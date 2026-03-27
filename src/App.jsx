@@ -137,7 +137,7 @@ const AboutPage = ({ setCurrentPage }) => {
   return (
     <div className="pt-32 pb-10 animate-in fade-in duration-700">
       {/* Section 1: Hero */}
-      <section className="px-6 lg:px-12 max-w-7xl mx-auto py-20">
+      <section className="px-6 lg:px-12 max-w-[1440px] mx-auto py-20">
         <FadeIn>
           <h1 className="text-6xl md:text-8xl font-light tracking-tighter text-zinc-950 mb-8 leading-[1.05]">
             Driven by data. <br />
@@ -150,7 +150,7 @@ const AboutPage = ({ setCurrentPage }) => {
       </section>
 
       {/* Section 2: Genesis */}
-      <section className="px-6 lg:px-12 max-w-7xl mx-auto py-20">
+      <section className="px-6 lg:px-12 max-w-[1440px] mx-auto py-20">
         <div className="grid md:grid-cols-2 gap-16 items-center">
           <FadeIn>
             <div className="aspect-square bg-zinc-50 rounded-[3rem] p-12 flex flex-col justify-end relative overflow-hidden group">
@@ -183,7 +183,7 @@ const AboutPage = ({ setCurrentPage }) => {
 
       {/* Section 3: Core Principles */}
       <section className="bg-zinc-950 text-white py-32 px-6 lg:px-12 my-20">
-        <div className="max-w-7xl mx-auto">
+        <div className="max-w-[1440px] mx-auto">
           <FadeIn className="mb-20">
             <h2 className="text-4xl md:text-5xl font-light tracking-tighter mb-6">The Ask Geo Pillars</h2>
             <p className="text-lg text-zinc-400 font-light max-w-2xl">The non-negotiable principles that guide every portfolio decision we make.</p>
@@ -206,7 +206,7 @@ const AboutPage = ({ setCurrentPage }) => {
       </section>
 
       {/* Section 4: Leadership */}
-      <section className="px-6 lg:px-12 max-w-7xl mx-auto py-20">
+      <section className="px-6 lg:px-12 max-w-[1440px] mx-auto py-20">
          <div className="flex flex-col md:flex-row gap-16">
             <FadeIn className="md:w-1/3">
               <h2 className="text-4xl font-light tracking-tighter mb-6">Leadership</h2>
@@ -235,7 +235,7 @@ const AboutPage = ({ setCurrentPage }) => {
       </section>
 
       {/* Section 5: The Difference */}
-      <section className="px-6 lg:px-12 max-w-7xl mx-auto py-20">
+      <section className="px-6 lg:px-12 max-w-[1440px] mx-auto py-20">
         <FadeIn className="mb-16">
           <h2 className="text-4xl font-light tracking-tighter mb-4">The Ask Geo Difference</h2>
           <p className="text-lg text-zinc-500 font-light">Why investors switch to us and never leave.</p>
@@ -264,7 +264,7 @@ const AboutPage = ({ setCurrentPage }) => {
       </section>
 
       {/* Section 6: Footprint */}
-      <section className="px-6 lg:px-12 max-w-7xl mx-auto py-20">
+      <section className="px-6 lg:px-12 max-w-[1440px] mx-auto py-20">
         <div className="bg-emerald-600 rounded-[3rem] p-12 md:p-20 text-white relative overflow-hidden">
            <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-emerald-500 rounded-full blur-[80px]"></div>
            <div className="relative z-10 grid md:grid-cols-3 gap-12 text-center md:text-left">
@@ -292,7 +292,7 @@ const ServicesPage = ({ setCurrentPage }) => {
   return (
     <div className="pt-32 pb-10 animate-in fade-in duration-700">
       {/* Section 1: Hero */}
-      <section className="px-6 lg:px-12 max-w-7xl mx-auto py-20">
+      <section className="px-6 lg:px-12 max-w-[1440px] mx-auto py-20">
         <FadeIn>
           <h1 className="text-6xl md:text-8xl font-light tracking-tighter text-zinc-950 mb-8 leading-[1.05]">
             Comprehensive <br />
@@ -305,7 +305,7 @@ const ServicesPage = ({ setCurrentPage }) => {
       </section>
 
       {/* Section 2: Wealth Management */}
-      <section className="px-6 lg:px-12 max-w-7xl mx-auto py-16">
+      <section className="px-6 lg:px-12 max-w-[1440px] mx-auto py-16">
         <div className="grid md:grid-cols-2 gap-16 items-center">
           <FadeIn className="order-2 md:order-1">
             <div className="w-16 h-16 bg-zinc-100 rounded-2xl flex items-center justify-center mb-8">
@@ -334,7 +334,7 @@ const ServicesPage = ({ setCurrentPage }) => {
       </section>
 
       {/* Section 3: Portfolio Management */}
-      <section className="px-6 lg:px-12 max-w-7xl mx-auto py-16">
+      <section className="px-6 lg:px-12 max-w-[1440px] mx-auto py-16">
         <div className="grid md:grid-cols-2 gap-16 items-center">
           <FadeIn>
             <div className="aspect-[4/3] bg-zinc-950 rounded-[3rem] border border-zinc-800 relative overflow-hidden">
@@ -363,7 +363,7 @@ const ServicesPage = ({ setCurrentPage }) => {
       </section>
 
       {/* Section 4: Risk & Insurance */}
-      <section className="px-6 lg:px-12 max-w-7xl mx-auto py-16">
+      <section className="px-6 lg:px-12 max-w-[1440px] mx-auto py-16">
         <div className="grid md:grid-cols-2 gap-16 items-center">
           <FadeIn className="order-2 md:order-1">
             <div className="w-16 h-16 bg-zinc-100 rounded-2xl flex items-center justify-center mb-8">
@@ -393,7 +393,7 @@ const ServicesPage = ({ setCurrentPage }) => {
 
       {/* Section 5: The Process */}
       <section className="bg-zinc-50 py-32 px-6 lg:px-12 my-20 border-y border-zinc-100">
-        <div className="max-w-7xl mx-auto">
+        <div className="max-w-[1440px] mx-auto">
           <FadeIn className="text-center mb-20 max-w-3xl mx-auto">
             <h2 className="text-4xl md:text-5xl font-light tracking-tighter mb-6">Our Onboarding Protocol</h2>
             <p className="text-lg text-zinc-500 font-light leading-relaxed">A systematic, friction-free process designed to transition you into a fully optimized portfolio within weeks.</p>
@@ -417,7 +417,7 @@ const ServicesPage = ({ setCurrentPage }) => {
       </section>
 
       {/* Section 6: CTA Bottom */}
-      <section className="px-6 lg:px-12 max-w-7xl mx-auto py-20 text-center">
+      <section className="px-6 lg:px-12 max-w-[1440px] mx-auto py-20 text-center">
         <FadeIn>
           <h2 className="text-4xl font-light tracking-tighter mb-6">Ready to optimize?</h2>
           <p className="text-lg text-zinc-500 font-light mb-10 max-w-2xl mx-auto">Don't leave your financial future to chance. Let our experts build a data-driven strategy for you today.</p>
@@ -448,7 +448,7 @@ const CalculatorsPage = ({ setCurrentPage }) => {
   return (
     <div className="pt-32 pb-10 animate-in fade-in duration-700">
       {/* Hero */}
-      <section className="px-6 lg:px-12 max-w-7xl mx-auto py-20">
+      <section className="px-6 lg:px-12 max-w-[1440px] mx-auto py-20">
         <FadeIn className="max-w-3xl">
           <h1 className="text-6xl md:text-8xl font-light tracking-tighter text-zinc-950 mb-8 leading-[1.05]">
             Project your <br />
@@ -461,7 +461,7 @@ const CalculatorsPage = ({ setCurrentPage }) => {
       </section>
 
       {/* Main Interactive SIP Calculator */}
-      <section className="px-6 lg:px-12 max-w-7xl mx-auto py-10">
+      <section className="px-6 lg:px-12 max-w-[1440px] mx-auto py-10">
         <div className="bg-zinc-50 border border-zinc-100 rounded-[3rem] p-8 md:p-16">
           <FadeIn className="mb-12">
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-zinc-200 text-emerald-600 text-xs font-medium tracking-widest mb-6">
@@ -546,7 +546,7 @@ const CalculatorsPage = ({ setCurrentPage }) => {
       </section>
 
       {/* Calculator Selector Cards (Teasers) */}
-      <section className="px-6 lg:px-12 max-w-7xl mx-auto py-20 border-t border-zinc-100 mt-10">
+      <section className="px-6 lg:px-12 max-w-[1440px] mx-auto py-20 border-t border-zinc-100 mt-10">
         <FadeIn className="mb-12 max-w-2xl">
           <h2 className="text-3xl font-light tracking-tighter mb-4">More analytical tools</h2>
           <p className="text-zinc-500 font-light">Explore specific scenarios for different life stages and capital deployments.</p>
@@ -586,7 +586,7 @@ const InsightsPage = ({ setCurrentPage }) => {
   return (
     <div className="pt-32 pb-10 animate-in fade-in duration-700">
       {/* Hero */}
-      <section className="px-6 lg:px-12 max-w-7xl mx-auto py-20">
+      <section className="px-6 lg:px-12 max-w-[1440px] mx-auto py-20">
         <FadeIn className="max-w-3xl">
           <h1 className="text-6xl md:text-8xl font-light tracking-tighter text-zinc-950 mb-8 leading-[1.05]">
             Market <br />
@@ -599,7 +599,7 @@ const InsightsPage = ({ setCurrentPage }) => {
       </section>
 
       {/* Featured Insight */}
-      <section className="px-6 lg:px-12 max-w-7xl mx-auto py-10">
+      <section className="px-6 lg:px-12 max-w-[1440px] mx-auto py-10">
         <FadeIn delay={100}>
           <div className="bg-zinc-950 text-white rounded-[3rem] p-8 md:p-16 flex flex-col md:flex-row gap-12 items-center group cursor-pointer relative overflow-hidden shadow-2xl">
             <div className="absolute inset-0 bg-gradient-to-tr from-emerald-900/20 to-transparent group-hover:scale-105 transition-transform duration-700"></div>
@@ -628,7 +628,7 @@ const InsightsPage = ({ setCurrentPage }) => {
       </section>
 
       {/* Article Grid */}
-      <section className="px-6 lg:px-12 max-w-7xl mx-auto py-20 border-t border-zinc-100 mt-10">
+      <section className="px-6 lg:px-12 max-w-[1440px] mx-auto py-20 border-t border-zinc-100 mt-10">
         <FadeIn className="mb-12">
           <h2 className="text-3xl font-light tracking-tighter">Latest Publications</h2>
         </FadeIn>
@@ -654,7 +654,7 @@ const InsightsPage = ({ setCurrentPage }) => {
       </section>
 
       {/* Newsletter CTA */}
-      <section className="px-6 lg:px-12 max-w-7xl mx-auto py-20">
+      <section className="px-6 lg:px-12 max-w-[1440px] mx-auto py-20">
         <FadeIn delay={200}>
           <div className="bg-emerald-600 rounded-[3rem] p-10 md:p-16 flex flex-col md:flex-row items-center justify-between gap-12 relative overflow-hidden shadow-2xl shadow-emerald-600/20">
             <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-emerald-500 rounded-full blur-[80px]"></div>
@@ -726,7 +726,7 @@ const AskGeoApp = () => {
       <nav className={`fixed w-full z-50 transition-all duration-500 ${
         isScrolled ? 'bg-white/90 backdrop-blur-xl border-b border-zinc-100 py-4 shadow-sm' : 'bg-transparent py-6'
       }`}>
-        <div className="max-w-7xl mx-auto px-6 lg:px-12 flex justify-between items-center">
+        <div className="max-w-[1440px] mx-auto px-6 lg:px-12 flex justify-between items-center">
           <div className="flex items-center gap-3 group cursor-pointer" onClick={() => { setCurrentPage('home'); window.scrollTo(0,0); }}>
             <div className="w-8 h-8 rounded-full bg-zinc-900 flex items-center justify-center group-hover:scale-110 group-hover:bg-emerald-600 transition-all duration-300">
               <TrendingUp className="text-white w-4 h-4" strokeWidth={1.5} />
@@ -788,7 +788,7 @@ const AskGeoApp = () => {
         {currentPage === 'home' && (
           <>
       {/* --- Minimal Hero Section --- */}
-      <section id="home" className="relative pt-40 pb-24 md:pt-56 md:pb-40 px-6 lg:px-12 max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-16">
+      <section id="home" className="relative pt-40 pb-24 md:pt-56 md:pb-40 px-6 lg:px-12 max-w-[1440px] mx-auto flex flex-col md:flex-row items-center gap-16">
         <div className="md:w-3/5 z-10 relative">
           <FadeIn delay={0}>
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-zinc-100 text-zinc-600 text-xs font-medium tracking-widest mb-8">
@@ -902,7 +902,7 @@ const AskGeoApp = () => {
 
       {/* --- Clean Divider Stats --- */}
       <section className="border-y border-zinc-100 bg-zinc-50/50 py-16">
-        <div className="max-w-7xl mx-auto px-6 lg:px-12 grid grid-cols-1 md:grid-cols-3 gap-8 divide-y md:divide-y-0 md:divide-x divide-zinc-200">
+        <div className="max-w-[1440px] mx-auto px-6 lg:px-12 grid grid-cols-1 md:grid-cols-3 gap-8 divide-y md:divide-y-0 md:divide-x divide-zinc-200">
           <FadeIn delay={100} direction="none" className="py-4 md:pr-8">
             <h4 className="text-5xl font-light tracking-tighter text-zinc-900 mb-2">
               <AnimatedNumber end={26} suffix="L+" />
@@ -925,7 +925,7 @@ const AskGeoApp = () => {
       </section>
 
       {/* --- NEW SECTION 1: Core Values / Approach --- */}
-      <section className="py-32 px-6 lg:px-12 max-w-7xl mx-auto">
+      <section className="py-32 px-6 lg:px-12 max-w-[1440px] mx-auto">
         <FadeIn className="mb-20 max-w-3xl">
           <h2 className="text-4xl md:text-5xl font-light tracking-tighter mb-6">Our Core Philosophy</h2>
           <p className="text-lg text-zinc-500 font-light leading-relaxed">
@@ -950,7 +950,7 @@ const AskGeoApp = () => {
       </section>
 
       {/* --- AI Tool Section (Minimal & Magical) --- */}
-      <section id="ai-tools" className="py-32 px-6 lg:px-12 max-w-7xl mx-auto relative">
+      <section id="ai-tools" className="py-32 px-6 lg:px-12 max-w-[1440px] mx-auto relative">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-emerald-50/50 rounded-full blur-[100px] -z-10 animate-blob animation-delay-2000"></div>
         
         <FadeIn className="mb-16 max-w-2xl">
@@ -970,7 +970,7 @@ const AskGeoApp = () => {
 
       {/* --- Philosophy Section --- */}
       <section id="about" className="py-32 bg-zinc-950 text-white px-6 lg:px-12">
-        <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-20 items-center">
+        <div className="max-w-[1440px] mx-auto grid md:grid-cols-2 gap-20 items-center">
           <div>
             <FadeIn>
               <h2 className="text-5xl md:text-6xl font-light tracking-tighter mb-8 leading-[1.1]">
@@ -1023,7 +1023,7 @@ const AskGeoApp = () => {
       </section>
 
       {/* --- Services Section --- */}
-      <section id="services" className="py-32 px-6 lg:px-12 max-w-7xl mx-auto">
+      <section id="services" className="py-32 px-6 lg:px-12 max-w-[1440px] mx-auto">
         <FadeIn className="mb-20 md:flex justify-between items-end">
           <div className="max-w-2xl">
             <h2 className="text-5xl font-light tracking-tighter mb-6">Our Expertise</h2>
@@ -1056,7 +1056,7 @@ const AskGeoApp = () => {
       <section className="py-32 bg-zinc-950 text-white px-6 lg:px-12 relative overflow-hidden">
         {/* Abstract dark background elements */}
         <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-emerald-900/20 rounded-full blur-[120px] pointer-events-none animate-blob animation-delay-4000"></div>
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-16 relative z-10">
+        <div className="max-w-[1440px] mx-auto flex flex-col md:flex-row items-center gap-16 relative z-10">
           <div className="md:w-1/2">
             <FadeIn className="max-w-xl">
               <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-zinc-900 border border-zinc-800 text-emerald-400 text-xs font-medium tracking-widest mb-8">
@@ -1113,7 +1113,7 @@ const AskGeoApp = () => {
 
       {/* --- Minimal Framework / Roadmap --- */}
       <section className="py-32 bg-zinc-50 border-y border-zinc-100 px-6 lg:px-12">
-        <div className="max-w-7xl mx-auto">
+        <div className="max-w-[1440px] mx-auto">
           <FadeIn className="mb-20 max-w-2xl">
             <h2 className="text-4xl font-light tracking-tighter mb-4">The Ask Geo Framework</h2>
             <p className="text-lg text-zinc-500 font-light">Three levels of service completely customized to your goals.</p>
@@ -1143,7 +1143,7 @@ const AskGeoApp = () => {
       </section>
 
       {/* --- NEW SECTION 3: The Expert / Team --- */}
-      <section className="py-32 px-6 lg:px-12 max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-16">
+      <section className="py-32 px-6 lg:px-12 max-w-[1440px] mx-auto flex flex-col md:flex-row items-center gap-16">
         <div className="md:w-1/2 relative">
           <FadeIn direction="right">
             <div className="w-full aspect-[4/5] bg-zinc-100 rounded-[3rem] overflow-hidden relative group">
@@ -1181,7 +1181,7 @@ const AskGeoApp = () => {
 
       {/* --- NEW SECTION 4: Testimonials --- */}
       <section className="py-32 bg-zinc-950 text-white px-6 lg:px-12">
-        <div className="max-w-7xl mx-auto">
+        <div className="max-w-[1440px] mx-auto">
           <FadeIn className="mb-20 max-w-2xl">
             <h2 className="text-4xl md:text-5xl font-light tracking-tighter mb-6">What our investors say</h2>
             <p className="text-lg text-zinc-400 font-light">Trust is built on consistent performance and transparent communication.</p>
@@ -1211,7 +1211,7 @@ const AskGeoApp = () => {
       </section>
 
       {/* --- NEW SECTION 5: Market Intelligence (Blog) --- */}
-      <section className="py-32 px-6 lg:px-12 max-w-7xl mx-auto">
+      <section className="py-32 px-6 lg:px-12 max-w-[1440px] mx-auto">
         <FadeIn className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
           <div className="max-w-2xl">
             <h2 className="text-4xl md:text-5xl font-light tracking-tighter mb-4">Market Intelligence</h2>
@@ -1247,7 +1247,7 @@ const AskGeoApp = () => {
 
       {/* --- NEW SECTION 6: FAQ --- */}
       <section className="py-32 bg-zinc-50 border-t border-zinc-100 px-6 lg:px-12">
-        <div className="max-w-7xl mx-auto">
+        <div className="max-w-[1440px] mx-auto">
           <FadeIn className="mb-16 max-w-2xl">
             <h2 className="text-4xl md:text-5xl font-light tracking-tighter mb-4">Common Questions</h2>
             <p className="text-lg text-zinc-500 font-light">Everything you need to know about working with Ask Geo.</p>
@@ -1286,7 +1286,7 @@ const AskGeoApp = () => {
         <div className="absolute inset-0 bg-zinc-950 z-0"></div>
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_right,_var(--tw-gradient-stops))] from-emerald-900/40 via-zinc-950 to-zinc-950 z-0"></div>
         
-        <div className="max-w-7xl mx-auto relative z-10">
+        <div className="max-w-[1440px] mx-auto relative z-10">
           <FadeIn>
             <div className="w-20 h-20 bg-emerald-500/10 rounded-full flex items-center justify-center mb-8 border border-emerald-500/20">
               <TrendingUp className="w-8 h-8 text-emerald-400" strokeWidth={1.5} />
@@ -1314,7 +1314,7 @@ const AskGeoApp = () => {
 
       {/* --- Contact Section (Moved from Footer) --- */}
       <section id="contact" className="py-32 px-6 lg:px-12 bg-white">
-        <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-20">
+        <div className="max-w-[1440px] mx-auto grid md:grid-cols-2 gap-20">
           <FadeIn direction="right">
             <h2 className="text-5xl font-light tracking-tighter mb-10 leading-[1.1]">
               Let's talk about <br/><span className="font-medium text-emerald-600">your future.</span>
@@ -1376,7 +1376,7 @@ const AskGeoApp = () => {
 
       {/* --- NEW: Mega Footer --- */}
       <footer className="bg-zinc-950 text-zinc-400 pt-24 pb-12 px-6 lg:px-12 border-t border-zinc-900">
-        <div className="max-w-7xl mx-auto">
+        <div className="max-w-[1440px] mx-auto">
           {/* Top Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 lg:gap-8 mb-16 border-b border-zinc-800 pb-16">
             
