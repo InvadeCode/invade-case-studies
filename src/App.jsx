@@ -1045,7 +1045,7 @@ const EarlyClosureWidget = () => {
       </div>
       <div className="lg:col-span-5">
         <FadeIn delay={350} className="bg-zinc-950 text-white p-6 sm:p-8 lg:p-10 rounded-2xl h-full flex flex-col justify-between relative overflow-hidden shadow-2xl">
-          <div className="absolute top-0 right-0 w-[200px] h-[200px] bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-indigo-600/30 to-transparent rounded-full blur-[40px] pointer-events-none"></div>
+          <div className="absolute top-0 right-0 w-[300px] h-[300px] bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-indigo-600/30 to-transparent rounded-full blur-[60px] pointer-events-none"></div>
           
           <div className="space-y-5 relative z-10 mb-6">
             <div className="flex flex-col sm:flex-row sm:justify-between sm:items-end border-b border-zinc-800 pb-3 gap-1">
@@ -1803,7 +1803,7 @@ const AskGeoApp = () => {
         
         {currentPage === 'home' && (
           <>
-      {/* --- Hero Section --- */}
+      {/* --- Minimal Hero Section --- */}
       <section id="home" className="relative pt-32 sm:pt-40 pb-20 sm:pb-24 lg:pt-48 lg:pb-32 px-6 sm:px-10 lg:px-16 xl:px-24 w-full max-w-[1800px] mx-auto flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
         <div className="lg:w-1/2 z-10 relative">
           <FadeIn delay={0}>
@@ -1843,54 +1843,67 @@ const AskGeoApp = () => {
         </div>
 
         {/* Hero Abstract Graphic */}
-        <div className="lg:w-1/2 relative w-full h-[350px] sm:h-[450px] lg:h-[500px] mt-8 lg:mt-0 perspective-1000">
+        <div className="lg:w-1/2 relative w-full h-[400px] sm:h-[500px] lg:h-[600px] mt-8 lg:mt-0 perspective-1000">
           <FadeIn delay={400} direction="left" className="w-full h-full relative">
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-emerald-50/80 rounded-full blur-[60px] sm:blur-[100px] -z-10 animate-blob"></div>
             
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[85%] max-w-[280px] sm:max-w-[340px] z-10">
-              <div className="w-full bg-white border border-zinc-100 rounded-3xl shadow-xl p-6 sm:p-8 flex flex-col justify-between overflow-hidden group animate-float-slow relative">
-                <div className="absolute top-0 right-0 p-6 opacity-5 group-hover:opacity-10 transition-opacity">
-                   <TrendingUp className="w-20 h-20 sm:w-28 sm:h-28" strokeWidth={1} />
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[85%] max-w-[280px] sm:max-w-[340px] lg:max-w-[400px] z-10">
+              <div className="w-full bg-white border border-zinc-100 rounded-[2rem] sm:rounded-[2.5rem] lg:rounded-[3rem] shadow-2xl shadow-zinc-200/50 p-6 sm:p-8 lg:p-10 flex flex-col justify-between overflow-hidden group animate-float-slow relative">
+                <div className="absolute top-1/2 right-0 -translate-y-1/2 opacity-10 group-hover:opacity-20 transition-opacity">
+                   <TrendingUp className="w-32 h-32 sm:w-48 sm:h-48 text-zinc-500" strokeWidth={1} />
                 </div>
                 
-                <div>
-                  <div className="w-10 h-10 sm:w-12 sm:h-12 bg-emerald-100 text-emerald-600 rounded-xl flex items-center justify-center mb-4 sm:mb-6">
-                    <PieChart className="w-5 h-5 sm:w-6 sm:h-6" strokeWidth={1.5} />
+                <div className="relative z-10">
+                  <div className="w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 bg-emerald-100 text-emerald-600 rounded-xl sm:rounded-2xl flex items-center justify-center mb-6 sm:mb-8">
+                    <PieChart className="w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8" strokeWidth={1.5} />
                   </div>
-                  <h3 className="text-lg sm:text-xl font-normal tracking-tight mb-1">Portfolio Metrics</h3>
-                  <p className="text-zinc-500 text-[10px] sm:text-xs font-light">Historical data & active management</p>
+                  <h3 className="text-xl sm:text-2xl lg:text-3xl font-medium tracking-tight mb-2 text-zinc-900">Portfolio Metrics</h3>
+                  <p className="text-zinc-500 text-xs sm:text-sm lg:text-base font-light mb-8 lg:mb-10">Historical data & active management</p>
                 </div>
 
-                <div className="grid grid-cols-2 gap-3 mt-6 sm:mt-8">
-                  <div className="bg-zinc-50 p-3 sm:p-4 rounded-xl">
-                    <p className="text-[9px] sm:text-[10px] font-medium text-zinc-400 tracking-widest mb-1">AUM</p>
-                    <p className="text-lg sm:text-xl font-light">133K<span className="text-zinc-400 text-xs sm:text-sm ml-1">Cr</span></p>
+                <div className="grid grid-cols-2 gap-3 sm:gap-4 relative z-10">
+                  <div className="bg-zinc-50 p-4 sm:p-5 lg:p-6 rounded-xl sm:rounded-2xl border border-zinc-100">
+                    <p className="text-[10px] sm:text-xs lg:text-sm font-semibold text-zinc-400 tracking-widest uppercase mb-1 sm:mb-2">AUM</p>
+                    <p className="text-2xl sm:text-3xl lg:text-4xl font-light text-zinc-900">133K<span className="text-zinc-400 text-sm sm:text-base lg:text-lg ml-1">Cr</span></p>
                   </div>
-                  <div className="bg-emerald-50 p-3 sm:p-4 rounded-xl">
-                    <p className="text-[9px] sm:text-[10px] font-medium text-emerald-600/60 tracking-widest mb-1">XIRR</p>
-                    <p className="text-lg sm:text-xl font-light text-emerald-700">+12%</p>
+                  <div className="bg-emerald-50 p-4 sm:p-5 lg:p-6 rounded-xl sm:rounded-2xl border border-emerald-100/50">
+                    <p className="text-[10px] sm:text-xs lg:text-sm font-semibold text-emerald-600/60 tracking-widest uppercase mb-1 sm:mb-2">XIRR</p>
+                    <p className="text-2xl sm:text-3xl lg:text-4xl font-light text-emerald-700">+12%</p>
                   </div>
                 </div>
               </div>
             </div>
 
-            <div className="absolute left-0 sm:left-4 lg:-left-4 top-4 sm:top-12 bg-zinc-950 border border-zinc-800 text-white p-3 rounded-xl shadow-lg animate-float z-20 flex items-center gap-3 hover:scale-105 transition-transform cursor-default">
-              <div className="w-8 h-8 rounded-full bg-emerald-500/20 flex items-center justify-center shrink-0">
-                <Bot className="w-4 h-4 text-emerald-400" strokeWidth={1.5} />
+            {/* Floating Card 1: AI Engine */}
+            <div className="absolute left-0 sm:left-4 lg:-left-8 top-8 sm:top-16 bg-zinc-950 border border-zinc-800 text-white p-3 sm:p-4 rounded-xl sm:rounded-2xl shadow-2xl animate-float z-20 flex items-center gap-3 sm:gap-4 hover:scale-105 transition-transform cursor-default">
+              <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-emerald-900/50 flex items-center justify-center shrink-0">
+                <Bot className="w-5 h-5 sm:w-6 sm:h-6 text-emerald-400" strokeWidth={1.5} />
               </div>
-              <div>
-                <p className="text-[8px] font-medium text-emerald-400 tracking-widest uppercase mb-0.5">AI Engine</p>
-                <p className="text-xs font-light">Optimizing...</p>
+              <div className="pr-2">
+                <p className="text-[8px] sm:text-[10px] font-bold text-emerald-500 tracking-widest uppercase mb-0.5">AI Engine</p>
+                <p className="text-xs sm:text-sm font-light text-white">Optimizing...</p>
               </div>
             </div>
 
-            <div className="absolute right-0 sm:right-4 lg:-right-4 top-1/3 bg-white border border-zinc-100 p-3 rounded-xl shadow-lg animate-float-delayed z-20 flex items-center gap-3 hover:scale-105 transition-transform cursor-default">
-              <div className="w-8 h-8 rounded-full bg-zinc-100 flex items-center justify-center shrink-0">
-                <ShieldCheck className="w-4 h-4 text-zinc-900" strokeWidth={1.5} />
+            {/* Floating Card 2: Trust/Clients */}
+            <div className="absolute right-0 sm:right-4 lg:-right-12 top-1/3 bg-white border border-zinc-100 p-3 sm:p-4 rounded-xl sm:rounded-2xl shadow-xl animate-float-delayed z-20 flex items-center gap-3 sm:gap-4 hover:scale-105 transition-transform cursor-default">
+              <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-zinc-50 border border-zinc-100 flex items-center justify-center shrink-0">
+                <ShieldCheck className="w-5 h-5 sm:w-6 sm:h-6 text-zinc-600" strokeWidth={1.5} />
               </div>
-              <div>
-                <p className="text-[8px] font-medium text-zinc-400 tracking-widest uppercase mb-0.5">Trust</p>
-                <p className="text-xs font-light text-zinc-900">26L+ Clients</p>
+              <div className="pr-2">
+                <p className="text-[8px] sm:text-[10px] font-bold text-zinc-400 tracking-widest uppercase mb-0.5">Trust</p>
+                <p className="text-xs sm:text-sm font-light text-zinc-900">26L+ Clients</p>
+              </div>
+            </div>
+
+            {/* Floating Card 3: Live Sync */}
+            <div className="absolute left-4 sm:left-12 lg:-left-4 bottom-12 sm:bottom-20 bg-white border border-zinc-100 p-3 sm:p-4 rounded-xl sm:rounded-2xl shadow-xl animate-float z-30 flex items-center gap-3 sm:gap-4 hover:scale-105 transition-transform cursor-default">
+               <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-emerald-50 border border-emerald-100 flex items-center justify-center shrink-0">
+                <Activity className="w-5 h-5 sm:w-6 sm:h-6 text-emerald-600" strokeWidth={1.5} />
+              </div>
+              <div className="pr-2">
+                <p className="text-[8px] sm:text-[10px] font-bold text-zinc-400 tracking-widest uppercase mb-0.5">Live Sync</p>
+                <p className="text-xs sm:text-sm font-light text-zinc-900">Market Data</p>
               </div>
             </div>
           </FadeIn>
@@ -2199,6 +2212,7 @@ const AskGeoApp = () => {
           </div>
         </div>
       </footer>
+      <GeneralContactModal isOpen={isContactModalOpen} onClose={() => setContactModalOpen(false)} title={contactModalTitle} />
     </div>
   );
 };
