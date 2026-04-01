@@ -946,7 +946,7 @@ const SmartEmiCalculatorWidget = () => {
       </div>
       <div className="lg:col-span-5">
         <FadeIn delay={300} className="bg-zinc-950 text-white p-6 sm:p-8 lg:p-10 rounded-2xl h-full flex flex-col justify-between relative overflow-hidden shadow-2xl">
-          <div className="absolute top-0 right-0 w-[200px] h-[200px] bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-emerald-600/30 to-transparent rounded-full blur-[40px] pointer-events-none"></div>
+          <div className="absolute top-0 right-0 w-[300px] h-[300px] bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-emerald-600/30 to-transparent rounded-full blur-[60px] pointer-events-none"></div>
           
           <div className="space-y-5 relative z-10 mb-6">
             <div className="flex flex-col sm:flex-row sm:justify-between sm:items-end border-b border-zinc-800 pb-3 gap-1">
@@ -959,11 +959,11 @@ const SmartEmiCalculatorWidget = () => {
             </div>
           </div>
 
-          <div className="pt-4 relative z-10">
-            <p className="text-[10px] sm:text-xs font-bold tracking-widest text-emerald-400 uppercase mb-2">Required Monthly SIP to recover 100% of interest</p>
-            <p className="text-3xl sm:text-4xl lg:text-5xl font-light text-white tracking-tight leading-none mb-4">{formatCurrency(requiredSip)}</p>
-            <div className="inline-flex items-center gap-2 bg-emerald-900/40 border border-emerald-500/30 text-emerald-300 text-[10px] sm:text-xs font-medium px-3 py-1.5 rounded-md">
-              <Sparkles className="w-3 h-3" /> That's just {sipPercentageOfEmi}% of your EMI!
+          <div className="pt-6 relative z-10">
+            <p className="text-[10px] sm:text-xs font-bold tracking-widest text-emerald-400 uppercase mb-4">Required Monthly SIP to recover 100% of interest</p>
+            <p className="text-5xl sm:text-6xl md:text-7xl font-light text-white tracking-tight leading-none mb-6">{formatCurrency(requiredSip)}</p>
+            <div className="inline-flex items-center gap-2 bg-emerald-900/40 border border-emerald-500/30 text-emerald-300 text-sm font-medium px-4 py-2 rounded-full">
+              <Sparkles className="w-4 h-4" /> That's just {sipPercentageOfEmi}% of your EMI amount!
             </div>
           </div>
         </FadeIn>
@@ -1063,7 +1063,7 @@ const EarlyClosureWidget = () => {
 
           <div className="pt-4 relative z-10">
             <p className="text-[10px] sm:text-xs font-bold tracking-widest text-indigo-400 uppercase mb-2">Required Monthly SIP to close early</p>
-            <p className="text-3xl sm:text-4xl lg:text-5xl font-light text-white tracking-tight leading-none mb-4">{formatCurrency(requiredSip)}</p>
+            <p className="text-5xl sm:text-6xl md:text-7xl font-light text-white tracking-tight leading-none mb-6">{formatCurrency(requiredSip)}</p>
             
             <div className="flex flex-col gap-2">
               <div className="inline-flex items-center gap-2 bg-indigo-900/40 border border-indigo-500/30 text-indigo-300 text-[10px] sm:text-xs font-medium px-3 py-1.5 rounded-md w-fit">
@@ -1119,17 +1119,17 @@ const FireCalculatorWidget = () => {
       </div>
       <div className="lg:col-span-5">
         <FadeIn delay={400} className="bg-zinc-950 text-white p-6 sm:p-8 lg:p-10 rounded-2xl h-full flex flex-col justify-between relative overflow-hidden shadow-2xl">
-          <div className="absolute top-0 right-0 w-[200px] h-[200px] bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-blue-600/20 to-transparent rounded-full blur-[40px] pointer-events-none"></div>
+          <div className="absolute top-0 right-0 w-[300px] h-[300px] bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-blue-600/20 to-transparent rounded-full blur-[60px] pointer-events-none"></div>
           <div className="space-y-6 relative z-10 mb-8">
             <div>
               <p className="text-[10px] sm:text-xs font-medium tracking-widest text-zinc-400 uppercase mb-1">Projected Future Monthly Expense</p>
-              <p className="text-xl sm:text-2xl font-light text-zinc-300">{formatCurrency(futureAnnualExp / 12)}</p>
+              <p className="text-2xl sm:text-3xl font-light text-zinc-300">{formatCurrency(futureAnnualExp / 12)}</p>
               <p className="text-[10px] text-zinc-500 mt-0.5">Adjusted for {inflation}% inflation</p>
             </div>
           </div>
           <div className="pt-6 border-t border-zinc-800 relative z-10">
             <p className="text-[10px] sm:text-xs font-bold tracking-widest text-blue-400 uppercase mb-2">Target F.I.R.E. Corpus</p>
-            <p className="text-3xl sm:text-4xl lg:text-5xl font-light text-white tracking-tight leading-none mb-4">{formatCurrency(requiredCorpus)}</p>
+            <p className="text-4xl sm:text-5xl md:text-6xl font-light text-white tracking-tight leading-none mb-8">{formatCurrency(requiredCorpus)}</p>
           </div>
         </FadeIn>
       </div>
@@ -1184,7 +1184,7 @@ const LumpsumCalculatorWidget = () => {
           </div>
           <div className="pt-6 border-t border-zinc-800 relative z-10">
             <p className="text-[10px] sm:text-xs font-bold tracking-widest text-zinc-500 uppercase mb-2">Future Value</p>
-            <p className="text-3xl sm:text-4xl lg:text-5xl font-light text-white tracking-tight leading-none">{formatCurrency(maturityValue)}</p>
+            <p className="text-4xl sm:text-5xl md:text-6xl font-light text-white tracking-tight leading-none">{formatCurrency(maturityValue)}</p>
           </div>
         </FadeIn>
       </div>
@@ -1228,7 +1228,7 @@ const GoalCalculatorWidget = () => {
       </div>
       <div className="lg:col-span-5">
         <FadeIn delay={400} className="bg-zinc-950 text-white p-6 sm:p-8 lg:p-10 rounded-2xl h-full flex flex-col justify-between relative overflow-hidden shadow-2xl">
-           <div className="absolute top-0 right-0 w-[200px] h-[200px] bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-indigo-600/20 to-transparent rounded-full blur-[40px] pointer-events-none"></div>
+           <div className="absolute top-0 right-0 w-[300px] h-[300px] bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-indigo-600/20 to-transparent rounded-full blur-[60px] pointer-events-none"></div>
           <div className="space-y-6 relative z-10 mb-8">
             <div>
               <p className="text-[10px] sm:text-xs font-medium tracking-widest text-zinc-400 uppercase mb-1">To reach your goal of</p>
@@ -1237,7 +1237,7 @@ const GoalCalculatorWidget = () => {
           </div>
           <div className="pt-6 border-t border-zinc-800 relative z-10">
             <p className="text-[10px] sm:text-xs font-bold tracking-widest text-indigo-400 uppercase mb-2">Required Monthly SIP</p>
-            <p className="text-3xl sm:text-4xl lg:text-5xl font-light text-white tracking-tight leading-none">{formatCurrency(requiredSip)}</p>
+            <p className="text-4xl sm:text-5xl md:text-6xl font-light text-white tracking-tight leading-none">{formatCurrency(requiredSip)}</p>
           </div>
         </FadeIn>
       </div>
@@ -1874,7 +1874,7 @@ const AskGeoApp = () => {
               </div>
 
               {/* Floating Card 1: AI Engine */}
-              <div className="absolute -left-6 sm:-left-12 lg:-left-16 top-12 sm:top-16 bg-zinc-950 border border-zinc-800 text-white p-3 sm:p-4 rounded-xl sm:rounded-2xl shadow-2xl animate-float z-20 flex items-center gap-3 sm:gap-4 hover:scale-105 transition-transform cursor-default">
+              <div className="absolute -left-8 sm:-left-20 lg:-left-28 top-8 sm:top-12 bg-zinc-950 border border-zinc-800 text-white p-3 sm:p-4 rounded-xl sm:rounded-2xl shadow-2xl animate-float z-20 flex items-center gap-3 sm:gap-4 hover:scale-105 transition-transform cursor-default w-max">
                 <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-emerald-900/50 flex items-center justify-center shrink-0">
                   <Bot className="w-5 h-5 sm:w-6 sm:h-6 text-emerald-400" strokeWidth={1.5} />
                 </div>
@@ -1885,7 +1885,7 @@ const AskGeoApp = () => {
               </div>
 
               {/* Floating Card 2: Trust/Clients */}
-              <div className="absolute -right-6 sm:-right-12 lg:-right-20 top-1/3 bg-white border border-zinc-100 p-3 sm:p-4 rounded-xl sm:rounded-2xl shadow-xl animate-float-delayed z-20 flex items-center gap-3 sm:gap-4 hover:scale-105 transition-transform cursor-default">
+              <div className="absolute -right-8 sm:-right-20 lg:-right-28 top-[35%] bg-white border border-zinc-100 p-3 sm:p-4 rounded-xl sm:rounded-2xl shadow-xl animate-float-delayed z-20 flex items-center gap-3 sm:gap-4 hover:scale-105 transition-transform cursor-default w-max">
                 <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-zinc-50 border border-zinc-100 flex items-center justify-center shrink-0">
                   <ShieldCheck className="w-5 h-5 sm:w-6 sm:h-6 text-zinc-600" strokeWidth={1.5} />
                 </div>
@@ -1896,7 +1896,7 @@ const AskGeoApp = () => {
               </div>
 
               {/* Floating Card 3: Live Sync */}
-              <div className="absolute -left-4 sm:-left-8 lg:-left-12 bottom-12 sm:bottom-16 bg-white border border-zinc-100 p-3 sm:p-4 rounded-xl sm:rounded-2xl shadow-xl animate-float z-30 flex items-center gap-3 sm:gap-4 hover:scale-105 transition-transform cursor-default">
+              <div className="absolute -left-4 sm:-left-16 lg:-left-20 bottom-12 sm:bottom-20 bg-white border border-zinc-100 p-3 sm:p-4 rounded-xl sm:rounded-2xl shadow-xl animate-float z-30 flex items-center gap-3 sm:gap-4 hover:scale-105 transition-transform cursor-default w-max">
                  <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-emerald-50 border border-emerald-100 flex items-center justify-center shrink-0">
                   <Activity className="w-5 h-5 sm:w-6 sm:h-6 text-emerald-600" strokeWidth={1.5} />
                 </div>
