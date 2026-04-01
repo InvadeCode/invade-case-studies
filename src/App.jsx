@@ -1717,7 +1717,7 @@ const AskGeoApp = () => {
     <div className="min-h-screen bg-white text-zinc-900 font-sans selection:bg-emerald-200 selection:text-zinc-900 overflow-x-hidden text-left">
       
       <style>{`
-        @keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-15px); } 100% { transform: translateY(0px); } }
+        @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-8px); } }
         .animate-float { animation: float 5s ease-in-out infinite; }
         .animate-float-delayed { animation: float 7s ease-in-out infinite 2s; }
         .animate-float-slow { animation: float 8s ease-in-out infinite 1s; }
@@ -1847,8 +1847,8 @@ const AskGeoApp = () => {
           <FadeIn delay={400} direction="left" className="w-full h-full relative">
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-emerald-50/80 rounded-full blur-[60px] sm:blur-[100px] -z-10 animate-blob"></div>
             
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[85%] max-w-[280px] sm:max-w-[340px] lg:max-w-[400px] z-10">
-              <div className="w-full bg-white border border-zinc-100 rounded-[2rem] sm:rounded-[2.5rem] lg:rounded-[3rem] shadow-2xl shadow-zinc-200/50 p-6 sm:p-8 lg:p-10 flex flex-col justify-between overflow-hidden group animate-float-slow relative">
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[85%] max-w-[280px] sm:max-w-[340px] lg:max-w-[380px] z-10 relative">
+              <div className="w-full bg-white border border-zinc-100 rounded-[2rem] sm:rounded-[2.5rem] lg:rounded-[3rem] shadow-2xl shadow-zinc-200/50 p-6 sm:p-8 lg:p-10 flex flex-col justify-between overflow-hidden group relative">
                 <div className="absolute top-1/2 right-0 -translate-y-1/2 opacity-10 group-hover:opacity-20 transition-opacity">
                    <TrendingUp className="w-32 h-32 sm:w-48 sm:h-48 text-zinc-500" strokeWidth={1} />
                 </div>
@@ -1872,39 +1872,40 @@ const AskGeoApp = () => {
                   </div>
                 </div>
               </div>
-            </div>
 
-            {/* Floating Card 1: AI Engine */}
-            <div className="absolute left-0 sm:left-4 lg:-left-8 top-8 sm:top-16 bg-zinc-950 border border-zinc-800 text-white p-3 sm:p-4 rounded-xl sm:rounded-2xl shadow-2xl animate-float z-20 flex items-center gap-3 sm:gap-4 hover:scale-105 transition-transform cursor-default">
-              <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-emerald-900/50 flex items-center justify-center shrink-0">
-                <Bot className="w-5 h-5 sm:w-6 sm:h-6 text-emerald-400" strokeWidth={1.5} />
+              {/* Floating Card 1: AI Engine */}
+              <div className="absolute -left-6 sm:-left-12 lg:-left-16 top-12 sm:top-16 bg-zinc-950 border border-zinc-800 text-white p-3 sm:p-4 rounded-xl sm:rounded-2xl shadow-2xl animate-float z-20 flex items-center gap-3 sm:gap-4 hover:scale-105 transition-transform cursor-default">
+                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-emerald-900/50 flex items-center justify-center shrink-0">
+                  <Bot className="w-5 h-5 sm:w-6 sm:h-6 text-emerald-400" strokeWidth={1.5} />
+                </div>
+                <div className="pr-2 sm:pr-4">
+                  <p className="text-[8px] sm:text-[10px] font-bold text-emerald-500 tracking-widest uppercase mb-0.5">AI Engine</p>
+                  <p className="text-xs sm:text-sm font-light text-white">Optimizing...</p>
+                </div>
               </div>
-              <div className="pr-2">
-                <p className="text-[8px] sm:text-[10px] font-bold text-emerald-500 tracking-widest uppercase mb-0.5">AI Engine</p>
-                <p className="text-xs sm:text-sm font-light text-white">Optimizing...</p>
-              </div>
-            </div>
 
-            {/* Floating Card 2: Trust/Clients */}
-            <div className="absolute right-0 sm:right-4 lg:-right-12 top-1/3 bg-white border border-zinc-100 p-3 sm:p-4 rounded-xl sm:rounded-2xl shadow-xl animate-float-delayed z-20 flex items-center gap-3 sm:gap-4 hover:scale-105 transition-transform cursor-default">
-              <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-zinc-50 border border-zinc-100 flex items-center justify-center shrink-0">
-                <ShieldCheck className="w-5 h-5 sm:w-6 sm:h-6 text-zinc-600" strokeWidth={1.5} />
+              {/* Floating Card 2: Trust/Clients */}
+              <div className="absolute -right-6 sm:-right-12 lg:-right-20 top-1/3 bg-white border border-zinc-100 p-3 sm:p-4 rounded-xl sm:rounded-2xl shadow-xl animate-float-delayed z-20 flex items-center gap-3 sm:gap-4 hover:scale-105 transition-transform cursor-default">
+                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-zinc-50 border border-zinc-100 flex items-center justify-center shrink-0">
+                  <ShieldCheck className="w-5 h-5 sm:w-6 sm:h-6 text-zinc-600" strokeWidth={1.5} />
+                </div>
+                <div className="pr-2 sm:pr-4">
+                  <p className="text-[8px] sm:text-[10px] font-bold text-zinc-400 tracking-widest uppercase mb-0.5">Trust</p>
+                  <p className="text-xs sm:text-sm font-light text-zinc-900">26L+ Clients</p>
+                </div>
               </div>
-              <div className="pr-2">
-                <p className="text-[8px] sm:text-[10px] font-bold text-zinc-400 tracking-widest uppercase mb-0.5">Trust</p>
-                <p className="text-xs sm:text-sm font-light text-zinc-900">26L+ Clients</p>
-              </div>
-            </div>
 
-            {/* Floating Card 3: Live Sync */}
-            <div className="absolute left-4 sm:left-12 lg:-left-4 bottom-12 sm:bottom-20 bg-white border border-zinc-100 p-3 sm:p-4 rounded-xl sm:rounded-2xl shadow-xl animate-float z-30 flex items-center gap-3 sm:gap-4 hover:scale-105 transition-transform cursor-default">
-               <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-emerald-50 border border-emerald-100 flex items-center justify-center shrink-0">
-                <Activity className="w-5 h-5 sm:w-6 sm:h-6 text-emerald-600" strokeWidth={1.5} />
+              {/* Floating Card 3: Live Sync */}
+              <div className="absolute -left-4 sm:-left-8 lg:-left-12 bottom-12 sm:bottom-16 bg-white border border-zinc-100 p-3 sm:p-4 rounded-xl sm:rounded-2xl shadow-xl animate-float z-30 flex items-center gap-3 sm:gap-4 hover:scale-105 transition-transform cursor-default">
+                 <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-emerald-50 border border-emerald-100 flex items-center justify-center shrink-0">
+                  <Activity className="w-5 h-5 sm:w-6 sm:h-6 text-emerald-600" strokeWidth={1.5} />
+                </div>
+                <div className="pr-2 sm:pr-4">
+                  <p className="text-[8px] sm:text-[10px] font-bold text-zinc-400 tracking-widest uppercase mb-0.5">Live Sync</p>
+                  <p className="text-xs sm:text-sm font-light text-zinc-900">Market Data</p>
+                </div>
               </div>
-              <div className="pr-2">
-                <p className="text-[8px] sm:text-[10px] font-bold text-zinc-400 tracking-widest uppercase mb-0.5">Live Sync</p>
-                <p className="text-xs sm:text-sm font-light text-zinc-900">Market Data</p>
-              </div>
+
             </div>
           </FadeIn>
         </div>
