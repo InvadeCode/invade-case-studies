@@ -8,6 +8,76 @@ import {
   Facebook, Twitter, Instagram, Linkedin, Download, Lock
 } from 'lucide-react';
 
+// --- RESEND API CONFIGURATION ---
+const RESEND_API_KEY = "re_EwrPzkYJ_CXGLyjj1LLjrqkp1oAEQHod9";
+const TARGET_EMAIL = "geoconsultant@gmail.com";
+
+const sendEmailViaResend = async (subject, htmlBody, attachments = []) => {
+  try {
+    const response = await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${RESEND_API_KEY}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        from: 'Ask Geo <onboarding@resend.dev>', // Resend allows testing via onboarding@resend.dev
+        to: [TARGET_EMAIL],
+        subject: subject,
+        html: htmlBody,
+        attachments: attachments
+      })
+    });
+    const data = await response.json();
+    console.log('Resend Delivery Status:', data);
+  } catch (error) {
+    console.error('Resend Delivery Error:', error);
+  }
+};
+
+const getBeautifulEmailTemplate = (title, leadData, metrics = []) => `
+  <div style="font-family: 'Inter', Helvetica, Arial, sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #e5e7eb; border-radius: 16px; overflow: hidden; box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);">
+    <div style="background-color: #047857; padding: 32px 24px; text-align: center;">
+      <h2 style="color: #ffffff; margin: 0; font-size: 24px; font-weight: 400; letter-spacing: -0.5px;">New Lead Interaction</h2>
+      <p style="color: #a7f3d0; margin: 8px 0 0 0; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;">Source: ${title}</p>
+    </div>
+    <div style="padding: 32px;">
+      <h3 style="color: #111827; font-size: 16px; font-weight: 600; border-bottom: 2px solid #f3f4f6; padding-bottom: 12px; margin-bottom: 24px; text-transform: uppercase; letter-spacing: 1px;">Contact Details</h3>
+      <table style="width: 100%; border-collapse: collapse; margin-bottom: 36px;">
+        <tr>
+          <td style="padding: 14px 12px; border-bottom: 1px solid #f3f4f6; background-color: #f9fafb; color: #6b7280; width: 35%; font-weight: 500; font-size: 13px;">Full Name</td>
+          <td style="padding: 14px 12px; border-bottom: 1px solid #f3f4f6; color: #111827; font-weight: 600; font-size: 14px;">${leadData.name}</td>
+        </tr>
+        <tr>
+          <td style="padding: 14px 12px; border-bottom: 1px solid #f3f4f6; background-color: #f9fafb; color: #6b7280; font-weight: 500; font-size: 13px;">Phone</td>
+          <td style="padding: 14px 12px; border-bottom: 1px solid #f3f4f6; color: #111827; font-weight: 600; font-size: 14px;">+91 ${leadData.phone}</td>
+        </tr>
+        <tr>
+          <td style="padding: 14px 12px; border-bottom: 1px solid #f3f4f6; background-color: #f9fafb; color: #6b7280; font-weight: 500; font-size: 13px;">Email</td>
+          <td style="padding: 14px 12px; border-bottom: 1px solid #f3f4f6; color: #111827; font-weight: 600; font-size: 14px;">${leadData.email}</td>
+        </tr>
+      </table>
+
+      ${metrics.length > 0 ? `
+        <h3 style="color: #111827; font-size: 16px; font-weight: 600; border-bottom: 2px solid #f3f4f6; padding-bottom: 12px; margin-bottom: 24px; text-transform: uppercase; letter-spacing: 1px;">Generated Metrics</h3>
+        <table style="width: 100%; border-collapse: collapse; border: 1px solid #e5e7eb; border-radius: 8px; overflow: hidden;">
+          ${metrics.map((m, index) => `
+            <tr>
+              <td style="padding: 16px 12px; border-bottom: ${index === metrics.length - 1 ? 'none' : '1px solid #e5e7eb'}; background-color: ${m.success ? '#ecfdf5' : '#ffffff'}; color: #6b7280; width: 55%; font-weight: 500; font-size: 13px;">${m.label}</td>
+              <td style="padding: 16px 12px; border-bottom: ${index === metrics.length - 1 ? 'none' : '1px solid #e5e7eb'}; background-color: ${m.success ? '#ecfdf5' : '#ffffff'}; color: ${m.success ? '#059669' : '#111827'}; font-weight: 700; font-size: 16px;">${m.value}</td>
+            </tr>
+          `).join('')}
+        </table>
+        <p style="font-size: 12px; color: #9ca3af; margin-top: 16px; text-align: center;"><em>*The detailed PDF blueprint has been attached to this email.</em></p>
+      ` : ''}
+    </div>
+    <div style="background-color: #111827; padding: 20px; text-align: center; color: #9ca3af; font-size: 11px; font-weight: 500; letter-spacing: 1px; text-transform: uppercase;">
+      Ask Geo Automated Intelligence System<br />
+      <span style="font-weight: 400; color: #6b7280; margin-top: 4px; display: inline-block;">${new Date().toLocaleString()}</span>
+    </div>
+  </div>
+`;
+
 // --- AIO & SEO Metadata Simulation ---
 const schemaData = {
   "@context": "https://schema.org",
@@ -104,34 +174,6 @@ const AnimatedNumber = ({ end, suffix = "", prefix = "", decimals = 0, duration 
   );
 };
 
-// --- Animated Progress Bar Component ---
-const AnimatedProgress = ({ width, delay = 0 }) => {
-  const domRef = useRef();
-  const [isVisible, setIsVisible] = useState(false);
-  
-  useEffect(() => {
-    const observer = new IntersectionObserver(entries => {
-      if (entries[0].isIntersecting) {
-        setTimeout(() => setIsVisible(true), delay);
-        observer.disconnect();
-      }
-    });
-    if (domRef.current) observer.observe(domRef.current);
-    return () => observer.disconnect();
-  }, [delay]);
-
-  return (
-    <div className="w-full h-2 bg-white/50 rounded-full overflow-hidden shadow-inner" ref={domRef}>
-      <div 
-        className="h-full bg-emerald-500 rounded-full transition-all duration-[1500ms] ease-out relative"
-        style={{ width: isVisible ? width : '0%' }}
-      >
-        <div className="absolute top-0 right-0 bottom-0 w-8 bg-gradient-to-r from-transparent to-white/60 rounded-full blur-[2px] animate-pulse"></div>
-      </div>
-    </div>
-  );
-};
-
 // --- Shared General Contact Lightbox / Modal ---
 const GeneralContactModal = ({ isOpen, onClose, title }) => {
   const [formData, setFormData] = useState({ name: '', phone: '', email: '' });
@@ -147,9 +189,14 @@ const GeneralContactModal = ({ isOpen, onClose, title }) => {
 
   if (!isOpen) return null;
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setIsProcessing(true);
+    
+    // --- INTEGRATED RESEND API ---
+    const emailHtml = getBeautifulEmailTemplate(title, formData);
+    await sendEmailViaResend(`New Ask Geo Lead: ${title} - ${formData.name}`, emailHtml);
+
     setTimeout(() => {
       setIsProcessing(false);
       setIsSuccess(true);
@@ -233,10 +280,9 @@ const generateReport = (config, leadData) => {
         @page { size: A4; margin: 0; }
         * { box-sizing: border-box; text-align: left; }
         body { font-family: 'Inter', sans-serif; margin: 0; padding: 0; color: #18181b; background: #ffffff; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
-        .page-container { width: 210mm; min-height: 297mm; margin: 0 auto; position: relative; overflow: hidden; }
+        .page-container { width: 210mm; min-height: 297mm; margin: 0 auto; position: relative; overflow: hidden; background: #ffffff; }
         .header { background: #047857; color: #ffffff; padding: 50px 50px 40px 50px; position: relative; overflow: hidden; }
         .logo-container { display: flex; align-items: center; gap: 12px; margin-bottom: 25px; }
-        .logo-img { height: 40px; filter: brightness(0) invert(1); }
         .report-title { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: #a7f3d0; margin-bottom: 10px; }
         .main-heading { font-size: 36px; font-weight: 300; letter-spacing: -1px; margin: 0 0 10px 0; line-height: 1.1; }
         .client-info { display: flex; justify-content: space-between; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 20px; margin-top: 30px; }
@@ -257,7 +303,7 @@ const generateReport = (config, leadData) => {
       </style>
     </head>
     <body>
-      <div class="page-container">
+      <div class="page-container" id="pdf-content">
         <div class="header">
           <div class="logo-container">
             <div style="width: 36px; height: 36px; border-radius: 50%; background: #022c22; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);">
@@ -338,6 +384,64 @@ const generateReport = (config, leadData) => {
   `;
   printWindow.document.write(htmlContent);
   printWindow.document.close();
+
+  // --- BACKGROUND PDF GENERATION AND EMAIL DISPATCH ---
+  const sendReportViaEmail = async () => {
+    try {
+      const emailHtmlBody = getBeautifulEmailTemplate(
+        `Report Download: ${config.reportTitle}`, 
+        leadData, 
+        [config.primaryMetric, ...config.secondaryMetrics]
+      );
+      
+      // Inject HTML string into a hidden off-screen div to parse it into a PDF
+      const hiddenDiv = document.createElement('div');
+      hiddenDiv.innerHTML = htmlContent;
+      hiddenDiv.style.position = 'absolute';
+      hiddenDiv.style.left = '-9999px';
+      document.body.appendChild(hiddenDiv);
+
+      // Dynamically load html2pdf from CDN
+      if (!window.html2pdf) {
+        await new Promise((resolve) => {
+          const script = document.createElement('script');
+          script.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js';
+          script.onload = resolve;
+          document.head.appendChild(script);
+        });
+      }
+
+      const opt = {
+        margin:       0,
+        filename:     `${config.reportTitle.replace(/\s+/g, '_')}.pdf`,
+        image:        { type: 'jpeg', quality: 0.98 },
+        html2canvas:  { scale: 2, useCORS: true },
+        jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+      };
+
+      // Generate the PDF and get it as base64 string
+      const targetElement = hiddenDiv.querySelector('#pdf-content');
+      const pdfBase64DataUri = await window.html2pdf().set(opt).from(targetElement).outputPdf('datauristring');
+      const base64Content = pdfBase64DataUri.split(',')[1];
+      
+      document.body.removeChild(hiddenDiv); // Clean up
+
+      await sendEmailViaResend(
+        `Report Request: ${config.reportTitle} for ${leadData.name}`,
+        emailHtmlBody,
+        [{ filename: opt.filename, content: base64Content }]
+      );
+
+    } catch (e) {
+      console.error("PDF generation failed, sending email without attachment", e);
+      // Fallback: Send email without attachment if PDF generation fails
+      const fallbackEmailHtmlBody = getBeautifulEmailTemplate(`Report Download: ${config.reportTitle}`, leadData, [config.primaryMetric, ...config.secondaryMetrics]);
+      await sendEmailViaResend(`Report Request: ${config.reportTitle} for ${leadData.name}`, fallbackEmailHtmlBody);
+    }
+  };
+
+  // Trigger non-blocking async function to send the email with attachment
+  sendReportViaEmail();
 };
 
 const LeadCaptureModal = ({ isOpen, onClose, onDownloadComplete }) => {
@@ -676,7 +780,7 @@ const StepUpCalculatorWidget = () => {
               </div>
             </div>
             <div className="pt-8 border-t border-zinc-800 relative z-10">
-              <p className="text-[10px] sm:text-xs font-bold tracking-widest text-zinc-400 uppercase mb-3">Accelerated Future Value</p>
+              <p className="text-[10px] sm:text-xs font-bold tracking-widest text-emerald-500/80 uppercase mb-3">Accelerated Future Value</p>
               <p className="text-4xl sm:text-5xl lg:text-6xl font-light text-white tracking-tight leading-none mb-8">{formatCurrency(futureValue)}</p>
               
               <button onClick={handleDownloadInitiate} className="w-full py-4 text-sm bg-emerald-500 hover:bg-emerald-400 text-white rounded-xl font-medium tracking-wide transition-all duration-300 flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/20 hover:-translate-y-1">
@@ -691,6 +795,7 @@ const StepUpCalculatorWidget = () => {
     </>
   );
 };
+
 
 const StpToSipCalculatorWidget = () => {
   const [lumpsum, setLumpsum] = useState(1000000);
@@ -775,21 +880,22 @@ const StpToSipCalculatorWidget = () => {
           </FadeIn>
         </div>
         <div className="lg:col-span-5 group">
-          <FadeIn delay={300} direction="zoom" className="bg-zinc-950 text-white p-8 lg:p-10 rounded-[2rem] h-full flex flex-col justify-between relative overflow-hidden shadow-2xl transition-transform duration-500 hover:scale-[1.02]">
+          <FadeIn delay={300} direction="zoom" className="bg-emerald-950 text-white p-8 lg:p-10 rounded-[2rem] h-full flex flex-col justify-between relative overflow-hidden shadow-2xl transition-transform duration-500 hover:scale-[1.02]">
             <div className="absolute top-0 right-0 w-[260px] h-[260px] bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-emerald-500/20 to-transparent rounded-full blur-[50px] pointer-events-none group-hover:scale-110 transition-transform duration-1000"></div>
             <div className="space-y-6 relative z-10 mb-10">
               <div className="bg-white/5 p-4 rounded-2xl backdrop-blur-sm border border-white/10">
-                <p className="text-[10px] sm:text-xs font-medium tracking-widest text-zinc-400 uppercase mb-1">Sustainable Monthly STP</p>
+                <p className="text-[10px] sm:text-xs font-medium tracking-widest text-emerald-200 uppercase mb-1">Sustainable Monthly STP</p>
                 <p className="text-2xl sm:text-3xl font-light text-emerald-300">{formatCurrency(sustainableMonthlyStp)}</p>
               </div>
               <div className="bg-white/5 p-4 rounded-2xl backdrop-blur-sm border border-white/10">
-                <p className="text-[10px] sm:text-xs font-medium tracking-widest text-zinc-400 uppercase mb-1">Average SIP Equivalent</p>
+                <p className="text-[10px] sm:text-xs font-medium tracking-widest text-emerald-200 uppercase mb-1">Average SIP Equivalent</p>
                 <p className="text-xl sm:text-2xl font-light">{formatCurrency(averageSipEquivalent)}</p>
               </div>
             </div>
-            <div className="pt-8 border-t border-zinc-800 relative z-10">
-              <p className="text-[10px] sm:text-xs font-bold tracking-widest text-zinc-400 uppercase mb-3">Projected Target Corpus</p>
-              <p className="text-4xl sm:text-5xl lg:text-6xl font-light text-white tracking-tight leading-none mb-8">{formatCurrency(targetCorpus)}</p>
+            <div className="pt-8 border-t border-emerald-900/60 relative z-10">
+              <p className="text-[10px] sm:text-xs font-bold tracking-widest text-emerald-300 uppercase mb-3">Projected Target Corpus</p>
+              <p className="text-4xl sm:text-5xl lg:text-6xl font-light text-white tracking-tight leading-none mb-5">{formatCurrency(targetCorpus)}</p>
+              <p className="text-xs text-emerald-300 font-medium bg-emerald-900/30 inline-block px-4 py-2 rounded-lg border border-emerald-500/20 mb-8">Net gain over parked capital: {formatCurrency(wealthCreated)}</p>
               
               <button onClick={handleDownloadInitiate} className="w-full py-4 text-sm bg-emerald-500 hover:bg-emerald-400 text-white rounded-xl font-medium tracking-wide transition-all duration-300 flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/20 hover:-translate-y-1">
                 <Download className="w-4 h-4 animate-bounce" />
@@ -905,8 +1011,11 @@ const EmiMatchSipWidget = () => {
               </div>
             </div>
             <div className="pt-8 border-t border-zinc-800 relative z-10">
-              <p className="text-[10px] sm:text-xs font-bold tracking-widest text-zinc-400 uppercase mb-3">If EMI amount were invested instead</p>
-              <p className="text-4xl sm:text-5xl lg:text-6xl font-light text-emerald-400 tracking-tight leading-none mb-8">{formatCurrency(sipFutureValue)}</p>
+              <p className="text-[10px] sm:text-xs font-bold tracking-widest text-white uppercase mb-3">If EMI amount were invested instead</p>
+              <p className="text-4xl sm:text-5xl lg:text-6xl font-light text-white tracking-tight leading-none mb-5">{formatCurrency(sipFutureValue)}</p>
+              <p className={`text-xs font-medium inline-block px-4 py-2 rounded-lg border mb-8 ${decisionGap >= 0 ? 'text-emerald-300 bg-emerald-900/30 border-emerald-500/20' : 'text-zinc-300 bg-zinc-800/50 border-zinc-600'}`}>
+                Net difference vs asset cost: {formatCurrency(decisionGap)}
+              </p>
               
               <button onClick={handleDownloadInitiate} className="w-full py-4 text-sm bg-emerald-500 hover:bg-emerald-400 text-white rounded-xl font-medium tracking-wide transition-all duration-300 flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/20 hover:-translate-y-1">
                 <Download className="w-4 h-4 animate-bounce" />
@@ -1181,7 +1290,7 @@ const ExtraEmiCalculatorWidget = () => {
                  </div>
               </div>
 
-              <div className="grid grid-cols-3 gap-3 mt-6">
+              <div className="grid grid-cols-3 gap-3 mt-6 mb-8">
                  <div className="bg-white/5 p-3 rounded-xl border border-white/10">
                     <p className="text-[8px] font-medium tracking-widest text-emerald-200 uppercase mb-1">Saved by rate drop</p>
                     <p className="text-sm font-bold text-emerald-400 mb-1">{formatYM(safeTime(savedTimeRateDrop))}</p>
@@ -1484,7 +1593,7 @@ const EarlyClosureWidget = () => {
             </div>
 
             <div className="pt-6 relative z-10">
-              <p className="text-[10px] sm:text-xs font-bold tracking-widest text-emerald-400 uppercase mb-3">Required Monthly SIP</p>
+              <p className="text-[10px] sm:text-xs font-bold tracking-widest text-emerald-400 uppercase mb-3">Required Monthly SIP to close early</p>
               <p className="text-5xl sm:text-6xl md:text-7xl font-light text-white tracking-tight leading-none mb-8">{formatCurrency(requiredSip)}</p>
               
               <div className="flex flex-col gap-3 mb-8">
@@ -2381,11 +2490,11 @@ const AskGeoApp = () => {
                   <div className="grid grid-cols-2 gap-4 sm:gap-5 relative z-10">
                     <div className="bg-zinc-50 p-5 sm:p-6 rounded-2xl border border-zinc-100 hover:bg-white hover:shadow-md transition-all">
                       <p className="text-[10px] sm:text-xs font-bold text-zinc-400 tracking-widest uppercase mb-2">AUM</p>
-                      <p className="text-3xl sm:text-4xl lg:text-5xl font-light text-zinc-900">13.44K<span className="text-zinc-400 text-sm sm:text-base ml-1 font-medium">Cr</span></p>
+                      <p className="text-3xl sm:text-4xl lg:text-5xl font-light text-zinc-900">133K<span className="text-zinc-400 text-sm sm:text-base ml-1 font-medium">Cr</span></p>
                     </div>
                     <div className="bg-emerald-50 p-5 sm:p-6 rounded-2xl border border-emerald-100/50 hover:bg-emerald-100/50 hover:shadow-md transition-all">
                       <p className="text-[10px] sm:text-xs font-bold text-emerald-600/70 tracking-widest uppercase mb-2">XIRR</p>
-                      <p className="text-3xl sm:text-4xl lg:text-5xl font-light text-emerald-700">+14.4%</p>
+                      <p className="text-3xl sm:text-4xl lg:text-5xl font-light text-emerald-700">+12%</p>
                     </div>
                   </div>
                 </div>
@@ -2408,7 +2517,7 @@ const AskGeoApp = () => {
                   </div>
                   <div className="pr-4 sm:pr-6">
                     <p className="text-[9px] sm:text-[10px] font-bold text-zinc-400 tracking-widest uppercase mb-1">Trust</p>
-                    <p className="text-sm sm:text-base font-medium text-zinc-900">2.6K+ Clients</p>
+                    <p className="text-sm sm:text-base font-medium text-zinc-900">26L+ Clients</p>
                   </div>
                 </div>
 
