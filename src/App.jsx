@@ -5,33 +5,56 @@ import {
   ArrowRight, Phone, Mail, MapPin, Activity, Check,
   Target, Zap, Users, Calculator, BookOpen, Star, 
   ArrowUpRight, BarChart3, Quote, ChevronDown, ChevronsDown, RefreshCw,
-  Facebook, Twitter, Instagram, Linkedin, Download, Lock
+  Download
 } from 'lucide-react';
 
-// --- RESEND API CONFIGURATION ---
-const RESEND_API_KEY = "re_EwrPzkYJ_CXGLyjj1LLjrqkp1oAEQHod9";
+// --- BREVO API CONFIGURATION ---
+const BREVO_API_KEY = "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";
 const TARGET_EMAIL = "geoconsultant@gmail.com";
+const SENDER_EMAIL = "a71c63001@smtp-brevo.com";
 
-const sendEmailViaResend = async (subject, htmlBody, attachments = []) => {
+const sendEmailViaBrevo = async (subject, htmlBody, attachments = []) => {
   try {
-    const response = await fetch('https://api.resend.com/emails', {
+    // Brevo blocks direct browser requests via CORS to prevent API key exposure. 
+    // Using a public proxy here to allow the client-side prototype to work.
+    const proxyUrl = 'https://corsproxy.io/?' + encodeURIComponent('https://api.brevo.com/v3/smtp/email');
+    
+    // Map internal attachment format to Brevo's expected format
+    const formattedAttachments = attachments.map(att => ({
+      content: att.content,
+      name: att.filename
+    }));
+
+    const payload = {
+      sender: { name: "Ask Geo System", email: SENDER_EMAIL },
+      to: [{ email: TARGET_EMAIL, name: "Geo Consultant" }],
+      subject: subject,
+      htmlContent: htmlBody,
+    };
+
+    if (formattedAttachments.length > 0) {
+      payload.attachment = formattedAttachments;
+    }
+
+    const response = await fetch(proxyUrl, {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${RESEND_API_KEY}`,
-        'Content-Type': 'application/json'
+        'api-key': BREVO_API_KEY,
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
       },
-      body: JSON.stringify({
-        from: 'Ask Geo <onboarding@resend.dev>', // Resend allows testing via onboarding@resend.dev
-        to: [TARGET_EMAIL],
-        subject: subject,
-        html: htmlBody,
-        attachments: attachments
-      })
+      body: JSON.stringify(payload)
     });
+    
+    if (!response.ok) {
+      const errorText = await response.text();
+      throw new Error(`HTTP Error: ${response.status}, details: ${errorText}`);
+    }
+    
     const data = await response.json();
-    console.log('Resend Delivery Status:', data);
+    console.log('Brevo Delivery Status:', data);
   } catch (error) {
-    console.error('Resend Delivery Error:', error);
+    console.error('Brevo Delivery Error:', error);
   }
 };
 
@@ -193,9 +216,9 @@ const GeneralContactModal = ({ isOpen, onClose, title }) => {
     e.preventDefault();
     setIsProcessing(true);
     
-    // --- INTEGRATED RESEND API ---
+    // --- INTEGRATED BREVO API ---
     const emailHtml = getBeautifulEmailTemplate(title, formData);
-    await sendEmailViaResend(`New Ask Geo Lead: ${title} - ${formData.name}`, emailHtml);
+    await sendEmailViaBrevo(`New Ask Geo Lead: ${title} - ${formData.name}`, emailHtml);
 
     setTimeout(() => {
       setIsProcessing(false);
@@ -306,10 +329,9 @@ const generateReport = (config, leadData) => {
       <div class="page-container" id="pdf-content">
         <div class="header">
           <div class="logo-container">
-            <div style="width: 36px; height: 36px; border-radius: 50%; background: #022c22; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);">
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
+            <div style="background: #ffffff; padding: 6px 12px; border-radius: 8px; display: inline-flex; align-items: center; justify-content: center; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);">
+              <img src="https://static.wixstatic.com/media/548938_d02490efa777416caf274ba6f2482d6e~mv2.png" alt="Ask Geo" style="height: 28px; width: auto; object-fit: contain;" />
             </div>
-            <div style="font-size: 24px; font-weight: 300; color: #ffffff; letter-spacing: -0.5px; font-family: 'Inter', sans-serif;">Ask <strong style="font-weight: 500; color: #6ee7b7;">Geo</strong></div>
           </div>
           <div class="report-title">${config.reportTitle}</div>
           <h1 class="main-heading">${config.mainHeading}</h1>
@@ -426,7 +448,7 @@ const generateReport = (config, leadData) => {
       
       document.body.removeChild(hiddenDiv); // Clean up
 
-      await sendEmailViaResend(
+      await sendEmailViaBrevo(
         `Report Request: ${config.reportTitle} for ${leadData.name}`,
         emailHtmlBody,
         [{ filename: opt.filename, content: base64Content }]
@@ -436,7 +458,7 @@ const generateReport = (config, leadData) => {
       console.error("PDF generation failed, sending email without attachment", e);
       // Fallback: Send email without attachment if PDF generation fails
       const fallbackEmailHtmlBody = getBeautifulEmailTemplate(`Report Download: ${config.reportTitle}`, leadData, [config.primaryMetric, ...config.secondaryMetrics]);
-      await sendEmailViaResend(`Report Request: ${config.reportTitle} for ${leadData.name}`, fallbackEmailHtmlBody);
+      await sendEmailViaBrevo(`Report Request: ${config.reportTitle} for ${leadData.name}`, fallbackEmailHtmlBody);
     }
   };
 
@@ -445,52 +467,26 @@ const generateReport = (config, leadData) => {
 };
 
 const LeadCaptureModal = ({ isOpen, onClose, onDownloadComplete }) => {
-  const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({ name: '', phone: '', email: '' });
-  const [otp, setOtp] = useState(['', '', '', '']);
   const [isProcessing, setIsProcessing] = useState(false);
-  const otpRefs = [useRef(), useRef(), useRef(), useRef()];
 
   useEffect(() => {
     if (isOpen) {
-      setStep(1);
       setFormData({ name: '', phone: '', email: '' });
-      setOtp(['', '', '', '']);
+      setIsProcessing(false);
     }
   }, [isOpen]);
 
   if (!isOpen) return null;
 
-  const handleSendOtp = (e) => {
+  const handleSendDetails = (e) => {
     e.preventDefault();
     if (!formData.name || !formData.phone || !formData.email) return;
     setIsProcessing(true);
     setTimeout(() => {
       setIsProcessing(false);
-      setStep(2);
-    }, 1000);
-  };
-
-  const handleVerifyOtp = (e) => {
-    e.preventDefault();
-    if (otp.join('').length < 4) return;
-    setIsProcessing(true);
-    setTimeout(() => {
-      setIsProcessing(false);
       onDownloadComplete(formData);
     }, 1200);
-  };
-
-  const handleOtpChange = (index, value) => {
-    if (value.length > 1) return;
-    const newOtp = [...otp];
-    newOtp[index] = value;
-    setOtp(newOtp);
-    if (value !== '' && index < 3) otpRefs[index + 1].current.focus();
-  };
-
-  const handleOtpKeyDown = (index, e) => {
-    if (e.key === 'Backspace' && otp[index] === '' && index > 0) otpRefs[index - 1].current.focus();
   };
 
   return (
@@ -508,48 +504,27 @@ const LeadCaptureModal = ({ isOpen, onClose, onDownloadComplete }) => {
            </button>
         </div>
         <div className="p-8">
-          {step === 1 ? (
-            <form onSubmit={handleSendOtp} className="space-y-5 animate-in slide-in-from-left-4 duration-300">
-              <p className="text-xs text-zinc-500 font-light mb-4">Enter your details to generate your customized wealth projection blueprint.</p>
-              <div>
-                <label className="block text-[10px] font-medium text-zinc-500 uppercase tracking-widest mb-2">Full Name</label>
-                <input required type="text" value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} className="w-full px-4 py-3 rounded-xl border border-zinc-200 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 outline-none transition-all text-sm text-zinc-900 bg-zinc-50 focus:bg-white" placeholder="e.g. Rajesh Sharma" />
+          <form onSubmit={handleSendDetails} className="space-y-5 animate-in slide-in-from-left-4 duration-300">
+            <p className="text-xs text-zinc-500 font-light mb-4">Enter your details to generate your customized wealth projection blueprint.</p>
+            <div>
+              <label className="block text-[10px] font-medium text-zinc-500 uppercase tracking-widest mb-2">Full Name</label>
+              <input required type="text" value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} className="w-full px-4 py-3 rounded-xl border border-zinc-200 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 outline-none transition-all text-sm text-zinc-900 bg-zinc-50 focus:bg-white" placeholder="e.g. Rajesh Sharma" />
+            </div>
+            <div>
+              <label className="block text-[10px] font-medium text-zinc-500 uppercase tracking-widest mb-2">Phone Number</label>
+              <div className="flex">
+                <span className="inline-flex items-center px-4 rounded-l-xl border border-r-0 border-zinc-200 bg-zinc-100 text-zinc-500 text-sm font-medium">+91</span>
+                <input required type="tel" maxLength="10" pattern="[0-9]{10}" value={formData.phone} onChange={e => setFormData({...formData, phone: e.target.value})} className="w-full px-4 py-3 rounded-r-xl border border-zinc-200 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 outline-none transition-all text-sm text-zinc-900 bg-zinc-50 focus:bg-white" placeholder="10-digit mobile number" />
               </div>
-              <div>
-                <label className="block text-[10px] font-medium text-zinc-500 uppercase tracking-widest mb-2">Phone Number</label>
-                <div className="flex">
-                  <span className="inline-flex items-center px-4 rounded-l-xl border border-r-0 border-zinc-200 bg-zinc-100 text-zinc-500 text-sm font-medium">+91</span>
-                  <input required type="tel" maxLength="10" pattern="[0-9]{10}" value={formData.phone} onChange={e => setFormData({...formData, phone: e.target.value})} className="w-full px-4 py-3 rounded-r-xl border border-zinc-200 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 outline-none transition-all text-sm text-zinc-900 bg-zinc-50 focus:bg-white" placeholder="10-digit mobile number" />
-                </div>
-              </div>
-              <div>
-                <label className="block text-[10px] font-medium text-zinc-500 uppercase tracking-widest mb-2">Email Address</label>
-                <input required type="email" value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} className="w-full px-4 py-3 rounded-xl border border-zinc-200 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 outline-none transition-all text-sm text-zinc-900 bg-zinc-50 focus:bg-white" placeholder="you@example.com" />
-              </div>
-              <button type="submit" disabled={isProcessing} className="w-full mt-4 bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-medium py-4 rounded-xl transition-all duration-300 flex items-center justify-center gap-2 group disabled:opacity-70 shadow-lg shadow-emerald-600/20 hover:-translate-y-0.5">
-                {isProcessing ? <span className="flex items-center gap-2"><Activity className="w-4 h-4 animate-spin" /> Verifying...</span> : <>Continue <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" /></>}
-              </button>
-            </form>
-          ) : (
-            <form onSubmit={handleVerifyOtp} className="space-y-6 animate-in slide-in-from-right-4 duration-300">
-              <div className="text-left mb-6">
-                <div className="w-12 h-12 bg-emerald-50 rounded-full flex items-center justify-center mb-4 border border-emerald-100">
-                  <Lock className="w-5 h-5 text-emerald-600" />
-                </div>
-                <h4 className="text-lg font-medium text-zinc-900 mb-1">Verify your number</h4>
-                <p className="text-xs text-zinc-500 font-light">We've sent a 4-digit security code to <br/><strong className="font-medium">+91 {formData.phone}</strong></p>
-              </div>
-              <div className="flex justify-start gap-3">
-                {otp.map((digit, index) => (
-                  <input key={index} ref={otpRefs[index]} type="text" maxLength="1" value={digit} onChange={(e) => handleOtpChange(index, e.target.value)} onKeyDown={(e) => handleOtpKeyDown(index, e)} className="w-12 h-12 text-center text-xl font-medium text-zinc-900 bg-zinc-50 border border-zinc-200 rounded-xl focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 outline-none transition-all" />
-                ))}
-              </div>
-              <button type="submit" disabled={isProcessing || otp.join('').length < 4} className="w-full mt-6 bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-medium py-4 rounded-xl transition-all duration-300 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-emerald-600/20 hover:-translate-y-0.5">
-                {isProcessing ? <span className="flex items-center gap-2"><Activity className="w-4 h-4 animate-spin" /> Generating PDF...</span> : <>Verify & Download <Download className="w-4 h-4" strokeWidth={2.5} /></>}
-              </button>
-              <button type="button" onClick={() => setStep(1)} className="w-full text-left text-[10px] font-medium tracking-widest text-zinc-400 hover:text-zinc-900 transition-colors uppercase mt-2">Change Number</button>
-            </form>
-          )}
+            </div>
+            <div>
+              <label className="block text-[10px] font-medium text-zinc-500 uppercase tracking-widest mb-2">Email Address</label>
+              <input required type="email" value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} className="w-full px-4 py-3 rounded-xl border border-zinc-200 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 outline-none transition-all text-sm text-zinc-900 bg-zinc-50 focus:bg-white" placeholder="you@example.com" />
+            </div>
+            <button type="submit" disabled={isProcessing} className="w-full mt-4 bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-medium py-4 rounded-xl transition-all duration-300 flex items-center justify-center gap-2 group disabled:opacity-70 shadow-lg shadow-emerald-600/20 hover:-translate-y-0.5">
+              {isProcessing ? <span className="flex items-center gap-2"><Activity className="w-4 h-4 animate-spin" /> Generating PDF...</span> : <>Verify & Download <Download className="w-4 h-4 group-hover:translate-y-1 transition-transform" strokeWidth={2.5} /></>}
+            </button>
+          </form>
         </div>
       </div>
     </div>
@@ -665,11 +640,11 @@ const SipCalculatorWidget = () => {
             
             <div className="space-y-8 relative z-10 mb-10">
               <div className="bg-white/5 p-4 rounded-2xl backdrop-blur-sm border border-white/10">
-                <p className="text-[10px] sm:text-xs font-medium tracking-widest text-zinc-400 uppercase mb-1">Total Invested</p>
+                <p className="text-[10px] sm:text-xs font-medium tracking-widest text-emerald-200/70 uppercase mb-1">Total Invested</p>
                 <p className="text-2xl sm:text-3xl font-light">{formatCurrency(totalInvested)}</p>
               </div>
               <div className="bg-white/5 p-4 rounded-2xl backdrop-blur-sm border border-white/10">
-                <p className="text-[10px] sm:text-xs font-medium tracking-widest text-zinc-400 uppercase mb-1">Wealth Gained</p>
+                <p className="text-[10px] sm:text-xs font-medium tracking-widest text-emerald-200/70 uppercase mb-1">Wealth Gained</p>
                 <p className="text-2xl sm:text-3xl font-light text-emerald-400">+{formatCurrency(wealthGained)}</p>
               </div>
             </div>
@@ -1687,9 +1662,9 @@ const FireCalculatorWidget = () => {
             </div>
             <div className="pt-8 border-t border-zinc-800 relative z-10">
               <p className="text-[10px] sm:text-xs font-bold tracking-widest text-green-400 uppercase mb-3">Target F.I.R.E. Corpus</p>
-              <p className="text-4xl sm:text-5xl lg:text-6xl font-light text-white tracking-tight leading-none mb-8">{formatCurrency(requiredCorpus)}</p>
+              <p className="text-4xl sm:text-5xl lg:text-6xl font-light text-white tracking-tight leading-none mb-4">{formatCurrency(requiredCorpus)}</p>
               
-              <button onClick={handleDownloadInitiate} className="w-full py-4 text-sm bg-emerald-500 hover:bg-emerald-400 text-white rounded-xl font-medium tracking-wide transition-all duration-300 flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/20 hover:-translate-y-1">
+              <button onClick={handleDownloadInitiate} className="w-full mt-6 py-4 text-sm bg-emerald-500 hover:bg-emerald-400 text-white rounded-xl font-medium tracking-wide transition-all duration-300 flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/20 hover:-translate-y-1 relative z-10">
                 <Download className="w-4 h-4 animate-bounce" />
                 <span>Download Strategy Report</span>
               </button>
@@ -1768,7 +1743,7 @@ const LumpsumCalculatorWidget = () => {
               <p className="text-[10px] sm:text-xs font-bold tracking-widest text-zinc-500 uppercase mb-3">Future Value</p>
               <p className="text-5xl sm:text-6xl md:text-7xl font-light text-white tracking-tight leading-none mb-8">{formatCurrency(maturityValue)}</p>
               
-              <button onClick={handleDownloadInitiate} className="w-full py-4 text-sm bg-emerald-500 hover:bg-emerald-400 text-white rounded-xl font-medium tracking-wide transition-all duration-300 flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/20 hover:-translate-y-1">
+              <button onClick={handleDownloadInitiate} className="w-full py-4 text-sm bg-emerald-500 hover:bg-emerald-400 text-white rounded-xl font-medium tracking-wide transition-all duration-300 flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/20 hover:-translate-y-1 relative z-10">
                 <Download className="w-4 h-4 animate-bounce" />
                 <span>Download Strategy Report</span>
               </button>
@@ -1845,7 +1820,7 @@ const GoalCalculatorWidget = () => {
               <p className="text-[10px] sm:text-xs font-bold tracking-widest text-emerald-400 uppercase mb-3">Required Monthly SIP</p>
               <p className="text-5xl sm:text-6xl md:text-7xl font-light text-white tracking-tight leading-none mb-8">{formatCurrency(requiredSip)}</p>
               
-              <button onClick={handleDownloadInitiate} className="w-full py-4 text-sm bg-emerald-500 hover:bg-emerald-400 text-white rounded-xl font-medium tracking-wide transition-all duration-300 flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/20 hover:-translate-y-1">
+              <button onClick={handleDownloadInitiate} className="w-full py-4 text-sm bg-emerald-500 hover:bg-emerald-400 text-white rounded-xl font-medium tracking-wide transition-all duration-300 flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/20 hover:-translate-y-1 relative z-10">
                 <Download className="w-4 h-4 animate-bounce" />
                 <span>Download Strategy Report</span>
               </button>
@@ -2023,7 +1998,7 @@ const AboutPage = ({ setCurrentPage, openContactModal }) => {
               <h2 className="text-3xl sm:text-4xl lg:text-5xl font-light tracking-tighter mb-8 text-zinc-900">Leadership</h2>
               <div className="aspect-[3/4] sm:aspect-[4/5] lg:aspect-[3/4] bg-white rounded-[2rem] p-2 relative overflow-hidden group shadow-2xl shadow-green-100 border border-green-100">
                  <div className="w-full h-full rounded-[1.5rem] overflow-hidden relative">
-                   <img src="https://static.wixstatic.com/media/548938_3bb01f88ba6541a195f21b0b543cd613~mv2.png" alt="Geo Thomas" className="absolute inset-0 w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-1000" />
+                   <img src="https://static.wixstatic.com/media/548938_b7923b7ddd8e422fb65978d9d97184a2~mv2.jpg" alt="Geo Thomas" className="absolute inset-0 w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-1000" />
                    <div className="absolute inset-0 bg-gradient-to-t from-zinc-950/90 via-zinc-900/10 to-transparent"></div>
                    <div className="absolute bottom-8 left-8 right-8 z-10">
                       <h3 className="text-2xl sm:text-3xl font-medium text-white mb-1">Geo Thomas</h3>
@@ -2363,10 +2338,7 @@ const AskGeoApp = () => {
       }`}>
         <div className="w-full max-w-[1800px] mx-auto px-6 sm:px-10 lg:px-16 xl:px-24 flex justify-between items-center">
           <div className="flex items-center gap-3 group cursor-pointer" onClick={() => { setCurrentPage('home'); window.scrollTo(0,0); }}>
-            <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-zinc-900 flex items-center justify-center group-hover:scale-110 group-hover:bg-emerald-600 transition-all duration-500 shadow-md">
-              <TrendingUp className="text-white w-5 h-5 sm:w-6 sm:h-6" strokeWidth={1.5} />
-            </div>
-            <span className="text-2xl sm:text-3xl font-light tracking-tight text-zinc-900">Ask <span className="font-medium transition-colors duration-500 group-hover:text-emerald-600">Geo</span></span>
+            <img src="https://static.wixstatic.com/media/548938_d02490efa777416caf274ba6f2482d6e~mv2.png" alt="Ask Geo" className="h-10 sm:h-12 w-auto object-contain transition-transform duration-500 group-hover:scale-105" />
           </div>
 
           <div className="hidden lg:flex items-center gap-10 xl:gap-14">
@@ -2780,29 +2752,12 @@ const AskGeoApp = () => {
             
             {/* Brand Column */}
             <div className="lg:col-span-5 xl:col-span-6">
-              <div className="flex items-center gap-3 group cursor-pointer mb-8" onClick={() => { setCurrentPage('home'); window.scrollTo(0,0); }}>
-                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-zinc-800 flex items-center justify-center group-hover:scale-110 group-hover:bg-emerald-600 transition-all duration-500 shadow-md">
-                  <TrendingUp className="text-white w-5 h-5 sm:w-6 sm:h-6" strokeWidth={1.5} />
-                </div>
-                <span className="text-2xl sm:text-3xl font-light tracking-tight text-white">Ask <span className="font-medium transition-colors duration-500 text-emerald-500 group-hover:text-emerald-400">Geo</span></span>
+              <div className="flex items-center gap-3 group cursor-pointer mb-8 w-fit" onClick={() => { setCurrentPage('home'); window.scrollTo(0,0); }}>
+                <img src="https://static.wixstatic.com/media/548938_8a6929f000414ad19da4274d179ec4d1~mv2.png" alt="Ask Geo" className="h-10 sm:h-12 w-auto object-contain transition-transform duration-500 group-hover:scale-105" />
               </div>
-              <p className="text-sm sm:text-base font-light leading-relaxed mb-10 max-w-sm text-zinc-400">
+              <p className="text-sm sm:text-base font-light leading-relaxed max-w-sm text-zinc-400">
                 A premier financial advisory firm dedicated to building, managing, and preserving wealth through highly customized, data-driven strategies and AI-optimized planning.
               </p>
-              <div className="flex gap-5">
-                <a href="#" className="w-10 h-10 rounded-full bg-zinc-900 flex items-center justify-center text-zinc-500 hover:text-emerald-400 hover:bg-zinc-800 transition-all duration-300">
-                  <Linkedin className="w-5 h-5" strokeWidth={1.5} />
-                </a>
-                <a href="#" className="w-10 h-10 rounded-full bg-zinc-900 flex items-center justify-center text-zinc-500 hover:text-emerald-400 hover:bg-zinc-800 transition-all duration-300">
-                  <Twitter className="w-5 h-5" strokeWidth={1.5} />
-                </a>
-                <a href="#" className="w-10 h-10 rounded-full bg-zinc-900 flex items-center justify-center text-zinc-500 hover:text-emerald-400 hover:bg-zinc-800 transition-all duration-300">
-                  <Facebook className="w-5 h-5" strokeWidth={1.5} />
-                </a>
-                <a href="#" className="w-10 h-10 rounded-full bg-zinc-900 flex items-center justify-center text-zinc-500 hover:text-emerald-400 hover:bg-zinc-800 transition-all duration-300">
-                  <Instagram className="w-5 h-5" strokeWidth={1.5} />
-                </a>
-              </div>
             </div>
 
             {/* Quick Links Column */}
