@@ -4,15 +4,17 @@ import nodemailer from 'nodemailer';
 
 const app = express();
 
+// Enable CORS for your frontend
 app.use(cors());
+// 50mb limit is required for the large base64 PDF attachments
 app.use(express.json({ limit: '50mb' }));
 
-// Set up Nodemailer with the App Password formatted CORRECTLY (no spaces)
+// Set up Nodemailer with Environment Variables
 const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
-    user: 'complete.anant@gmail.com',
-    pass: 'srbogcxpwhglghcu', 
+    user: process.env.GMAIL_USER,
+    pass: process.env.GMAIL_PASS,
   },
 });
 
@@ -28,7 +30,7 @@ app.post('/api/send-email', async (req, res) => {
     }
 
     const info = await transporter.sendMail({
-      from: '"Ask Geo System" <complete.anant@gmail.com>',
+      from: `"Ask Geo System" <${process.env.GMAIL_USER}>`,
       to,
       subject,
       html,
@@ -54,5 +56,5 @@ app.post('/api/send-email', async (req, res) => {
 const PORT = process.env.PORT || 3001;
 
 app.listen(PORT, () => {
-  console.log(`Email backend running on http://localhost:${PORT}`);
+  console.log(`Email backend running on port ${PORT}`);
 });
