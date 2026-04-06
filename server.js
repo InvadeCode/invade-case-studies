@@ -12,7 +12,7 @@ const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
     user: 'complete.anant@gmail.com',
-    pass: 'srbogcxpwhglghcu', // <-- Spaces removed here
+    pass: 'srbogcxpwhglghcu', 
   },
 });
 
@@ -42,7 +42,6 @@ app.post('/api/send-email', async (req, res) => {
       messageId: info.messageId,
     });
   } catch (error) {
-    // This will log the EXACT reason Gmail rejected the email to your Render console
     console.error('Error sending email:', error);
 
     return res.status(500).json({
@@ -55,5 +54,5 @@ app.post('/api/send-email', async (req, res) => {
 const PORT = process.env.PORT || 3001;
 
 app.listen(PORT, () => {
-  console.log(`Email backend running on port ${PORT}`);
+  console.log(`Email backend running on http://localhost:${PORT}`);
 });
