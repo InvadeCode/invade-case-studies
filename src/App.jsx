@@ -4,7 +4,7 @@ import {
   MapPin, Clock, Layers, Send, CheckCircle, 
   ArrowRight, Activity, Cpu, Shield, Zap, GitBranch, Terminal,
   Network, MessageCircle, Factory, Scale, Check,
-  Server, Lock, Globe, Leaf, Briefcase, HeartPulse, BarChart3, LineChart, Target
+  Server, Lock, Globe, Leaf, Briefcase, HeartPulse, BarChart3, LineChart
 } from 'lucide-react';
 
 // --- Global Animation Utility ---
@@ -54,39 +54,39 @@ const formatNumber = (value) => {
 // --- Dynamic Interactive Chart Component ---
 const DynamicChart = ({ data, theme }) => {
   return (
-    <Reveal delay={100} className="bg-slate-900 p-5 sm:p-6 md:p-8 rounded-3xl md:rounded-[2.5rem] my-8 sm:my-12 relative overflow-hidden group border border-slate-800 shadow-2xl">
-      <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:16px_16px] sm:bg-[size:20px_20px] opacity-20"></div>
-      <div className={`absolute top-0 right-0 w-48 sm:w-64 h-48 sm:h-64 bg-${theme.colorName}-500/10 blur-[60px] sm:blur-[80px] rounded-full pointer-events-none transition-all duration-1000 group-hover:scale-110`}></div>
+    <Reveal delay={100} className="bg-slate-900 p-6 sm:p-8 rounded-[2.5rem] my-12 relative overflow-hidden group border border-slate-800 shadow-2xl">
+      <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:20px_20px] opacity-20"></div>
+      <div className={`absolute top-0 right-0 w-64 h-64 bg-${theme.colorName}-500/10 blur-[80px] rounded-full pointer-events-none transition-all duration-1000 group-hover:scale-110`}></div>
       
-      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-end mb-8 sm:mb-10 relative z-10 gap-4">
+      <div className="flex justify-between items-end mb-10 relative z-10">
         <div>
-          <h4 className="text-lg sm:text-xl font-bold mb-1 flex items-center gap-2 text-white">
-            <BarChart3 className={`w-4 h-4 sm:w-5 sm:h-5 text-${theme.colorName}-400 shrink-0`}/> 
-            <span className="truncate">{data.title}</span>
+          <h4 className="text-xl font-bold mb-1 flex items-center gap-2 text-white">
+            <BarChart3 className={`w-5 h-5 text-${theme.colorName}-400`}/> 
+            {data.title}
           </h4>
-          <p className="text-[10px] sm:text-xs text-slate-400 font-mono tracking-widest uppercase truncate">{data.subtitle}</p>
+          <p className="text-xs text-slate-400 font-mono tracking-widest uppercase">{data.subtitle}</p>
         </div>
       </div>
       
-      <div className="flex items-end gap-2 sm:gap-4 md:gap-6 h-40 sm:h-48 md:h-56 relative z-10 border-b border-slate-700/50 pb-2">
+      <div className="flex items-end gap-2 sm:gap-6 h-56 relative z-10 border-b border-slate-700/50 pb-2">
         {data.points.map((d, i) => (
-          <div key={i} className="flex-1 flex flex-col justify-end gap-1 sm:gap-2 h-full group/bar relative">
-            <div className="absolute -top-10 left-1/2 -translate-x-1/2 w-max flex flex-col items-center text-[8px] sm:text-[10px] font-mono text-slate-400 opacity-0 group-hover/bar:opacity-100 transition-opacity bg-slate-800 px-2 py-1 rounded shadow-lg z-20 pointer-events-none">
+          <div key={i} className="flex-1 flex flex-col justify-end gap-2 h-full group/bar relative">
+            <div className="absolute -top-8 left-1/2 -translate-x-1/2 w-max flex flex-col items-center text-[10px] font-mono text-slate-400 opacity-0 group-hover/bar:opacity-100 transition-opacity bg-slate-800 px-2 py-1 rounded shadow-lg z-20">
               <span className={`text-${theme.colorName}-400`}>{d.val1Label}: {d.val1}</span>
               <span className="text-slate-300">{d.val2Label}: {d.val2}</span>
             </div>
-            <div className="w-full flex items-end gap-0.5 sm:gap-1 h-full bg-slate-800/30 rounded-t-xl sm:rounded-t-2xl p-0.5 sm:p-1 relative overflow-hidden">
-              <div className={`w-1/2 bg-gradient-to-t from-${theme.colorName}-800 to-${theme.colorName}-400 rounded-t-lg sm:rounded-t-xl transition-all duration-1000 relative group-hover/bar:from-${theme.colorName}-600 group-hover/bar:to-${theme.colorName}-300`} style={{ height: `${d.val1Pct}%` }}></div>
-              <div className={`w-1/2 bg-gradient-to-t from-slate-700 to-slate-400 rounded-t-lg sm:rounded-t-xl transition-all duration-1000 relative group-hover/bar:from-slate-600 group-hover/bar:to-slate-300`} style={{ height: `${d.val2Pct}%` }}></div>
+            <div className="w-full flex items-end gap-1 h-full bg-slate-800/30 rounded-t-2xl p-1 relative overflow-hidden">
+              <div className={`w-1/2 bg-gradient-to-t from-${theme.colorName}-800 to-${theme.colorName}-400 rounded-t-xl transition-all duration-1000 relative group-hover/bar:from-${theme.colorName}-600 group-hover/bar:to-${theme.colorName}-300`} style={{ height: `${d.val1Pct}%` }}></div>
+              <div className={`w-1/2 bg-gradient-to-t from-slate-700 to-slate-400 rounded-t-xl transition-all duration-1000 relative group-hover/bar:from-slate-600 group-hover/bar:to-slate-300`} style={{ height: `${d.val2Pct}%` }}></div>
             </div>
-            <div className="text-center text-[8px] sm:text-xs font-bold text-slate-500 mt-1 sm:mt-2 truncate w-full">{d.label}</div>
+            <div className="text-center text-xs font-bold text-slate-500 mt-2">{d.label}</div>
           </div>
         ))}
       </div>
       
-      <div className="flex flex-wrap gap-3 sm:gap-6 mt-4 sm:mt-6 justify-center relative z-10 text-[8px] sm:text-xs font-mono">
-        <div className="flex items-center gap-1.5 sm:gap-2"><div className={`w-2 h-2 sm:w-3 sm:h-3 shrink-0 bg-${theme.colorName}-500 rounded-full shadow-[0_0_8px_rgba(255,255,255,0.2)]`}></div> <span className="text-slate-300 truncate">{data.points[0].val1Label}</span></div>
-        <div className="flex items-center gap-1.5 sm:gap-2"><div className="w-2 h-2 sm:w-3 sm:h-3 shrink-0 bg-slate-400 rounded-full"></div> <span className="text-slate-300 truncate">{data.points[0].val2Label}</span></div>
+      <div className="flex gap-6 mt-6 justify-center relative z-10 text-xs font-mono">
+        <div className="flex items-center gap-2"><div className={`w-3 h-3 bg-${theme.colorName}-500 rounded-full shadow-[0_0_8px_rgba(255,255,255,0.2)]`}></div> <span className="text-slate-300">{data.points[0].val1Label}</span></div>
+        <div className="flex items-center gap-2"><div className="w-3 h-3 bg-slate-400 rounded-full"></div> <span className="text-slate-300">{data.points[0].val2Label}</span></div>
       </div>
     </Reveal>
   );
@@ -97,83 +97,83 @@ const CaseStudyViewer = ({ study, onReturnToHub }) => {
   const theme = study.theme;
   
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 py-8 md:py-12 flex flex-col lg:flex-row gap-8 lg:gap-14 relative w-full overflow-hidden lg:overflow-visible">
+    <div className="max-w-7xl mx-auto px-4 sm:px-8 py-12 flex flex-col lg:flex-row gap-12 lg:gap-14 relative">
       {/* Sidebar Index - Glassmorphic */}
-      <aside className="hidden lg:block w-[260px] xl:w-[280px] shrink-0">
-        <div className="sticky top-32 bg-white/60 backdrop-blur-2xl border border-slate-200/60 p-5 xl:p-6 rounded-[2rem] xl:rounded-[2.5rem] shadow-[0_8px_30px_rgb(0,0,0,0.04)] transition-all duration-500 hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)]">
-          <button onClick={onReturnToHub} className="mb-6 flex items-center gap-2 text-[10px] font-bold tracking-widest uppercase text-slate-400 hover:text-slate-900 transition-colors cursor-pointer w-full text-left">
-             <ArrowRight className="w-3 h-3 rotate-180 shrink-0" /> <span className="truncate">Back to Hub</span>
+      <aside className="hidden lg:block w-[280px] shrink-0">
+        <div className="sticky top-32 bg-white/60 backdrop-blur-2xl border border-slate-200/60 p-6 rounded-[2.5rem] shadow-[0_8px_30px_rgb(0,0,0,0.04)] transition-all duration-500 hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)]">
+          <button onClick={onReturnToHub} className="mb-6 flex items-center gap-2 text-[10px] font-bold tracking-widest uppercase text-slate-400 hover:text-slate-900 transition-colors cursor-pointer">
+             <ArrowRight className="w-3 h-3 rotate-180" /> Back to Hub
           </button>
           
           <div className="mb-8">
-            <h1 className="text-xl xl:text-2xl font-bold tracking-tighter text-slate-900 leading-tight break-words">{study.title}</h1>
-            <h2 className="text-[10px] xl:text-xs font-semibold text-slate-500 mt-2 tracking-wide uppercase break-words">
+            <h1 className="text-2xl font-bold tracking-tighter text-slate-900 leading-tight">{study.title}</h1>
+            <h2 className="text-xs font-semibold text-slate-500 mt-2 tracking-wide uppercase">
               <span className={`text-transparent bg-clip-text bg-gradient-to-r ${theme.gradientText}`}>{study.subtitle}</span>
             </h2>
           </div>
           <h5 className="text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-4">Index Directory</h5>
-          
+          {/* NO SCROLLBAR CLASS ADDED HERE */}
           <nav className="space-y-3 text-xs text-slate-600 font-medium border-l-2 border-slate-100 pl-4 max-h-[35vh] overflow-y-auto no-scrollbar relative group">
             {study.sections.map((sec, i) => (
-              <a key={i} href={`#sec-${study.id}-${i}`} className={`block hover:${theme.text} transition-all duration-300 truncate hover:translate-x-1 pr-2`}>
+              <a key={i} href={`#sec-${study.id}-${i}`} className={`block hover:${theme.text} transition-all duration-300 truncate hover:translate-x-1`}>
                 {sec.index ? `${sec.index}. ` : ''}{sec.title}
               </a>
             ))}
-            <a href={`#sim-${study.id}`} className={`block ${theme.text} transition-all duration-300 hover:translate-x-1 flex items-center gap-2 font-bold mt-4 pt-4 border-t border-slate-100 pr-2`}>
-              <Calculator className="w-3.5 h-3.5 shrink-0" /> <span className="truncate">ROI Simulator</span>
+            <a href={`#sim-${study.id}`} className={`block ${theme.text} transition-all duration-300 hover:translate-x-1 flex items-center gap-2 font-bold mt-4 pt-4 border-t border-slate-100`}>
+              <Calculator className="w-3.5 h-3.5" /> ROI Simulator
             </a>
           </nav>
           <div className={`mt-8 pt-6 border-t border-slate-100`}>
             <h5 className="text-[10px] font-bold uppercase tracking-widest text-slate-900 mb-3">Specification</h5>
-            <ul className="space-y-2 text-[10px] xl:text-xs text-slate-500 font-mono">
-              <li className="flex justify-between items-center gap-2"><span className="opacity-70 shrink-0">Target:</span> <span className="text-slate-900 font-semibold truncate text-right">{study.spec.target}</span></li>
-              <li className="flex justify-between items-center gap-2"><span className="opacity-70 shrink-0">Scale:</span> <span className="text-slate-900 font-semibold truncate text-right">{study.spec.scale}</span></li>
-              <li className="flex justify-between items-center gap-2"><span className="opacity-70 shrink-0">Metric:</span> <span className={`${theme.text} font-bold truncate text-right`}>{study.spec.metric}</span></li>
+            <ul className="space-y-2 text-xs text-slate-500 font-mono">
+              <li className="flex justify-between items-center"><span className="opacity-70">Target:</span> <span className="text-slate-900 font-semibold truncate max-w-[120px] text-right">{study.spec.target}</span></li>
+              <li className="flex justify-between items-center"><span className="opacity-70">Scale:</span> <span className="text-slate-900 font-semibold truncate max-w-[120px] text-right">{study.spec.scale}</span></li>
+              <li className="flex justify-between items-center"><span className="opacity-70">Metric:</span> <span className={`${theme.text} font-bold truncate max-w-[120px] text-right`}>{study.spec.metric}</span></li>
             </ul>
           </div>
         </div>
       </aside>
 
       {/* Main Content */}
-      <main className="flex-1 w-full min-w-0 max-w-full lg:max-w-4xl pb-16 md:pb-32">
+      <main className="flex-1 max-w-4xl pb-32">
         <Reveal>
-          <header className="mb-6 lg:hidden bg-white/60 backdrop-blur-xl border border-slate-200/60 p-5 sm:p-6 rounded-[2rem] shadow-sm relative">
-            <button onClick={onReturnToHub} className="absolute top-4 sm:top-5 right-4 sm:right-6 flex items-center gap-1.5 sm:gap-2 text-[8px] sm:text-[10px] font-bold tracking-widest uppercase text-slate-400 hover:text-slate-900 transition-colors cursor-pointer bg-slate-100/50 p-1.5 sm:px-3 sm:py-1.5 rounded-full">
-               <ArrowRight className="w-2.5 h-2.5 sm:w-3 sm:h-3 rotate-180 shrink-0" /> <span className="hidden sm:inline">Hub</span>
+          <header className="mb-6 lg:hidden bg-white/60 backdrop-blur-xl border border-slate-200/60 p-6 rounded-[2rem] shadow-sm relative">
+            <button onClick={onReturnToHub} className="absolute top-4 right-4 flex items-center gap-2 text-[10px] font-bold tracking-widest uppercase text-slate-400 hover:text-slate-900 transition-colors cursor-pointer">
+               <ArrowRight className="w-3 h-3 rotate-180" /> Hub
             </button>
-            <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tighter text-slate-900 leading-tight mb-2 mt-4 sm:mt-2 pr-12 sm:pr-20 break-words">{study.title}</h1>
-            <h2 className="text-xs sm:text-sm font-semibold text-slate-500 tracking-wide uppercase break-words">
+            <h1 className="text-3xl sm:text-4xl font-bold tracking-tighter text-slate-900 leading-tight mb-2 mt-4">{study.title}</h1>
+            <h2 className="text-sm font-semibold text-slate-500 tracking-wide uppercase">
               <span className={`text-transparent bg-clip-text bg-gradient-to-r ${theme.gradientText}`}>{study.subtitle}</span>
             </h2>
           </header>
         </Reveal>
 
         {/* Engineering Trust Telemetry Banner */}
-        <Reveal delay={50} className="mb-8 md:mb-12 overflow-x-auto no-scrollbar pb-2">
-          <div className="flex flex-nowrap sm:flex-wrap items-center gap-4 sm:gap-6 md:gap-8 border-y border-slate-200/80 py-3 sm:py-4 px-2 text-[10px] sm:text-xs font-mono text-slate-600 bg-white/40 backdrop-blur-sm rounded-xl min-w-max sm:min-w-0">
-            <div className="flex items-center gap-1.5 sm:gap-2"><Shield className={`w-3.5 h-3.5 sm:w-4 sm:h-4 ${theme.text} shrink-0`} /> <span className="font-bold text-slate-900 whitespace-nowrap">{study.trust.compliance}</span></div>
-            <div className="w-px h-3 sm:h-4 bg-slate-300 shrink-0"></div>
-            <div className="flex items-center gap-1.5 sm:gap-2"><Activity className={`w-3.5 h-3.5 sm:w-4 sm:h-4 ${theme.text} shrink-0`} /> <span className="font-bold text-slate-900 whitespace-nowrap">Uptime: {study.trust.uptime}</span></div>
-            <div className="w-px h-3 sm:h-4 bg-slate-300 shrink-0"></div>
-            <div className="flex items-center gap-1.5 sm:gap-2"><Database className={`w-3.5 h-3.5 sm:w-4 sm:h-4 ${theme.text} shrink-0`} /> <span className="font-bold text-slate-900 whitespace-nowrap">{study.trust.dataVolume}</span></div>
+        <Reveal delay={50} className="mb-12">
+          <div className="flex flex-wrap items-center gap-4 sm:gap-8 border-y border-slate-200/80 py-4 px-2 text-xs font-mono text-slate-600 bg-white/40 backdrop-blur-sm rounded-xl">
+            <div className="flex items-center gap-2"><Shield className={`w-4 h-4 ${theme.text}`} /> <span className="font-bold text-slate-900">{study.trust.compliance}</span></div>
+            <div className="hidden sm:block w-px h-4 bg-slate-300"></div>
+            <div className="flex items-center gap-2"><Activity className={`w-4 h-4 ${theme.text}`} /> <span className="font-bold text-slate-900">Uptime: {study.trust.uptime}</span></div>
+            <div className="hidden sm:block w-px h-4 bg-slate-300"></div>
+            <div className="flex items-center gap-2"><Database className={`w-4 h-4 ${theme.text}`} /> <span className="font-bold text-slate-900">{study.trust.dataVolume}</span></div>
           </div>
         </Reveal>
 
         {study.sections.map((section, idx) => (
           <React.Fragment key={idx}>
-            <Reveal delay={Math.min(idx * 20, 200)}>
-              <div className="pt-8 md:pt-10 mt-8 md:mt-10 border-t border-slate-200/60 scroll-mt-24 md:scroll-mt-40 relative" id={`sec-${study.id}-${idx}`}>
-                <div className="absolute -top-[1px] left-0 w-8 md:w-12 h-[2px] bg-gradient-to-r from-slate-300 to-transparent"></div>
+            <Reveal delay={idx * 20}>
+              <div className="pt-10 mt-10 border-t border-slate-200/60 scroll-mt-40 relative" id={`sec-${study.id}-${idx}`}>
+                <div className="absolute -top-[1px] left-0 w-12 h-[2px] bg-gradient-to-r from-slate-300 to-transparent"></div>
                 {section.index && (
-                  <span className={`block text-[8px] sm:text-[10px] font-mono font-bold ${theme.text} mb-2 sm:mb-3 tracking-widest uppercase`}>
+                  <span className={`block text-[10px] font-mono font-bold ${theme.text} mb-3 tracking-widest uppercase`}>
                     // {String(section.index).padStart(2, '0')}. {section.title}
                   </span>
                 )}
-                <h2 className="text-xl sm:text-2xl md:text-3xl font-semibold text-slate-900 mb-4 sm:mb-6 tracking-tight break-words">{section.title}</h2>
+                <h2 className="text-2xl sm:text-3xl font-semibold text-slate-900 mb-6 tracking-tight">{section.title}</h2>
               </div>
             </Reveal>
-            <Reveal delay={Math.min((idx * 20) + 20, 250)}>
-              <div className="text-xs sm:text-sm text-slate-600 leading-relaxed mb-6 font-light tracking-wide space-y-4 sm:space-y-5 break-words" dangerouslySetInnerHTML={{__html: section.content}} />
+            <Reveal delay={(idx * 20) + 20}>
+              <div className="text-sm text-slate-600 leading-relaxed mb-6 font-light tracking-wide space-y-5" dangerouslySetInnerHTML={{__html: section.content}} />
             </Reveal>
 
             {/* Inject Interactive Chart dynamically after section 4 */}
@@ -183,18 +183,16 @@ const CaseStudyViewer = ({ study, onReturnToHub }) => {
 
             {/* Render Metrics after section 8 if defined */}
             {idx === 8 && study.metrics && (
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 my-8 sm:my-12">
+              <div className="grid sm:grid-cols-2 gap-6 my-12">
                 {study.metrics.map((m, i) => (
-                  <Reveal key={i} delay={i * 100} className="p-5 sm:p-6 rounded-3xl sm:rounded-[2rem] bg-white/80 backdrop-blur-md border border-slate-200/80 shadow-[0_4px_20px_rgb(0,0,0,0.03)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] hover:-translate-y-1 transition-all duration-500 group relative overflow-hidden flex flex-col items-start w-full">
+                  <Reveal key={i} delay={i * 100} className="p-6 rounded-[2rem] bg-white/80 backdrop-blur-md border border-slate-200/80 shadow-[0_4px_20px_rgb(0,0,0,0.03)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] hover:-translate-y-1 transition-all duration-500 group relative overflow-hidden">
                     <div className="absolute inset-0 bg-gradient-to-br from-transparent to-slate-50/50 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                    <div className={`w-10 h-10 sm:w-12 sm:h-12 ${theme.bgSoft} rounded-xl sm:rounded-2xl flex items-center justify-center mb-4 sm:mb-6 group-hover:scale-110 transition-transform duration-500 ease-out relative z-10 shrink-0`}>
-                      <m.icon className={`w-5 h-5 sm:w-6 sm:h-6 ${theme.text}`} />
+                    <div className={`w-12 h-12 ${theme.bgSoft} rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500 ease-out relative z-10`}>
+                      <m.icon className={`w-6 h-6 ${theme.text}`} />
                     </div>
-                    <div className="w-full">
-                      <h4 className="text-[9px] sm:text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5 sm:mb-2 relative z-10 truncate">{m.title}</h4>
-                      <div className="text-3xl sm:text-4xl font-light text-slate-900 mb-2 sm:mb-3 tracking-tighter relative z-10 truncate">{m.value}</div>
-                      <p className="text-[10px] sm:text-xs text-slate-500 font-medium leading-relaxed relative z-10">{m.detail}</p>
-                    </div>
+                    <h4 className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2 relative z-10">{m.title}</h4>
+                    <div className="text-4xl font-light text-slate-900 mb-3 tracking-tighter relative z-10">{m.value}</div>
+                    <p className="text-xs text-slate-500 font-medium leading-relaxed relative z-10">{m.detail}</p>
                   </Reveal>
                 ))}
               </div>
@@ -220,60 +218,60 @@ const DynamicSimulator = ({ config, theme, id }) => {
   const results = config.calculate(values);
 
   return (
-    <Reveal className={`w-full ${theme.simBg} rounded-3xl sm:rounded-[3rem] mt-16 sm:mt-24 px-4 sm:px-6 md:px-12 relative overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.3)] border ${theme.simBorder} min-h-[100vh] flex flex-col justify-center py-12 sm:py-16 group`}>
+    <Reveal className={`w-full ${theme.simBg} rounded-[3rem] mt-24 px-4 sm:px-12 relative overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.3)] border ${theme.simBorder} min-h-[100vh] flex flex-col justify-center py-16 group`}>
       <div id={id} className="absolute -top-40"></div>
-      <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:24px_24px] sm:bg-[size:40px_40px] opacity-50 group-hover:opacity-100 transition-opacity duration-1000"></div>
-      <div className={`absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-5xl h-full ${theme.simGlow} blur-[100px] sm:blur-[120px] rounded-[100%] pointer-events-none transition-all duration-1000 group-hover:scale-105`}></div>
+      <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:40px_40px] opacity-50 group-hover:opacity-100 transition-opacity duration-1000"></div>
+      <div className={`absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-5xl h-full ${theme.simGlow} blur-[120px] rounded-[100%] pointer-events-none transition-all duration-1000 group-hover:scale-105`}></div>
 
-      <div className="relative z-10 w-full max-w-5xl mx-auto flex flex-col gap-8 sm:gap-16">
-        <div className="text-center max-w-3xl mx-auto px-2">
-          <div className={`inline-flex items-center justify-center p-3 sm:p-4 ${theme.bgSoft} border ${theme.borderSoft} rounded-xl sm:rounded-2xl mb-4 sm:mb-6 backdrop-blur-xl shadow-lg relative overflow-hidden`}>
+      <div className="relative z-10 w-full max-w-5xl mx-auto">
+        <div className="text-center mb-16 max-w-3xl mx-auto">
+          <div className={`inline-flex items-center justify-center p-4 ${theme.bgSoft} border ${theme.borderSoft} rounded-2xl mb-6 backdrop-blur-xl shadow-lg relative overflow-hidden`}>
             <div className={`absolute inset-0 ${theme.bgSoft} animate-pulse`}></div>
-            <Calculator className={`w-6 h-6 sm:w-8 sm:h-8 ${theme.text} relative z-10`} />
+            <Calculator className={`w-8 h-8 ${theme.text} relative z-10`} />
           </div>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-white mb-4 sm:mb-6 leading-tight break-words">{config.title}</h2>
-          <p className="text-slate-400 text-xs sm:text-sm md:text-base font-light leading-relaxed max-w-2xl mx-auto break-words">{config.description}</p>
+          <h2 className="text-4xl sm:text-5xl font-bold tracking-tight text-white mb-6 leading-tight">{config.title}</h2>
+          <p className="text-slate-400 text-base font-light leading-relaxed max-w-2xl mx-auto">{config.description}</p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 lg:gap-16 xl:gap-20 items-stretch">
-          <div className="space-y-6 sm:space-y-8 md:space-y-10 min-w-0 bg-slate-900/40 p-5 sm:p-6 md:p-8 rounded-3xl sm:rounded-[2.5rem] border border-slate-800/50 backdrop-blur-sm w-full">
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+          <div className="space-y-10 min-w-0 bg-slate-900/40 p-8 rounded-[2.5rem] border border-slate-800/50 backdrop-blur-sm">
             {config.sliders.map((slider, idx) => (
-              <div key={idx} className="group/slider relative w-full">
-                <div className="flex flex-col sm:flex-row sm:justify-between sm:items-end mb-3 sm:mb-4 gap-1 sm:gap-4">
-                  <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest break-words">{slider.label}</label>
-                  <span className={`text-lg sm:text-xl md:text-2xl font-mono font-bold ${theme.text} tabular-nums break-words drop-shadow-[0_0_12px_rgba(255,255,255,0.1)]`}>
+              <div key={idx} className="group/slider relative">
+                <div className="flex justify-between items-end mb-4">
+                  <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest truncate mr-4">{slider.label}</label>
+                  <span className={`text-2xl font-mono font-bold ${theme.text} tabular-nums whitespace-nowrap drop-shadow-[0_0_12px_rgba(255,255,255,0.1)]`}>
                     {slider.format ? slider.format(values[slider.key]) : values[slider.key]}
                   </span>
                 </div>
-                <div className="relative w-full">
+                <div className="relative">
                   <input 
                     type="range" min={slider.min} max={slider.max} step={slider.step} 
                     value={values[slider.key]} 
                     onChange={(e) => handleSliderChange(slider.key, e.target.value)} 
-                    className={`w-full h-1.5 sm:h-2 bg-slate-950 rounded-lg appearance-none cursor-pointer ${theme.accent} relative z-10 shadow-inner`} 
+                    className={`w-full h-2 bg-slate-950 rounded-lg appearance-none cursor-pointer ${theme.accent} relative z-10 shadow-inner`} 
                   />
-                  <div className={`absolute top-1/2 left-0 h-1.5 sm:h-2 -translate-y-1/2 rounded-lg pointer-events-none ${theme.simGlow} opacity-50 blur-sm`} style={{ width: `${((values[slider.key] - slider.min) / (slider.max - slider.min)) * 100}%` }}></div>
+                  <div className={`absolute top-1/2 left-0 h-2 -translate-y-1/2 rounded-lg pointer-events-none ${theme.simGlow} opacity-50 blur-sm`} style={{ width: `${((values[slider.key] - slider.min) / (slider.max - slider.min)) * 100}%` }}></div>
                 </div>
               </div>
             ))}
           </div>
 
-          <div className={`bg-slate-950/80 rounded-3xl sm:rounded-[2.5rem] p-6 sm:p-8 md:p-12 border ${theme.simBorder} shadow-[inset_0_0_40px_rgba(0,0,0,0.5),0_10px_40px_rgba(0,0,0,0.4)] relative overflow-hidden min-w-0 h-full flex flex-col justify-center`}>
+          <div className={`bg-slate-950/80 rounded-[2.5rem] p-8 sm:p-12 border ${theme.simBorder} shadow-[inset_0_0_40px_rgba(0,0,0,0.5),0_10px_40px_rgba(0,0,0,0.4)] relative overflow-hidden min-w-0 h-full flex flex-col justify-center`}>
             <div className={`absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-${theme.colorName}-400 to-transparent opacity-50 scanline-animation`}></div>
-            <div className="absolute -top-16 -right-16 sm:-top-32 sm:-right-32 w-48 h-48 sm:w-64 sm:h-64 bg-white/5 rounded-full blur-[60px] sm:blur-[80px] pointer-events-none"></div>
+            <div className="absolute -top-32 -right-32 w-64 h-64 bg-white/5 rounded-full blur-[80px] pointer-events-none"></div>
             
-            <div className="space-y-8 sm:space-y-10 md:space-y-12 relative z-10 w-full">
+            <div className="space-y-12 relative z-10">
               {results.map((res, idx) => (
-                <div key={idx} className={`${res.primary ? "relative" : ""} w-full`}>
-                  <div className={`text-[8px] sm:text-[10px] font-bold uppercase tracking-widest mb-2 sm:mb-3 flex items-center gap-1.5 sm:gap-2 break-words ${res.primary ? theme.text : 'text-slate-500'}`}>
-                    <Activity className={`w-3 h-3 sm:w-3.5 sm:h-3.5 shrink-0 ${res.primary ? 'animate-pulse' : ''}`} /> {res.label}
+                <div key={idx} className={res.primary ? "relative" : ""}>
+                  <div className={`text-[10px] font-bold uppercase tracking-widest mb-3 flex items-center gap-2 truncate ${res.primary ? theme.text : 'text-slate-500'}`}>
+                    <Activity className={`w-3.5 h-3.5 ${res.primary ? 'animate-pulse' : ''}`} /> {res.label}
                   </div>
-                  <div className={`tabular-nums break-words leading-tight ${res.primary ? 'text-4xl sm:text-5xl md:text-6xl lg:text-[4rem] font-bold tracking-tighter text-white mb-3 sm:mb-5 drop-shadow-[0_0_25px_rgba(255,255,255,0.15)]' : 'text-2xl sm:text-3xl font-mono text-slate-400 opacity-60 line-through decoration-slate-700 decoration-2'}`}>
+                  <div className={`tabular-nums truncate leading-tight ${res.primary ? 'text-5xl lg:text-[4.5rem] font-bold tracking-tighter text-white mb-5 drop-shadow-[0_0_25px_rgba(255,255,255,0.15)]' : 'text-3xl font-mono text-slate-400 opacity-60 line-through decoration-slate-700 decoration-2'}`}>
                     {res.value}
                   </div>
                   {res.subtext && (
-                    <div className={`inline-flex items-center gap-1.5 sm:gap-2 px-3 py-1.5 sm:px-4 sm:py-2 ${theme.bgSoft} border ${theme.borderSoft} ${theme.text} text-[10px] sm:text-xs font-bold tracking-wide uppercase rounded-full tabular-nums shadow-lg break-words max-w-full`}>
-                      <span className="truncate">{res.subtext}</span>
+                    <div className={`inline-flex items-center gap-2 px-4 py-2 ${theme.bgSoft} border ${theme.borderSoft} ${theme.text} text-xs font-bold tracking-wide uppercase rounded-full tabular-nums whitespace-nowrap shadow-lg`}>
+                      {res.subtext}
                     </div>
                   )}
                 </div>
@@ -286,11 +284,12 @@ const DynamicSimulator = ({ config, theme, id }) => {
   );
 };
 
-// --- DATA: 5 Core Industries ---
+// --- DATA: Massive Case Studies Configuration (18 Total) ---
+// Using extremely dense, metrics-driven technical copy to fulfill 11 sections per case study.
 const caseStudiesData = [
-  // 1. PSU ERP (Public Sector)
+  // 1. PSU ERP (GovTech)
   {
-    id: 'psu', industry: 'Public Sector', title: 'National PSU ERP Overhaul', subtitle: 'The Sovereign Cloud Migration.',
+    id: 'psu', industry: 'GovTech', title: 'National PSU ERP Overhaul', subtitle: 'The Sovereign Cloud Migration.',
     theme: { colorName: 'amber', text: 'text-amber-500', bgSoft: 'bg-amber-500/10', borderSoft: 'border-amber-500/30', accent: 'accent-amber-500', gradientText: 'from-amber-600 to-orange-500', simBg: 'bg-[#0f0a05]', simBorder: 'border-amber-900/30', simGlow: 'bg-amber-900/20' },
     spec: { target: '2x State Energy PSUs', scale: '14,000+ Personnel', metric: '100% Legacy Modules Deprecated' },
     trust: { compliance: 'FedRAMP / ISO 27001', uptime: '99.999%', dataVolume: '4.2 PB Processed' },
@@ -326,9 +325,9 @@ const caseStudiesData = [
       }
     }
   },
-  // 2. Kerala Dengue (Healthcare)
+  // 2. Kerala Dengue (GovTech / Health)
   {
-    id: 'kerala', industry: 'Healthcare', title: 'Southern State Dengue Predictor', subtitle: 'Epidemiological Support System.',
+    id: 'kerala', industry: 'Healthcare', title: 'State-Wide Dengue Predictor', subtitle: 'Epidemiological Support System.',
     theme: { colorName: 'rose', text: 'text-rose-500', bgSoft: 'bg-rose-500/10', borderSoft: 'border-rose-500/30', accent: 'accent-rose-500', gradientText: 'from-rose-500 to-pink-600', simBg: 'bg-[#100508]', simBorder: 'border-rose-900/30', simGlow: 'bg-rose-900/20' },
     spec: { target: 'Southern State Health Min.', scale: '14 Districts', metric: '18-Day Predictive Lead Time' },
     trust: { compliance: 'HIPAA / ISO 27799', uptime: '99.99%', dataVolume: '1.2B Clinical Rows' },
@@ -402,9 +401,9 @@ const caseStudiesData = [
       }
     }
   },
-  // 4. FMCG Choco (Supply Chain)
+  // 4. FMCG Choco (Manufacturing)
   {
-    id: 'choco', industry: 'Supply Chain', title: 'FMCG Global Chocolate SCM', subtitle: 'Predictive Farm-to-Factory ERP.',
+    id: 'choco', industry: 'Manufacturing', title: 'FMCG Global Chocolate SCM', subtitle: 'Predictive Farm-to-Factory ERP.',
     theme: { colorName: 'yellow', text: 'text-yellow-500', bgSoft: 'bg-yellow-500/10', borderSoft: 'border-yellow-500/30', accent: 'accent-yellow-500', gradientText: 'from-yellow-400 to-amber-600', simBg: 'bg-[#100d05]', simBorder: 'border-yellow-900/30', simGlow: 'bg-yellow-900/20' },
     spec: { target: '3rd Largest Chocolate Mfg.', scale: 'Global Logistics', metric: 'Spoilage Reduced by 18%' },
     trust: { compliance: 'ISO 22000 / FDA', uptime: '99.98%', dataVolume: '45M IoT Pings/Day' },
@@ -440,9 +439,9 @@ const caseStudiesData = [
       }
     }
   },
-  // 5. Autonomous HR/PM (Enterprise IT)
+  // 5. Autonomous HR/PM (IT)
   {
-    id: 'hrpm', industry: 'Enterprise IT', title: 'Autonomous Enterprise OS', subtitle: 'Zero-Leak PM & HR Ecosystem.',
+    id: 'hrpm', industry: 'IT Services', title: 'Autonomous Enterprise OS', subtitle: 'Zero-Leak PM & HR Ecosystem.',
     theme: { colorName: 'purple', text: 'text-purple-400', bgSoft: 'bg-purple-500/10', borderSoft: 'border-purple-500/30', accent: 'accent-purple-500', gradientText: 'from-purple-400 to-indigo-500', simBg: 'bg-[#0a0510]', simBorder: 'border-purple-900/30', simGlow: 'bg-purple-900/20' },
     spec: { target: 'Global IT Enterprise', scale: '10,000+ Personnel', metric: '100% Automated PM Routing' },
     trust: { compliance: 'SOC2 Type II / GDPR', uptime: '99.95%', dataVolume: '500k Tasks/Mo' },
@@ -477,38 +476,318 @@ const caseStudiesData = [
         ];
       }
     }
+  },
+  // 6. IIT Delhi Net Zero (EdTech / Environment)
+  {
+    id: 'iit-netzero', industry: 'EdTech', title: 'Premier Institute Net Zero', subtitle: 'Algorithmic Scope Emission Calculator.',
+    theme: { colorName: 'emerald', text: 'text-emerald-500', bgSoft: 'bg-emerald-500/10', borderSoft: 'border-emerald-500/30', accent: 'accent-emerald-500', gradientText: 'from-emerald-400 to-teal-500', simBg: 'bg-[#020a06]', simBorder: 'border-emerald-900/30', simGlow: 'bg-emerald-900/20' },
+    spec: { target: 'Institute COE', scale: 'Campus Wide', metric: 'Scope 1, 2 & 3 Precision' },
+    trust: { compliance: 'GHG Protocol / ISO 14064', uptime: '99.9%', dataVolume: '150M IoT Pings' },
+    chartData: { title: 'Projected Carbon Deceleration', subtitle: 'CO2e (Tons) vs Year', points: [ {label: '2024', val1: 45000, val1Pct: 100, val1Label: 'Baseline', val2: 40000, val2Pct: 90, val2Label: 'Optimized'}, {label: '2026', val1: 46000, val1Pct: 100, val1Label: 'Baseline', val2: 28000, val2Pct: 60, val2Label: 'Optimized'}, {label: '2030', val1: 48000, val1Pct: 100, val1Label: 'Baseline', val2: 12000, val2Pct: 25, val2Label: 'Optimized'} ] },
+    metrics: [ { icon: Leaf, title: 'Scope 3 Accuracy', value: '+85%', detail: 'Via algorithmic supply chain tracing.' }, { icon: Activity, title: 'Audit Reporting', value: 'Instant', detail: 'Eliminated 6 weeks of manual spreadsheet calcs.' } ],
+    sections: [
+      { title: 'Executive Abstract', content: 'InvadeCode partnered with a Premier Technical Institute\'s Center of Excellence (COE) to architect a comprehensive digital tool for their Net Zero Initiative. We built a highly complex Scope Emissions Calculator capable of ingesting vast, disparate campus data.' },
+      { index: 1, title: 'The Carbon Data Fragmentation', content: 'Data was scattered across utility bills, procurement ledgers, staff commuting surveys, and heavy laboratory telemetry. Manual calculation was prone to massive margins of error.' },
+      { index: 2, title: 'The Core Engineering Problem', content: 'We needed to build a unified mathematical engine that could convert chaotic raw data (liters of fuel, KWh of grid electricity, tons of procured steel) into standardized CO2e metrics in real-time.' },
+      { index: 3, title: 'Data Ingestion & Normalization API', content: 'We deployed a suite of RESTful APIs to hook directly into the campus facility management systems, automatically pulling live meter readings, HVAC power consumption, and generator logs.' },
+      { index: 4, title: 'Algorithmic Scope Engine', content: 'The core backend is a high-performance calculation matrix. It strictly categorizes inputs into Scope 1, Scope 2, and Scope 3 emissions using dynamic emission factors updated via global environmental databases.' },
+      { index: 5, title: 'Scope 3 Supply Chain Tracing', content: 'We built a vendor portal where suppliers input their manufacturing metrics, allowing the algorithm to dynamically trace the embedded carbon of all procured campus materials.' },
+      { index: 6, title: 'Predictive Reduction Modeling', content: 'The tool is a simulator. Administrators can manipulate variables ("What if we install 2MW of solar?") and the engine recalculates the trajectory towards the Net Zero date.' },
+      { index: 7, title: 'Interactive GIS Campus Mapping', content: 'Emissions data is visualized on a 3D digital twin of the campus. Heatmaps instantly identify high-emission buildings, allowing facilities management to perform targeted energy audits.' },
+      { index: 8, title: 'Automated Compliance Reporting', content: 'The system auto-generates exhaustive, audit-ready compliance reports formatted to international standards (GHG Protocol, ISO 14064) with a single click.' },
+      { index: 9, title: 'Threat Vector & Security', content: 'Operating within a premier research institute, the architecture features strict OIDC-based authentication and secure multi-tenant isolation, protecting sensitive vendor data.' },
+      { index: 10, title: 'Empirical Yield', content: 'The tool provided unprecedented, mathematical clarity on the footprint, enabling aggressive fast-tracking of Net Zero goals. It established our dominance in complex environmental algorithmic modeling.' }
+    ],
+    simulator: {
+      title: 'Scope Emission Trajectory Simulator', description: 'Model the impact of infrastructural shifts on campus-wide CO2e metrics to hit Net Zero milestones.',
+      initialValues: { fleetEV: 10, solarMW: 2, hvacEff: 5 },
+      sliders: [
+        { key: 'fleetEV', label: 'Fleet Converted to EV (%)', min: 0, max: 100, step: 5, format: v => `${v}%` },
+        { key: 'solarMW', label: 'Solar Capacity Installed (MW)', min: 0, max: 20, step: 0.5, format: v => `${v} MW` },
+        { key: 'hvacEff', label: 'HVAC Optimization Gain (%)', min: 0, max: 30, step: 1, format: v => `${v}%` }
+      ],
+      calculate: (v) => {
+        const baseEmissions = 45000;
+        const reduction = (v.fleetEV * 20) + (v.solarMW * 800) + (v.hvacEff * 150);
+        return [
+          { label: 'CO2e Tons Eliminated Annually', value: formatNumber(reduction), primary: false },
+          { label: 'Projected Campus Emissions (CO2e)', value: formatNumber(Math.max(0, baseEmissions - reduction)), primary: true, subtext: 'Towards Absolute Zero' }
+        ];
+      }
+    }
+  },
+  // 7. Aviation Fleet Predictor (Aviation)
+  {
+    id: 'aviation', industry: 'Aviation', title: 'Commercial Fleet Predictor', subtitle: 'Aeronautical Maintenance ERP.',
+    theme: { colorName: 'sky', text: 'text-sky-400', bgSoft: 'bg-sky-500/10', borderSoft: 'border-sky-500/30', accent: 'accent-sky-500', gradientText: 'from-sky-400 to-blue-500', simBg: 'bg-[#020810]', simBorder: 'border-sky-900/30', simGlow: 'bg-sky-900/20' },
+    spec: { target: 'Tier-1 Airline', scale: '450+ Aircraft', metric: 'AOG (Aircraft On Ground) -40%' },
+    trust: { compliance: 'FAA / EASA Part 145', uptime: '99.999%', dataVolume: '12TB Telemetry/Flight' },
+    chartData: { title: 'AOG Maintenance Delays', subtitle: 'Unplanned Ground Hours vs Fleet Size', points: [ {label: 'Q1', val1: 4500, val1Pct: 100, val1Label: 'Reactive', val2: 2700, val2Pct: 60, val2Label: 'Predictive'}, {label: 'Q2', val1: 4800, val1Pct: 100, val1Label: 'Reactive', val2: 2100, val2Pct: 43, val2Label: 'Predictive'}, {label: 'Q3', val1: 4900, val1Pct: 100, val1Label: 'Reactive', val2: 1800, val2Pct: 36, val2Label: 'Predictive'} ] },
+    metrics: [ { icon: Activity, title: 'AOG Reduction', value: '41.2%', detail: 'Fewer unplanned maintenance groundings.' }, { icon: Box, title: 'Part Inventory Costs', value: '-22%', detail: 'Just-in-time procurement via predictive engine.' } ],
+    sections: [
+      { title: 'Executive Abstract', content: 'We built a predictive maintenance ERP for a Tier-1 commercial airline. The system ingests massive inflight telemetry data to predict mechanical failures before they occur, drastically reducing costly AOG (Aircraft On Ground) incidents.' },
+      { index: 1, title: 'The Reactive Maintenance Crisis', content: 'The airline relied on scheduled maintenance and reactive repairs. Unplanned part failures grounded aircraft, costing upwards of $150,000 per hour in passenger compensation, gate fees, and rerouting logistics.' },
+      { index: 2, title: 'The Core Engineering Problem', content: 'Modern aircraft generate 12TB of sensor data per flight. We needed a high-throughput pipeline to ingest, parse, and analyze this multi-dimensional telemetry (vibration, heat, pressure) in real-time.' },
+      { index: 3, title: 'Inflight Telemetry Ingestion', content: 'We deployed an edge-computing module on the aircraft that pre-processes sensor data, transmitting critical anomaly flags via satellite comms to our cloud Kafka clusters before the plane even lands.' },
+      { index: 4, title: 'Digital Twin Modeling', content: 'The ERP maintains a strict Digital Twin for every engine and APU in the fleet. It models wear-and-tear using historical physics-based degradation matrices.' },
+      { index: 5, title: 'Predictive Failure ML Engine', content: 'Using Deep Neural Networks (LSTMs), the system detects micro-anomalies in engine spool speeds. It predicts component failure with 96% accuracy, generating repair tickets up to 14 days in advance.' },
+      { index: 6, title: 'Just-In-Time Procurement Sync', content: 'When a failure is predicted, the ERP cross-references the flight schedule. It automatically routes the necessary spare parts to the specific airport where the plane will undergo its next overnight layover.' },
+      { index: 7, title: 'Crew & Bay Allocation', content: 'The system optimizes ground operations, auto-assigning certified engineering crews and maintenance bays precisely when the aircraft touches down, eliminating idle waiting time.' },
+      { index: 8, title: 'Regulatory Audit Ledger', content: 'Every predictive repair is logged immutably. The system auto-generates compliance documents for the FAA/EASA, proving airworthiness without manual data entry.' },
+      { index: 9, title: 'Zero-Trust Architecture', content: 'Flight telemetry is hyper-sensitive. We implemented strict zero-trust access, ensuring only cleared engineering terminals can query the physics matrices.' },
+      { index: 10, title: 'Empirical Yield', content: 'The airline reduced AOG incidents by 41.2%, saving an estimated $210M annually in operational disruptions, proving our capacity to handle mission-critical aviation infrastructure.' }
+    ],
+    simulator: {
+      title: 'Aviation AOG Recovery Simulator', description: 'Model the capital saved by algorithmically predicting and preventing unplanned aircraft groundings.',
+      initialValues: { fleet: 450, aogHours: 12000, costPerHour: 150000 },
+      sliders: [
+        { key: 'fleet', label: 'Fleet Size', min: 50, max: 1000, step: 10, format: formatNumber },
+        { key: 'aogHours', label: 'Annual AOG Hours (Legacy)', min: 1000, max: 50000, step: 1000, format: formatNumber },
+        { key: 'costPerHour', label: 'Cost Per AOG Hour ($)', min: 50000, max: 300000, step: 10000, format: v => `$${v / 1000}K` }
+      ],
+      calculate: (v) => {
+        const legacyCost = v.aogHours * v.costPerHour;
+        const preventedHours = v.aogHours * 0.412;
+        const saved = preventedHours * v.costPerHour;
+        return [
+          { label: 'Unplanned Ground Hours Eliminated', value: formatNumber(Math.floor(preventedHours)), primary: false },
+          { label: 'Annual Capital Recaptured', value: formatCurrency(saved), primary: true, subtext: 'Prevented AOG Disruptions' }
+        ];
+      }
+    }
+  },
+  // 8. Smart City Grid (Infrastructure)
+  {
+    id: 'smartcity', industry: 'Infrastructure', title: 'Smart City Power Grid', subtitle: 'Adaptive Traffic & Energy Routing.',
+    theme: { colorName: 'fuchsia', text: 'text-fuchsia-400', bgSoft: 'bg-fuchsia-500/10', borderSoft: 'border-fuchsia-500/30', accent: 'accent-fuchsia-500', gradientText: 'from-fuchsia-400 to-purple-500', simBg: 'bg-[#100410]', simBorder: 'border-fuchsia-900/30', simGlow: 'bg-fuchsia-900/20' },
+    spec: { target: 'Tier-1 Metro Node', scale: '12M+ Population', metric: 'Grid Blackouts -98%' },
+    trust: { compliance: 'NERC CIP / ISO 27001', uptime: '99.9999%', dataVolume: '2.5B IoT Pings/Hr' },
+    chartData: { title: 'Peak Load Shaving', subtitle: 'Grid MW Demand vs Hour of Day', points: [ {label: '12 PM', val1: 4500, val1Pct: 80, val1Label: 'Unmanaged', val2: 4400, val2Pct: 78, val2Label: 'Adaptive'}, {label: '4 PM', val1: 6800, val1Pct: 100, val1Label: 'Unmanaged', val2: 5100, val2Pct: 75, val2Label: 'Adaptive'}, {label: '8 PM', val1: 5200, val1Pct: 90, val1Label: 'Unmanaged', val2: 4800, val2Pct: 70, val2Label: 'Adaptive'} ] },
+    metrics: [ { icon: Zap, title: 'Peak Load Reduced', value: '-25%', detail: 'Saved via dynamic smart-meter throttling.' }, { icon: Activity, title: 'Traffic Flow', value: '+18%', detail: 'Velocity increased via algorithmic light sequencing.' } ],
+    sections: [
+      { title: 'Executive Abstract', content: 'InvadeCode engineered a unified Smart City Operating System for a Tier-1 metropolis. The system autonomously manages municipal power grids and traffic light sequences, adapting in real-time to population density and micro-loads.' },
+      { index: 1, title: 'The Infrastructure Breaking Point', content: 'The city suffered rolling blackouts during summer peaks and crippling gridlock. Legacy SCADA systems operated in isolation, incapable of communicating with the traffic management APIs.' },
+      { index: 2, title: 'The Core Engineering Problem', content: 'We had to ingest 2.5 Billion IoT pings per hour from smart meters, traffic cameras, and EV charging stations, processing them with sub-10ms latency to make automated load-balancing decisions.' },
+      { index: 3, title: 'Unified Data Fabric', content: 'We built a decentralized data mesh using Apache Pulsar. It normalizes disparate telemetry—from high-voltage substations to intersection induction loops—into a single queryable semantic state.' },
+      { index: 4, title: 'Algorithmic Peak Load Shaving', content: 'During peak heat, the ML engine predicts grid stress. It automatically interfaces with residential smart meters, micro-throttling non-critical loads (like AC units enrolled in the savings program) by 1-2 degrees, shaving 25% off peak demand.' },
+      { index: 5, title: 'Adaptive Traffic Sequencing', content: 'Computer vision models at intersections analyze traffic density. The system dynamically alters red-light durations city-wide to clear congestion waves, improving average transit velocity by 18%.' },
+      { index: 6, title: 'EV Charging Orchestration', content: 'As EV adoption scales, unmanaged charging melts local transformers. Our OS dynamically prices and limits public EV charging speeds based on the real-time capacity of the hyper-local neighborhood grid.' },
+      { index: 7, title: 'Predictive Transformer Maintenance', content: 'By analyzing thermal profiles and load variations, the system predicts transformer blowouts weeks in advance, automatically dispatching municipal repair crews.' },
+      { index: 8, title: 'Citizen Emergency Broadcast', content: 'In severe events (floods), the OS automatically calculates safe evacuation routes and pushes targeted push notifications/SMS to specific cellular towers via telecom APIs.' },
+      { index: 9, title: 'Nation-State Threat Vectors', content: 'City grids are targets for cyber-warfare. The entire system sits behind an air-gapped, military-grade firewall, utilizing continuous AI-driven penetration testing to flag anomalous lateral movement.' },
+      { index: 10, title: 'Empirical Yield', content: 'The Smart City OS eliminated 98% of rolling blackouts and deferred $1.2B in required power plant construction by optimizing existing infrastructure.' }
+    ],
+    simulator: {
+      title: 'Infrastructure Optimization Simulator', description: 'Model the capital deferred by algorithmically shaving peak grid loads and preventing blackouts.',
+      initialValues: { pop: 12, peakLoad: 6800, plantCost: 1200 },
+      sliders: [
+        { key: 'pop', label: 'Metro Population (Millions)', min: 1, max: 30, step: 1, format: v => `${v}M` },
+        { key: 'peakLoad', label: 'Legacy Peak Demand (MW)', min: 1000, max: 15000, step: 100, format: v => `${v} MW` },
+        { key: 'plantCost', label: 'Cost per New Plant ($M)', min: 500, max: 3000, step: 100, format: v => `$${v}M` }
+      ],
+      calculate: (v) => {
+        const mwSaved = v.peakLoad * 0.25; // 25% peak shaving
+        // assume 1 plant = 500MW capacity
+        const plantsDeferred = mwSaved / 500;
+        const capexDeferred = plantsDeferred * v.plantCost * 1000000;
+        return [
+          { label: 'Peak Capacity Shaved (MW)', value: formatNumber(Math.floor(mwSaved)), primary: false },
+          { label: 'CAPEX Deferred', value: formatCurrency(capexDeferred), primary: true, subtext: 'Prevented new plant construction' }
+        ];
+      }
+    }
+  },
+  // 9. Telecom Network Optimizer (Telecom)
+  {
+    id: 'telecom', industry: 'Telecom', title: '5G Network Auto-Scaler', subtitle: 'Dynamic Bandwidth Allocation.',
+    theme: { colorName: 'lime', text: 'text-lime-500', bgSoft: 'bg-lime-500/10', borderSoft: 'border-lime-500/30', accent: 'accent-lime-500', gradientText: 'from-lime-400 to-green-500', simBg: 'bg-[#050a02]', simBorder: 'border-lime-900/30', simGlow: 'bg-lime-900/20' },
+    spec: { target: 'Tier-1 Telco Provider', scale: '85,000+ Cell Nodes', metric: 'Energy Costs -32%' },
+    trust: { compliance: '3GPP / SOC2', uptime: '99.999%', dataVolume: '5.2TB/Hr Logs' },
+    chartData: { title: 'Node Power Consumption', subtitle: 'KW/h vs Density', points: [ {label: '02:00', val1: 450, val1Pct: 100, val1Label: 'Static', val2: 120, val2Pct: 26, val2Label: 'Auto-Scaled'}, {label: '14:00', val1: 450, val1Pct: 100, val1Label: 'Static', val2: 440, val2Pct: 98, val2Label: 'Auto-Scaled'}, {label: '22:00', val1: 450, val1Pct: 100, val1Label: 'Static', val2: 210, val2Pct: 46, val2Label: 'Auto-Scaled'} ] },
+    metrics: [ { icon: Leaf, title: 'Energy OPEX', value: '-32.4%', detail: 'Saved by sleeping idle cellular antennas.' }, { icon: Activity, title: 'Packet Drop', value: '< 0.01%', detail: 'Maintained pristine QoS during peak loads.' } ],
+    sections: [
+      { title: 'Executive Abstract', content: 'We built a deep-learning Network Optimizer for a Tier-1 5G Telecom provider. The system autonomously scales cellular tower power up and down based on predictive human density modeling, slashing energy costs without impacting QoS.' },
+      { index: 1, title: 'The Energy OPEX Hemorrhage', content: '5G massive MIMO antennas consume vast amounts of electricity. The legacy network ran at 100% capacity 24/7, even at 3 AM when the sector was empty, resulting in tens of millions in wasted energy OPEX.' },
+      { index: 2, title: 'The Core Engineering Problem', content: 'Powering down a node risks dropping active calls or degrading emergency services. We needed a model that could predict hyper-local human density down to the minute, adjusting RF (Radio Frequency) tilt and power instantly.' },
+      { index: 3, title: 'Predictive Density Modeling', content: 'We trained an LSTM network on 3 years of historical tower handshake logs. The model perfectly maps the ebb and flow of human traffic—rush hours, stadium events, and quiet nights.' },
+      { index: 4, title: 'Autonomous Node Sleeping', content: 'During predicted low-load windows, the orchestrator issues commands via the O-RAN interface to selectively put antenna arrays into deep sleep micro-cycles, maintaining a thin coverage layer for baseline connectivity.' },
+      { index: 5, title: 'Dynamic Bandwidth Steering', content: 'During anomalous spikes (e.g., an unannounced concert), the system detects connection density deviations. It instantly wakes adjacent towers and steers bandwidth using beamforming to prevent congestion.' },
+      { index: 6, title: 'Self-Healing Mesh Integration', content: 'If a tower experiences hardware failure, the ERP detects the packet loss and automatically commands surrounding nodes to increase their transmit power to cover the physical blind spot.' },
+      { index: 7, title: 'Real-Time Billing Sync', content: 'Network usage telemetry is piped directly into the enterprise billing module via Kafka, ensuring data-caps and roaming charges are resolved instantaneously rather than via batch files.' },
+      { index: 8, title: 'Predictive Hardware Maintenance', content: 'By analyzing internal antenna temperatures and power draw, the system predicts hardware degradation, dispatching technicians before the transceiver fails completely.' },
+      { index: 9, title: 'Telco-Grade Security', content: 'The orchestration layer operates behind a strict DMZ. All commands to the Radio Access Network (RAN) are cryptographically signed to prevent malicious actor interference.' },
+      { index: 10, title: 'Empirical Yield', content: 'The telco slashed their network energy consumption by 32.4%, realizing over $85M in annual OPEX savings while actually improving peak-time connection speeds.' }
+    ],
+    simulator: {
+      title: '5G Node Auto-Scaler Simulator', description: 'Model the energy OPEX savings achieved by dynamically sleeping idle cellular arrays.',
+      initialValues: { nodes: 85000, costPerKwh: 0.15, sleepGain: 32 },
+      sliders: [
+        { key: 'nodes', label: 'Active 5G Nodes', min: 1000, max: 200000, step: 1000, format: formatNumber },
+        { key: 'costPerKwh', label: 'Commercial Power Cost ($/kWh)', min: 0.05, max: 0.50, step: 0.01, format: v => `$${v}` },
+        { key: 'sleepGain', label: 'Energy Reduction (%)', min: 10, max: 50, step: 1, format: v => `${v}%` }
+      ],
+      calculate: (v) => {
+        // Assume a node uses 20,000 kWh annually
+        const annualUsage = v.nodes * 20000;
+        const legacyCost = annualUsage * v.costPerKwh;
+        const savings = legacyCost * (v.sleepGain / 100);
+        return [
+          { label: 'Legacy Annual Power OPEX', value: formatCurrency(legacyCost), primary: false },
+          { label: 'Capital Reclaimed via Auto-Scale', value: formatCurrency(savings), primary: true, subtext: 'Pure Profit Margin' }
+        ];
+      }
+    }
+  },
+  // 10. BioPharma Cold Chain (MedTech)
+  {
+    id: 'biopharma', industry: 'MedTech', title: 'BioPharma Cold Chain ERP', subtitle: 'Vaccine Integrity Matrix.',
+    theme: { colorName: 'sky', text: 'text-sky-400', bgSoft: 'bg-sky-500/10', borderSoft: 'border-sky-500/30', accent: 'accent-sky-500', gradientText: 'from-sky-400 to-cyan-500', simBg: 'bg-[#02070a]', simBorder: 'border-sky-900/30', simGlow: 'bg-sky-900/20' },
+    spec: { target: 'Global Pharma Giant', scale: '120+ Countries', metric: '0.00% Batch Spoilage' },
+    trust: { compliance: 'FDA 21 CFR Part 11', uptime: '99.999%', dataVolume: '500M IoT Pings/Day' },
+    chartData: { title: 'Temperature Excursion Events', subtitle: 'Violations vs Transit Time', points: [ {label: 'Q1', val1: 450, val1Pct: 100, val1Label: 'Legacy', val2: 12, val2Pct: 2, val2Label: 'ERP'}, {label: 'Q2', val1: 410, val1Pct: 90, val1Label: 'Legacy', val2: 4, val2Pct: 1, val2Label: 'ERP'}, {label: 'Q3', val1: 390, val1Pct: 85, val1Label: 'Legacy', val2: 0, val2Pct: 0, val2Label: 'ERP'} ] },
+    metrics: [ { icon: Box, title: 'Batch Integrity', value: '100%', detail: 'Zero regulatory spoilage write-offs.' }, { icon: Shield, title: 'Audit Reporting', value: 'Instant', detail: 'Automated cryptographic compliance logs.' } ],
+    sections: [
+      { title: 'Executive Abstract', content: 'InvadeCode engineered a hyper-secure cold chain ERP for a global pharmaceutical giant. The system ensures the absolute thermodynamic integrity of mRNA vaccines and biologics from the laboratory floor to the patient’s arm.' },
+      { index: 1, title: 'The Cold Chain Fragility', content: 'Biologics must be kept at strict cryogenic temperatures (-70°C). A temperature excursion of just 2 degrees for 15 minutes destroys the efficacy of a $5M batch. The client relied on post-transit data loggers, leading to massive delayed write-offs.' },
+      { index: 2, title: 'The Core Engineering Problem', content: 'We had to build an active, real-time telemetry network that could ingest data from deep-frozen pallets worldwide, predicting thermal degradation *before* an irreversible excursion occurred.' },
+      { index: 3, title: 'Cryogenic IoT Mesh', content: 'We integrated with ultra-low-temperature IoT beacons. The data is piped via MQTT into our stream-processing engine, mapping exact thermodynamic states of 500,000+ individual vials simultaneously.' },
+      { index: 4, title: 'Predictive Thermal Degradation', content: 'Our ML models analyze the cooling curve of each pallet. If a compressor is failing, the system predicts the exact minute the payload will breach -70°C, triggering an emergency SOS to the logistics crew.' },
+      { index: 5, title: 'Algorithmic Re-Routing', content: 'If a customs delay at an airport threatens the thermal window, the ERP autonomously contacts local dry-ice vendors via API, dispatching emergency coolant to the tarmac.' },
+      { index: 6, title: 'Blockchain Chain of Custody', content: 'To combat counterfeit drugs, every vial scan, GPS ping, and temperature log is hashed and written to a private Hyperledger blockchain. This proves provenance beyond cryptographic doubt.' },
+      { index: 7, title: 'Automated FDA Compliance', content: 'The system auto-generates 21 CFR Part 11 compliant audit trails. Regulatory bodies can instantly verify that a batch never experienced a thermal excursion during its 8,000-mile journey.' },
+      { index: 8, title: 'Demand-Driven Manufacturing', content: 'The ERP syncs global clinical utilization rates with the factory floor, pacing batch production strictly to matched demand, preventing overstocking of highly perishable assets.' },
+      { index: 9, title: 'Zero-Trust Architecture', content: 'Given the high value of the cargo, transit routes and API endpoints are heavily obfuscated. We deployed mutual TLS (mTLS) for all IoT comms to prevent man-in-the-middle attacks.' },
+      { index: 10, title: 'Empirical Yield', content: 'The ERP achieved a 0.00% batch spoilage rate globally, saving $140M+ in annual write-offs and guaranteeing the efficacy of life-saving medical payloads.' }
+    ],
+    simulator: {
+      title: 'Biologic Payload Integrity Simulator', description: 'Model the capital saved by completely eliminating temperature excursion write-offs in pharmaceutical cold chains.',
+      initialValues: { batches: 5000, valuePerBatch: 5, excursionRate: 1.5 },
+      sliders: [
+        { key: 'batches', label: 'Annual Batches Shipped', min: 100, max: 20000, step: 100, format: formatNumber },
+        { key: 'valuePerBatch', label: 'Value per Batch ($M)', min: 0.5, max: 20, step: 0.5, format: v => `$${v}M` },
+        { key: 'excursionRate', label: 'Legacy Excursion Rate (%)', min: 0.1, max: 10, step: 0.1, format: v => `${v}%` }
+      ],
+      calculate: (v) => {
+        const legacyLoss = v.batches * (v.excursionRate / 100) * v.valuePerBatch * 1000000;
+        return [
+          { label: 'Capital Lost to Thermal Spoilage', value: formatCurrency(legacyLoss), primary: false },
+          { label: 'Capital Reclaimed via 0% Spoilage', value: formatCurrency(legacyLoss), primary: true, subtext: 'Total Payload Integrity' }
+        ];
+      }
+    }
+  },
+  // 11. Retail Omni-Channel (Retail)
+  {
+    id: 'retail', industry: 'Retail', title: 'Omni-Channel Retail ERP', subtitle: 'Algorithmic Pricing & SCM.',
+    theme: { colorName: 'fuchsia', text: 'text-fuchsia-400', bgSoft: 'bg-fuchsia-500/10', borderSoft: 'border-fuchsia-500/30', accent: 'accent-fuchsia-500', gradientText: 'from-fuchsia-400 to-purple-500', simBg: 'bg-[#100410]', simBorder: 'border-fuchsia-900/30', simGlow: 'bg-fuchsia-900/20' },
+    spec: { target: 'Global Fashion Brand', scale: '4,500+ Locations', metric: 'Dead Stock -82%' },
+    trust: { compliance: 'PCI-DSS / GDPR', uptime: '99.99%', dataVolume: '18M Tx/Day' },
+    chartData: { title: 'Dead Stock vs Inventory Turn', subtitle: 'Turn Rate (Days) vs Unsold Units', points: [ {label: 'Q1', val1: 45, val1Pct: 100, val1Label: 'Legacy Turn', val2: 12000, val2Pct: 100, val2Label: 'Dead Stock'}, {label: 'Q2', val1: 28, val1Pct: 60, val1Label: 'Legacy Turn', val2: 5000, val2Pct: 40, val2Label: 'Dead Stock'}, {label: 'Q3', val1: 14, val1Pct: 30, val1Label: 'Legacy Turn', val2: 2100, val2Pct: 15, val2Label: 'Dead Stock'} ] },
+    metrics: [ { icon: TrendingUp, title: 'Margin Optimization', value: '+14%', detail: 'Via algorithmic dynamic pricing.' }, { icon: Box, title: 'Dead Stock', value: '-82%', detail: 'Prevented via predictive geographic routing.' } ],
+    sections: [
+      { title: 'Executive Abstract', content: 'We built a hyper-intelligent Omni-Channel ERP for a massive global fashion retailer. The system unifies physical POS, e-commerce, and warehouse data to dynamically price items and algorithmically shift inventory to prevent dead stock.' },
+      { index: 1, title: 'The Inventory Silo Problem', content: 'The brand suffered from localized overstock. Winter coats would sit dead in Miami while selling out in New York. Disjointed e-commerce and physical POS ledgers meant online shoppers couldn\'t access physical store inventory.' },
+      { index: 2, title: 'The Core Engineering Problem', content: 'We needed a highly concurrent database that could sync 18 million daily transactions across 4,500 physical stores and global web-traffic, providing a single, instantaneous source of truth for every SKU.' },
+      { index: 3, title: 'Unified Graph Ledger', content: 'We deployed a distributed GraphQL database. Now, an online purchase instantly decrements the inventory of the nearest physical store, allowing the store to act as a micro-fulfillment center.' },
+      { index: 4, title: 'Algorithmic Dynamic Pricing', content: 'The ERP continuously scrapes competitor prices and analyzes local demand elasticity. If an item is moving slowly in a specific zip code, the system autonomously drops the price by micro-increments until velocity recovers.' },
+      { index: 5, title: 'Predictive Inventory Routing', content: 'Before items become dead stock, the ML engine identifies demand clusters. It automatically generates shipping manifests to transfer unsold inventory from low-demand to high-demand nodes within the network.' },
+      { index: 6, title: 'Computer Vision Store Analytics', content: 'We integrated computer vision APIs with store cameras to track customer footfall and gaze duration on specific racks. This physical telemetry feeds directly into the digital pricing algorithms.' },
+      { index: 7, title: 'Automated Procurement', content: 'When high-velocity items drop below a predictive threshold, the ERP autonomously triggers purchase orders to manufacturing facilities in Southeast Asia, accounting for 45-day maritime shipping delays.' },
+      { index: 8, title: 'Hyper-Personalized CRM', content: 'The system unifies customer identities across physical cards and web cookies. It pushes dynamically generated discount codes via SMS for items the user physically examined in-store but didn\'t purchase.' },
+      { index: 9, title: 'PCI-DSS & GDPR Compliance', content: 'All financial data is tokenized via Stripe APIs. Customer behavioral data is heavily anonymized and GDPR-compliant, ensuring the brand faces zero regulatory exposure.' },
+      { index: 10, title: 'Empirical Yield', content: 'The brand reduced dead stock by 82% and increased overall margin by 14% via dynamic pricing. E-commerce conversion spiked as physical stores became instant-delivery fulfillment hubs.' }
+    ],
+    simulator: {
+      title: 'Dead Stock Recovery Simulator', description: 'Model the capital reclaimed by algorithmically shifting inventory and utilizing dynamic pricing.',
+      initialValues: { inventory: 500, deadPct: 15, marginGain: 14 },
+      sliders: [
+        { key: 'inventory', label: 'Total Annual Inventory ($M)', min: 100, max: 2000, step: 50, format: v => `$${v}M` },
+        { key: 'deadPct', label: 'Legacy Dead Stock Rate (%)', min: 1, max: 30, step: 1, format: v => `${v}%` },
+        { key: 'marginGain', label: 'Dynamic Pricing Gain (%)', min: 1, max: 25, step: 1, format: v => `+${v}%` }
+      ],
+      calculate: (v) => {
+        const deadLoss = v.inventory * (v.deadPct / 100) * 1000000;
+        const reclaimed = deadLoss * 0.82; // 82% recovery
+        const pricingBonus = v.inventory * (v.marginGain / 100) * 1000000;
+        return [
+          { label: 'Dead Stock Capital Reclaimed', value: formatCurrency(reclaimed), primary: false },
+          { label: 'Total Margin Recaptured', value: formatCurrency(reclaimed + pricingBonus), primary: true, subtext: 'Via Routing & Dynamic Pricing' }
+        ];
+      }
+    }
+  },
+  // 12. Defense Supply Chain (Defense)
+  {
+    id: 'defense', industry: 'Defense', title: 'Munitions Logistics Network', subtitle: 'Air-Gapped SCM Matrix.',
+    theme: { colorName: 'emerald', text: 'text-emerald-500', bgSoft: 'bg-emerald-500/10', borderSoft: 'border-emerald-500/30', accent: 'accent-emerald-500', gradientText: 'from-emerald-400 to-green-500', simBg: 'bg-[#020a06]', simBorder: 'border-emerald-900/30', simGlow: 'bg-emerald-900/20' },
+    spec: { target: 'NATO Allied Command', scale: 'Global Theater', metric: '100% Cryptographic Audit' },
+    trust: { compliance: 'DoD IL6 / NIST 800-171', uptime: '99.999%', dataVolume: 'Classified' },
+    chartData: { title: 'Supply Line Velocity', subtitle: 'Request to Fulfillment (Hours)', points: [ {label: 'T1', val1: 120, val1Pct: 100, val1Label: 'Legacy', val2: 24, val2Pct: 20, val2Label: 'Algorithmic'}, {label: 'T2', val1: 140, val1Pct: 100, val1Label: 'Legacy', val2: 28, val2Pct: 20, val2Label: 'Algorithmic'}, {label: 'T3', val1: 180, val1Pct: 100, val1Label: 'Legacy', val2: 36, val2Pct: 20, val2Label: 'Algorithmic'} ] },
+    metrics: [ { icon: Target, title: 'Fulfillment Velocity', value: '+400%', detail: 'Algorithmically routed through safe corridors.' }, { icon: Shield, title: 'Data Breaches', value: '0', detail: 'Impenetrable air-gapped cryptography.' } ],
+    sections: [
+      { title: 'Executive Abstract', content: 'InvadeCode was cleared to build an ultra-secure, air-gapped Supply Chain Management system for a coalition military force. The ERP orchestrates the global movement of munitions, medical supplies, and armor while remaining cryptographically dark to adversarial interception.' },
+      { index: 1, title: 'The Theater of Chaos', content: 'Military logistics rely on antiquated, slow databases. Frontline requests took days to process, and physical supply lines were vulnerable because route data was fragmented and lacked real-time threat-intel correlation.' },
+      { index: 2, title: 'The Core Engineering Problem', content: 'We had to build a globally synchronized database that operates entirely without public internet access, capable of reconciling supply states using intermittent, highly-encrypted satellite bursts.' },
+      { index: 3, title: 'Air-Gapped Mesh Architecture', content: 'The system uses a decentralized mesh. Forward Operating Bases (FOBs) run localized instances of the ERP on ruggedized servers. When satellite windows open, they transmit heavily compressed, differential state-updates to Central Command.' },
+      { index: 4, title: 'Algorithmic Threat Routing', content: 'The logistics module ingests classified threat-intelligence feeds. It algorithmically calculates supply routes that minimize exposure to enemy radar and kinetic threats, updating convoy manifests dynamically.' },
+      { index: 5, title: 'Predictive Munitions Depletion', content: 'By analyzing live expenditure rates from smart-weapon systems during engagements, the ML engine predicts ammunition depletion, autonomously requesting resupply drops before the FOB hits critical bingo fuel.' },
+      { index: 6, title: 'Cryptographic Chain of Custody', content: 'Every asset is tracked using highly classified RFID/NFC tags. The movement is logged to an internal, permissioned blockchain, ensuring that diversion or theft of military hardware is mathematically impossible to hide.' },
+      { index: 7, title: 'Automated Medical Triage Sync', content: 'The system integrates with field medic telemetry. It anticipates the need for specific blood types and surgical kits based on casualty reports, automatically prioritizing these payloads on MedEvac flights.' },
+      { index: 8, title: 'Zero-Knowledge Maintenance', content: 'Maintenance for complex hardware (fighter jets, armor) is scheduled predictively. The AI sends encrypted repair instructions without ever exposing the underlying schematic blueprints to the edge node.' },
+      { index: 9, title: 'DoD IL6 Security Standards', content: 'The platform meets the absolute highest security clearance. It utilizes Quantum-Resistant cryptographic algorithms for all state transfers, ensuring data remains secure even against future adversarial supercomputing.' },
+      { index: 10, title: 'Empirical Yield', content: 'Fulfillment velocity increased by 400%, turning days of logistical planning into hours. The system proved that InvadeCode can architect software where human lives and global security are the ultimate metrics.' }
+    ],
+    simulator: {
+      title: 'Logistical Velocity Simulator', description: 'Model the impact of algorithmic routing and predictive depletion on military supply chain velocity.',
+      initialValues: { requests: 5000, legacyTime: 120, velocityGain: 400 },
+      sliders: [
+        { key: 'requests', label: 'Monthly Supply Requests', min: 1000, max: 20000, step: 1000, format: formatNumber },
+        { key: 'legacyTime', label: 'Legacy Fulfillment (Hours)', min: 24, max: 300, step: 12, format: v => `${v} Hrs` },
+        { key: 'velocityGain', label: 'Algorithmic Velocity Gain (%)', min: 100, max: 800, step: 50, format: v => `+${v}%` }
+      ],
+      calculate: (v) => {
+        const newTime = v.legacyTime / (v.velocityGain / 100);
+        const hoursSaved = (v.legacyTime - newTime) * v.requests;
+        return [
+          { label: 'Cumulative Hours Saved/Mo', value: formatNumber(Math.floor(hoursSaved)), primary: false },
+          { label: 'New Fulfillment Time', value: `${newTime.toFixed(1)} Hours`, primary: true, subtext: 'Mission-Critical Velocity' }
+        ];
+      }
+    }
   }
 ];
+
+// --- Added icon specifically for defense ---
+import { Target } from 'lucide-react';
 
 // --- Showcase Gallery Hub ---
 const GalleryView = ({ studies, onSelect }) => {
   const [selectedIndustry, setSelectedIndustry] = useState('All');
   
-  // Enforced 5 specific industries
-  const coreIndustries = ['Public Sector', 'Healthcare', 'Finance', 'Supply Chain', 'Enterprise IT'];
+  const industries = ['All', ...new Set(studies.map(s => s.industry))];
   const filteredStudies = selectedIndustry === 'All' ? studies : studies.filter(s => s.industry === selectedIndustry);
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 py-16 sm:py-24 md:py-32 relative z-10 animate-fade-in-up">
-      <div className="text-center mb-12 sm:mb-16 md:mb-24 relative px-4">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-2xl h-48 sm:h-64 bg-slate-200/50 blur-[80px] sm:blur-[100px] rounded-full pointer-events-none"></div>
-        <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold tracking-tighter text-slate-900 mb-4 sm:mb-6 relative z-10 leading-tight">
-          Engineering <span className="text-transparent bg-clip-text bg-gradient-to-r from-slate-500 to-slate-900 block sm:inline">Excellence.</span>
+    <div className="max-w-7xl mx-auto px-4 sm:px-8 py-24 sm:py-32 relative z-10 animate-fade-in-up">
+      <div className="text-center mb-16 relative">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-2xl h-64 bg-slate-200/50 blur-[100px] rounded-full pointer-events-none"></div>
+        <h1 className="text-5xl sm:text-7xl font-bold tracking-tighter text-slate-900 mb-6 relative z-10">
+          Engineering <span className="text-transparent bg-clip-text bg-gradient-to-r from-slate-500 to-slate-900">Excellence.</span>
         </h1>
-        <p className="text-lg sm:text-xl text-slate-500 font-light max-w-2xl mx-auto relative z-10 px-4 sm:px-0">
-          Explore how we systematically eradicate legacy bottlenecks, deploying autonomous, hyper-scalable algorithmic ecosystems across 5 core industries.
+        <p className="text-xl text-slate-500 font-light max-w-2xl mx-auto relative z-10">
+          Explore how we systematically eradicate legacy bottlenecks, deploying autonomous, hyper-scalable algorithmic ecosystems across global industries.
         </p>
       </div>
 
       {/* Industry Filter Pills */}
-      <div className="flex flex-nowrap sm:flex-wrap overflow-x-auto sm:justify-center gap-2 sm:gap-3 mb-10 sm:mb-16 relative z-10 pb-4 sm:pb-0 px-2 sm:px-0 no-scrollbar">
-        {['All', ...coreIndustries].map(ind => (
+      <div className="flex flex-wrap justify-center gap-2 mb-16 relative z-10">
+        {industries.map(ind => (
           <button
             key={ind}
             onClick={() => setSelectedIndustry(ind)}
-            className={`px-4 sm:px-5 py-2 sm:py-2.5 rounded-full text-[10px] sm:text-xs font-bold uppercase tracking-widest transition-all duration-300 shrink-0 ${
+            className={`px-5 py-2 rounded-full text-xs font-bold uppercase tracking-widest transition-all duration-300 ${
               selectedIndustry === ind 
-              ? 'bg-slate-900 text-white shadow-lg shadow-slate-900/20 sm:scale-105' 
+              ? 'bg-slate-900 text-white shadow-lg shadow-slate-900/20 scale-105' 
               : 'bg-white text-slate-500 border border-slate-200 hover:bg-slate-50 hover:text-slate-700'
             }`}
           >
@@ -517,46 +796,46 @@ const GalleryView = ({ studies, onSelect }) => {
         ))}
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 px-2 sm:px-0">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {filteredStudies.map((study, idx) => (
-          <Reveal key={study.id} delay={Math.min(idx * 50, 300)}>
+          <Reveal key={study.id} delay={idx * 50}>
             <button 
               onClick={() => onSelect(study.id)} 
-              className="group relative w-full text-left bg-white border border-slate-200/80 rounded-3xl sm:rounded-[2.5rem] p-6 sm:p-8 shadow-xl shadow-slate-200/40 hover:shadow-2xl hover:shadow-slate-300/60 transition-all duration-700 hover:-translate-y-1 sm:hover:-translate-y-2 overflow-hidden flex flex-col h-full focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2"
+              className="group relative w-full text-left bg-white border border-slate-200/80 rounded-[2.5rem] p-8 shadow-xl shadow-slate-200/40 hover:shadow-2xl hover:shadow-slate-300/60 transition-all duration-700 hover:-translate-y-2 overflow-hidden flex flex-col h-full"
             >
-              <div className={`absolute top-0 right-0 w-48 sm:w-64 h-48 sm:h-64 bg-${study.theme.colorName}-500/10 rounded-full blur-[40px] sm:blur-[60px] group-hover:scale-150 group-hover:bg-${study.theme.colorName}-500/20 transition-all duration-1000`}></div>
+              <div className={`absolute top-0 right-0 w-64 h-64 bg-${study.theme.colorName}-500/10 rounded-full blur-[60px] group-hover:scale-150 group-hover:bg-${study.theme.colorName}-500/20 transition-all duration-1000`}></div>
               <div className="absolute inset-0 bg-gradient-to-br from-transparent to-slate-50/50 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
               
-              <div className="relative z-10 flex-1 w-full">
-                <div className="flex justify-between items-start mb-4 sm:mb-6">
-                   <h4 className="text-[9px] sm:text-[10px] font-bold uppercase tracking-widest text-slate-400 break-words pr-2">{study.industry}</h4>
-                   <div className={`w-8 h-8 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl ${study.theme.bgSoft} flex items-center justify-center shrink-0`}>
-                      <Terminal className={`w-3.5 h-3.5 sm:w-4 sm:h-4 ${study.theme.text}`} />
+              <div className="relative z-10 flex-1">
+                <div className="flex justify-between items-start mb-6">
+                   <h4 className="text-[10px] font-bold uppercase tracking-widest text-slate-400">{study.industry}</h4>
+                   <div className={`w-10 h-10 rounded-2xl ${study.theme.bgSoft} flex items-center justify-center`}>
+                      <Terminal className={`w-4 h-4 ${study.theme.text}`} />
                    </div>
                 </div>
-                <h3 className="text-xl sm:text-2xl font-bold text-slate-900 mb-1.5 sm:mb-2 group-hover:text-slate-700 transition-colors break-words">{study.title}</h3>
-                <p className={`text-xs sm:text-sm font-semibold text-transparent bg-clip-text bg-gradient-to-r ${study.theme.gradientText} mb-6 sm:mb-8 break-words`}>{study.subtitle}</p>
+                <h3 className="text-2xl font-bold text-slate-900 mb-2 group-hover:text-slate-700 transition-colors">{study.title}</h3>
+                <p className={`text-sm font-semibold text-transparent bg-clip-text bg-gradient-to-r ${study.theme.gradientText} mb-8`}>{study.subtitle}</p>
                 
-                <div className="space-y-3 sm:space-y-4 mb-6 sm:mb-10 w-full">
-                  <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center text-[10px] sm:text-xs font-mono border-b border-slate-100 pb-2 sm:pb-3 gap-1 sm:gap-0">
+                <div className="space-y-4 mb-10">
+                  <div className="flex justify-between items-center text-xs font-mono border-b border-slate-100 pb-3">
                      <span className="text-slate-500">Target</span>
-                     <span className="text-slate-900 font-semibold truncate sm:text-right w-full sm:max-w-[140px]">{study.spec.target}</span>
+                     <span className="text-slate-900 font-semibold truncate max-w-[140px] text-right">{study.spec.target}</span>
                   </div>
-                  <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center text-[10px] sm:text-xs font-mono border-b border-slate-100 pb-2 sm:pb-3 gap-1 sm:gap-0">
+                  <div className="flex justify-between items-center text-xs font-mono border-b border-slate-100 pb-3">
                      <span className="text-slate-500">Scale</span>
-                     <span className="text-slate-900 font-semibold truncate sm:text-right w-full sm:max-w-[140px]">{study.spec.scale}</span>
+                     <span className="text-slate-900 font-semibold truncate max-w-[140px] text-right">{study.spec.scale}</span>
                   </div>
-                  <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center text-[10px] sm:text-xs font-mono gap-1 sm:gap-0">
+                  <div className="flex justify-between items-center text-xs font-mono">
                      <span className="text-slate-500">Yield</span>
-                     <span className={`font-bold ${study.theme.text} truncate sm:text-right w-full sm:max-w-[140px]`}>{study.spec.metric}</span>
+                     <span className={`font-bold ${study.theme.text} truncate max-w-[140px] text-right`}>{study.spec.metric}</span>
                   </div>
                 </div>
               </div>
 
-              <div className={`relative z-10 w-full pt-4 sm:pt-6 border-t border-slate-100 flex items-center justify-between mt-auto`}>
-                 <span className="text-[10px] sm:text-xs font-bold text-slate-400 uppercase tracking-widest group-hover:text-slate-900 transition-colors duration-300">View Architecture</span>
-                 <div className={`w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-slate-50 flex items-center justify-center group-hover:bg-${study.theme.colorName}-50 transition-colors duration-500 shrink-0`}>
-                    <ArrowRight className={`w-3.5 h-3.5 sm:w-4 sm:h-4 text-slate-400 group-hover:${study.theme.text} transition-all duration-500 group-hover:translate-x-1`} />
+              <div className={`relative z-10 w-full pt-6 border-t border-slate-100 flex items-center justify-between`}>
+                 <span className="text-xs font-bold text-slate-400 uppercase tracking-widest group-hover:text-slate-900 transition-colors duration-300">View Architecture</span>
+                 <div className={`w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center group-hover:bg-${study.theme.colorName}-50 transition-colors duration-500`}>
+                    <ArrowRight className={`w-4 h-4 text-slate-400 group-hover:${study.theme.text} transition-all duration-500 group-hover:translate-x-1`} />
                  </div>
               </div>
             </button>
@@ -632,7 +911,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#FAFAFA] text-slate-900 selection:bg-slate-300 selection:text-slate-900 overflow-x-hidden w-full" style={{ fontFamily: "'Poppins', sans-serif" }}>
+    <div className="min-h-screen bg-[#FAFAFA] text-slate-900 selection:bg-slate-300 selection:text-slate-900" style={{ fontFamily: "'Poppins', sans-serif" }}>
       <style dangerouslySetInnerHTML={{__html: `
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
         @keyframes scanline { 0% { transform: translateY(-100%); } 100% { transform: translateY(500px); } }
@@ -643,61 +922,60 @@ export default function App() {
       
       {/* Background Ambience */}
       <div className="fixed inset-0 pointer-events-none z-0">
-        <div className="absolute inset-0 bg-[radial-gradient(#e2e8f0_1px,transparent_1px)] bg-[size:16px_16px] sm:bg-[size:24px_24px] opacity-40"></div>
-        <div className={`absolute top-0 right-0 w-64 sm:w-96 md:w-[600px] h-64 sm:h-96 md:h-[600px] ${activeStudy ? `bg-${activeStudy.theme.colorName}-500/10` : 'bg-slate-400/10'} rounded-full blur-[60px] sm:blur-[80px] md:blur-[100px] transition-colors duration-1000`}></div>
-        <div className={`absolute bottom-0 left-0 w-80 sm:w-[600px] md:w-[800px] h-80 sm:h-[600px] md:h-[800px] ${activeStudy ? `bg-${activeStudy.theme.colorName}-400/5` : 'bg-slate-300/10'} rounded-full blur-[80px] sm:blur-[100px] md:blur-[120px] transition-colors duration-1000`}></div>
+        <div className="absolute inset-0 bg-[radial-gradient(#e2e8f0_1px,transparent_1px)] [background-size:24px_24px] opacity-40"></div>
+        <div className={`absolute top-0 right-0 w-[600px] h-[600px] ${activeStudy ? `bg-${activeStudy.theme.colorName}-500/10` : 'bg-slate-400/10'} rounded-full blur-[100px] transition-colors duration-1000`}></div>
+        <div className={`absolute bottom-0 left-0 w-[800px] h-[800px] ${activeStudy ? `bg-${activeStudy.theme.colorName}-400/5` : 'bg-slate-300/10'} rounded-full blur-[120px] transition-colors duration-1000`}></div>
       </div>
       
       {/* Global Top Nav */}
-      <div className="w-full bg-slate-950/80 backdrop-blur-2xl py-3 sm:py-4 px-4 sm:px-6 md:px-8 z-50 sticky top-0 shadow-[0_10px_40px_rgba(0,0,0,0.1)] border-b border-slate-800/80 flex flex-wrap sm:flex-nowrap justify-between items-center transition-all gap-2 sm:gap-0">
-        <button onClick={() => { setActiveStudyId(null); window.scrollTo({top: 0, behavior: 'smooth'}); }} className="flex items-center space-x-2 sm:space-x-4 md:space-x-6 text-slate-300 text-[10px] sm:text-xs font-mono hover:text-white transition-colors cursor-pointer text-left focus:outline-none shrink-0 w-auto">
-          <span className="font-bold text-white flex items-center gap-1.5 sm:gap-2">
-            <Terminal className={`w-3.5 h-3.5 sm:w-4 sm:h-4 ${activeStudy ? `text-${activeStudy.theme.colorName}-400` : 'text-slate-400'} transition-colors duration-500 shrink-0`} /> 
-            <span className="hidden sm:inline">INVADECODE_CORE</span>
-            <span className="sm:hidden">IC_CORE</span>
+      <div className="w-full bg-slate-950/80 backdrop-blur-2xl py-4 px-4 sm:px-8 z-50 sticky top-0 shadow-[0_10px_40px_rgba(0,0,0,0.1)] border-b border-slate-800/80 flex justify-between items-center transition-all">
+        <button onClick={() => { setActiveStudyId(null); window.scrollTo({top: 0, behavior: 'smooth'}); }} className="flex items-center space-x-6 text-slate-300 text-xs font-mono hover:text-white transition-colors cursor-pointer text-left focus:outline-none">
+          <span className="font-bold text-white flex items-center gap-2">
+            <Terminal className={`w-4 h-4 ${activeStudy ? `text-${activeStudy.theme.colorName}-400` : 'text-slate-400'} transition-colors duration-500`} /> 
+            INVADECODE_CORE
           </span>
-          <span className="text-slate-600">|</span>
-          <span className="text-slate-400 truncate max-w-[100px] sm:max-w-none">HUB_V3</span>
+          <span className="hidden lg:inline text-slate-600">|</span>
+          <span className="hidden lg:inline text-slate-400">SOLUTIONS_HUB_V3</span>
         </button>
         
         {activeStudy ? (
-          <button onClick={() => { setActiveStudyId(null); window.scrollTo({top: 0, behavior: 'smooth'}); }} className="flex items-center gap-1.5 sm:gap-2 text-[9px] sm:text-[10px] md:text-xs font-bold font-mono text-slate-400 hover:text-white transition-colors bg-slate-900 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full border border-slate-700 shadow-inner hover:bg-slate-800 cursor-pointer shrink-0">
-             <ArrowRight className="w-2.5 h-2.5 sm:w-3 sm:h-3 md:w-4 md:h-4 rotate-180 shrink-0" /> <span className="hidden sm:inline">RETURN TO HUB</span><span className="sm:hidden">HUB</span>
+          <button onClick={() => { setActiveStudyId(null); window.scrollTo({top: 0, behavior: 'smooth'}); }} className="flex items-center gap-2 text-[10px] sm:text-xs font-bold font-mono text-slate-400 hover:text-white transition-colors bg-slate-900 px-4 py-2 rounded-full border border-slate-700 shadow-inner hover:bg-slate-800 cursor-pointer">
+             <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4 rotate-180" /> RETURN TO HUB
           </button>
         ) : (
-          <span className="flex items-center gap-1.5 sm:gap-2 bg-slate-900/50 text-slate-300 px-2 sm:px-3 py-1 sm:py-1.5 text-[9px] sm:text-[10px] md:text-xs font-mono rounded-full border border-slate-700/50 backdrop-blur-md shadow-inner shrink-0">
-            <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full animate-pulse bg-emerald-500 shrink-0"></div> <span className="hidden sm:inline">System Online</span><span className="sm:hidden">Online</span>
+          <span className="flex items-center gap-2 bg-slate-900/50 text-slate-300 px-3 py-1.5 text-xs font-mono rounded-full border border-slate-700/50 backdrop-blur-md shadow-inner">
+            <div className="w-2 h-2 rounded-full animate-pulse bg-emerald-500"></div> System Online
           </span>
         )}
       </div>
 
       {/* Dynamic Content Routing with Re-Mount Key for Animation */}
-      <div key={activeStudyId || 'gallery'} className="relative z-10 animate-fade-in-up w-full">
+      <div key={activeStudyId || 'gallery'} className="relative z-10 animate-fade-in-up">
         {activeStudy ? (
           <>
             <CaseStudyViewer study={activeStudy} onReturnToHub={() => { setActiveStudyId(null); window.scrollTo({top: 0, behavior: 'smooth'}); }} />
             
             {/* --- SEAMLESS NEXT CASE STUDY CTA --- */}
-            <div className="max-w-4xl mx-auto px-4 sm:px-6 md:px-8 py-16 sm:py-24 relative z-10 flex justify-center w-full">
+            <div className="max-w-4xl mx-auto px-4 sm:px-8 py-24 relative z-10 flex justify-center">
               <button 
                 onClick={handleNextStudy}
-                className="group relative w-full overflow-hidden rounded-3xl sm:rounded-[3rem] bg-white border border-slate-200 shadow-xl shadow-slate-200/50 hover:shadow-2xl hover:shadow-slate-300/60 transition-all duration-700 hover:-translate-y-1 sm:hover:-translate-y-2 p-6 sm:p-8 md:p-12 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 sm:gap-8 text-left focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2"
+                className="group relative w-full overflow-hidden rounded-[3rem] bg-white border border-slate-200 shadow-xl shadow-slate-200/50 hover:shadow-2xl hover:shadow-slate-300/60 transition-all duration-700 hover:-translate-y-2 p-8 sm:p-12 flex flex-col sm:flex-row items-center justify-between gap-8 text-left"
               >
                 <div className={`absolute inset-0 bg-gradient-to-r ${nextStudyPreview.theme.gradientText} opacity-0 group-hover:opacity-[0.03] transition-opacity duration-700`}></div>
-                <div className={`absolute -right-10 -top-10 sm:-right-20 sm:-top-20 w-48 h-48 sm:w-64 sm:h-64 bg-${nextStudyPreview.theme.colorName}-500/20 rounded-full blur-[60px] sm:blur-[80px] group-hover:scale-150 transition-transform duration-1000 pointer-events-none`}></div>
+                <div className={`absolute -right-20 -top-20 w-64 h-64 bg-${nextStudyPreview.theme.colorName}-500/20 rounded-full blur-[80px] group-hover:scale-150 transition-transform duration-1000`}></div>
                 
-                <div className="w-full sm:w-auto relative z-10">
-                  <h5 className="text-[10px] sm:text-xs font-bold uppercase tracking-widest text-slate-400 mb-1.5 sm:mb-2">Explore Next Architecture</h5>
-                  <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-slate-900 mb-1.5 sm:mb-2 group-hover:text-slate-700 transition-colors break-words pr-4 sm:pr-0">
+                <div>
+                  <h5 className="text-xs font-bold uppercase tracking-widest text-slate-400 mb-2">Explore Next Architecture</h5>
+                  <h3 className="text-3xl sm:text-4xl font-bold tracking-tight text-slate-900 mb-2 group-hover:text-slate-700 transition-colors">
                     {nextStudyPreview.title}
                   </h3>
-                  <p className="text-xs sm:text-sm font-medium text-slate-500 break-words">
+                  <p className="text-sm font-medium text-slate-500">
                     {nextStudyPreview.subtitle}
                   </p>
                 </div>
                 
-                <div className={`w-12 h-12 sm:w-16 sm:h-16 rounded-full flex items-center justify-center bg-slate-50 group-hover:bg-${nextStudyPreview.theme.colorName}-50 transition-colors duration-500 shrink-0 self-end sm:self-auto relative z-10`}>
-                  <ArrowRight className={`w-5 h-5 sm:w-6 sm:h-6 text-slate-400 group-hover:text-${nextStudyPreview.theme.colorName}-500 transition-colors duration-500 group-hover:translate-x-1`} />
+                <div className={`w-16 h-16 rounded-full flex items-center justify-center bg-slate-50 group-hover:bg-${nextStudyPreview.theme.colorName}-50 transition-colors duration-500 shrink-0`}>
+                  <ArrowRight className={`w-6 h-6 text-slate-400 group-hover:text-${nextStudyPreview.theme.colorName}-500 transition-colors duration-500 group-hover:translate-x-1`} />
                 </div>
               </button>
             </div>
@@ -708,90 +986,89 @@ export default function App() {
       </div>
 
       {/* --- THE DAMN NICE GLOBAL FOOTER / CONTACT FORM --- */}
-      <footer className="w-full bg-[#020617] relative overflow-hidden border-t border-slate-800 pt-20 sm:pt-24 md:pt-32 pb-10 sm:pb-12 md:pb-16 px-4 sm:px-6 md:px-8">
+      <footer className="w-full bg-[#020617] relative overflow-hidden border-t border-slate-800 pt-32 pb-16">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom,rgba(15,23,42,1),transparent_70%)]"></div>
-        {/* Glowing Orbs mapping to active theme or default */}
-        <div className={`absolute top-0 left-0 w-96 sm:w-[600px] md:w-[800px] h-96 sm:h-[600px] md:h-[800px] rounded-full blur-[80px] sm:blur-[100px] md:blur-[120px] opacity-20 pointer-events-none transition-colors duration-1000 ${activeStudy ? `bg-${activeStudy.theme.colorName}-600` : 'bg-slate-600'} -translate-x-1/2 -translate-y-1/2`}></div>
-        <div className={`absolute bottom-0 right-0 w-64 sm:w-[400px] md:w-[600px] h-64 sm:h-[400px] md:h-[600px] rounded-full blur-[60px] sm:blur-[80px] md:blur-[100px] opacity-15 pointer-events-none transition-colors duration-1000 ${activeStudy ? `bg-${activeStudy.theme.colorName}-400` : 'bg-slate-500'} translate-x-1/3 translate-y-1/3`}></div>
+        <div className={`absolute top-0 left-0 w-[800px] h-[800px] rounded-full blur-[120px] opacity-20 pointer-events-none transition-colors duration-1000 ${activeStudy ? `bg-${activeStudy.theme.colorName}-600` : 'bg-slate-600'} -translate-x-1/2 -translate-y-1/2`}></div>
+        <div className={`absolute bottom-0 right-0 w-[600px] h-[600px] rounded-full blur-[100px] opacity-15 pointer-events-none transition-colors duration-1000 ${activeStudy ? `bg-${activeStudy.theme.colorName}-400` : 'bg-slate-500'} translate-x-1/3 translate-y-1/3`}></div>
 
-        <div className="max-w-7xl mx-auto relative z-10 flex flex-col lg:flex-row gap-12 sm:gap-16 lg:gap-24 items-center">
+        <div className="max-w-7xl mx-auto px-4 sm:px-8 relative z-10 flex flex-col lg:flex-row gap-16 lg:gap-24 items-center">
           
-          <div className="lg:w-1/2 text-center lg:text-left w-full">
-            <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tighter text-white mb-4 sm:mb-6 leading-tight break-words px-2 sm:px-0">
-              Let's build your <br className="hidden sm:block"/><span className={`text-transparent bg-clip-text bg-gradient-to-r ${activeStudy ? activeStudy.theme.gradientText : 'from-slate-400 to-slate-200'} transition-all duration-1000`}>Algorithmic Future.</span>
+          <div className="lg:w-1/2 text-center lg:text-left">
+            <h2 className="text-5xl sm:text-6xl font-bold tracking-tighter text-white mb-6 leading-tight">
+              Let's build your <br/><span className={`text-transparent bg-clip-text bg-gradient-to-r ${activeStudy ? activeStudy.theme.gradientText : 'from-slate-400 to-slate-200'} transition-all duration-1000`}>Algorithmic Future.</span>
             </h2>
-            <p className="text-base sm:text-lg md:text-xl text-slate-400 font-light leading-relaxed mb-8 sm:mb-10 max-w-lg mx-auto lg:mx-0 px-4 sm:px-0">
+            <p className="text-xl text-slate-400 font-light leading-relaxed mb-10 max-w-lg mx-auto lg:mx-0">
               Stop relying on heuristic guesswork. We engineer bespoke, hyper-scalable ERPs and predictive ecosystems that turn operational bottlenecks into massive revenue multipliers.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center lg:justify-start px-4 sm:px-0">
-              <div className="flex items-center justify-center lg:justify-start gap-2.5 sm:gap-3 text-slate-300 font-mono text-xs sm:text-sm">
-                 <CheckCircle className={`w-4 h-4 sm:w-5 sm:h-5 shrink-0 ${activeStudy ? activeStudy.theme.text : 'text-slate-400'} transition-colors duration-500`} /> <span>Zero-Trust Security</span>
+            <div className="flex flex-col sm:flex-row gap-6 justify-center lg:justify-start">
+              <div className="flex items-center justify-center lg:justify-start gap-3 text-slate-300 font-mono text-sm">
+                 <CheckCircle className={`w-5 h-5 ${activeStudy ? activeStudy.theme.text : 'text-slate-400'} transition-colors duration-500`} /> Zero-Trust Security
               </div>
-              <div className="flex items-center justify-center lg:justify-start gap-2.5 sm:gap-3 text-slate-300 font-mono text-xs sm:text-sm">
-                 <CheckCircle className={`w-4 h-4 sm:w-5 sm:h-5 shrink-0 ${activeStudy ? activeStudy.theme.text : 'text-slate-400'} transition-colors duration-500`} /> <span>Custom ML Pipelines</span>
+              <div className="flex items-center justify-center lg:justify-start gap-3 text-slate-300 font-mono text-sm">
+                 <CheckCircle className={`w-5 h-5 ${activeStudy ? activeStudy.theme.text : 'text-slate-400'} transition-colors duration-500`} /> Custom ML Pipelines
               </div>
             </div>
           </div>
 
           <div className="lg:w-1/2 w-full max-w-lg relative group">
-            <div className={`absolute -inset-1 bg-gradient-to-r ${activeStudy ? activeStudy.theme.gradientText : 'from-slate-600 to-slate-400'} rounded-3xl sm:rounded-[3rem] blur opacity-20 group-hover:opacity-40 transition duration-1000 group-hover:duration-200`}></div>
-            <div className="bg-slate-900/60 border border-slate-700/50 backdrop-blur-2xl rounded-3xl sm:rounded-[3rem] p-6 sm:p-8 md:p-12 relative shadow-2xl w-full">
+            <div className={`absolute -inset-1 bg-gradient-to-r ${activeStudy ? activeStudy.theme.gradientText : 'from-slate-600 to-slate-400'} rounded-[3rem] blur opacity-20 group-hover:opacity-40 transition duration-1000 group-hover:duration-200`}></div>
+            <div className="bg-slate-900/60 border border-slate-700/50 backdrop-blur-2xl rounded-[3rem] p-8 sm:p-12 relative shadow-2xl">
               {submitStatus === 'success' ? (
-                <div className="text-center py-12 sm:py-16 animate-fade-in-up">
-                  <div className={`w-16 h-16 sm:w-20 sm:h-20 rounded-2xl sm:rounded-[2rem] flex items-center justify-center mx-auto mb-4 sm:mb-6 shadow-inner ${activeStudy ? `${activeStudy.theme.bgSoft} ${activeStudy.theme.text} border-${activeStudy.theme.colorName}-500/30` : 'bg-slate-800 text-slate-300 border-slate-700'} border transition-colors duration-500`}>
-                    <CheckCircle className="w-8 h-8 sm:w-10 sm:h-10" />
+                <div className="text-center py-16 animate-fade-in-up">
+                  <div className={`w-20 h-20 rounded-[2rem] flex items-center justify-center mx-auto mb-6 shadow-inner ${activeStudy ? `${activeStudy.theme.bgSoft} ${activeStudy.theme.text} border-${activeStudy.theme.colorName}-500/30` : 'bg-slate-800 text-slate-300 border-slate-700'} border transition-colors duration-500`}>
+                    <CheckCircle className="w-10 h-10" />
                   </div>
-                  <h3 className="text-xl sm:text-2xl font-bold text-white mb-2">Spec Received</h3>
-                  <p className="text-slate-400 text-xs sm:text-sm">An InvadeCode architect will initiate contact via secure channel shortly.</p>
+                  <h3 className="text-2xl font-bold text-white mb-2">Spec Received</h3>
+                  <p className="text-slate-400 text-sm">An InvadeCode architect will initiate contact via secure channel shortly.</p>
                 </div>
               ) : (
-                <form onSubmit={handleLeadSubmit} className="space-y-4 sm:space-y-5">
-                  <div className="mb-6 sm:mb-8 text-center sm:text-left">
-                     <h3 className="text-xl sm:text-2xl font-bold text-white mb-1.5 sm:mb-2">Initiate Architecture Review</h3>
-                     <p className="text-[10px] sm:text-xs text-slate-400 font-mono break-words">SECURE_TRANSMISSION_PROTOCOL</p>
+                <form onSubmit={handleLeadSubmit} className="space-y-5">
+                  <div className="mb-8">
+                     <h3 className="text-2xl font-bold text-white mb-2">Initiate Architecture Review</h3>
+                     <p className="text-xs text-slate-400 font-mono">SECURE_TRANSMISSION_PROTOCOL</p>
                   </div>
                   
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                     <div>
                       <input required type="text" value={leadForm.name} onChange={(e) => setLeadForm({...leadForm, name: e.target.value})}
-                        className="w-full px-4 sm:px-5 py-3.5 sm:py-4 bg-slate-950/50 border border-slate-800 rounded-full sm:rounded-full focus:bg-slate-900 focus:ring-2 focus:ring-slate-700 outline-none transition-all text-xs sm:text-sm font-medium text-white placeholder-slate-600 shadow-inner"
+                        className="w-full px-5 py-4 bg-slate-950/50 border border-slate-800 rounded-full focus:bg-slate-900 focus:ring-2 focus:ring-slate-700 outline-none transition-all text-sm font-medium text-white placeholder-slate-600 shadow-inner"
                         placeholder="Operator Name"
                       />
                     </div>
                     <div>
                       <input required type="email" value={leadForm.email} onChange={(e) => setLeadForm({...leadForm, email: e.target.value})}
-                        className="w-full px-4 sm:px-5 py-3.5 sm:py-4 bg-slate-950/50 border border-slate-800 rounded-full sm:rounded-full focus:bg-slate-900 focus:ring-2 focus:ring-slate-700 outline-none transition-all text-xs sm:text-sm font-medium text-white placeholder-slate-600 shadow-inner"
+                        className="w-full px-5 py-4 bg-slate-950/50 border border-slate-800 rounded-full focus:bg-slate-900 focus:ring-2 focus:ring-slate-700 outline-none transition-all text-sm font-medium text-white placeholder-slate-600 shadow-inner"
                         placeholder="Secure Email"
                       />
                     </div>
                   </div>
                   <div>
                     <input required type="text" value={leadForm.company} onChange={(e) => setLeadForm({...leadForm, company: e.target.value})}
-                      className="w-full px-4 sm:px-5 py-3.5 sm:py-4 bg-slate-950/50 border border-slate-800 rounded-full sm:rounded-full focus:bg-slate-900 focus:ring-2 focus:ring-slate-700 outline-none transition-all text-xs sm:text-sm font-medium text-white placeholder-slate-600 shadow-inner"
+                      className="w-full px-5 py-4 bg-slate-950/50 border border-slate-800 rounded-full focus:bg-slate-900 focus:ring-2 focus:ring-slate-700 outline-none transition-all text-sm font-medium text-white placeholder-slate-600 shadow-inner"
                       placeholder="Enterprise Designation (Company)"
                     />
                   </div>
                   <div>
                     <textarea required rows={4} value={leadForm.problem} onChange={(e) => setLeadForm({...leadForm, problem: e.target.value})}
-                      className="w-full px-4 sm:px-5 py-3.5 sm:py-4 bg-slate-950/50 border border-slate-800 rounded-2xl sm:rounded-[2rem] focus:bg-slate-900 focus:ring-2 focus:ring-slate-700 outline-none transition-all text-xs sm:text-sm font-medium text-white placeholder-slate-600 resize-y shadow-inner"
+                      className="w-full px-5 py-4 bg-slate-950/50 border border-slate-800 rounded-[2rem] focus:bg-slate-900 focus:ring-2 focus:ring-slate-700 outline-none transition-all text-sm font-medium text-white placeholder-slate-600 resize-y shadow-inner"
                       placeholder="Define operational bottlenecks..."
                     />
                   </div>
                   
                   {submitStatus === 'error' && (
-                    <div className="bg-red-950/50 text-red-400 text-[10px] sm:text-xs font-mono p-3 sm:p-4 rounded-xl sm:rounded-[2rem] border border-red-900/50 flex items-center gap-2 sm:gap-3">
-                      <Activity className="w-3 h-3 sm:w-4 sm:h-4 shrink-0" /> Transmission failed. Retry.
+                    <div className="bg-red-950/50 text-red-400 text-xs font-mono p-4 rounded-[2rem] border border-red-900/50 flex items-center gap-3">
+                      <Activity className="w-4 h-4" /> Transmission failed. Retry.
                     </div>
                   )}
 
-                  <div className="pt-2 sm:pt-4">
+                  <div className="pt-4">
                     <button type="submit" disabled={submitStatus === 'loading'}
-                      className={`w-full px-6 sm:px-8 py-3.5 sm:py-4 text-slate-950 text-xs sm:text-sm font-bold tracking-wide uppercase rounded-full flex items-center justify-center gap-2 sm:gap-3 transition-all duration-500 disabled:opacity-70 shadow-xl ${activeStudy ? `bg-${activeStudy.theme.colorName}-500 hover:bg-${activeStudy.theme.colorName}-400 hover:shadow-${activeStudy.theme.colorName}-500/30` : 'bg-slate-200 hover:bg-white hover:shadow-slate-200/30'} hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-900`}
+                      className={`w-full px-8 py-4 text-slate-950 text-sm font-bold tracking-wide uppercase rounded-full flex items-center justify-center gap-3 transition-all duration-500 disabled:opacity-70 shadow-xl ${activeStudy ? `bg-${activeStudy.theme.colorName}-500 hover:bg-${activeStudy.theme.colorName}-400 hover:shadow-${activeStudy.theme.colorName}-500/30` : 'bg-slate-200 hover:bg-white hover:shadow-slate-200/30'} hover:-translate-y-1`}
                     >
                       {submitStatus === 'loading' ? (
-                        <div className="w-4 h-4 sm:w-5 sm:h-5 border-2 border-slate-900/30 border-t-slate-900 rounded-full animate-spin" />
+                        <div className="w-5 h-5 border-2 border-slate-900/30 border-t-slate-900 rounded-full animate-spin" />
                       ) : (
-                        <><span>Transmit Spec</span><Send className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0" /></>
+                        <><span>Transmit Spec</span><Send className="w-4 h-4" /></>
                       )}
                     </button>
                   </div>
@@ -801,8 +1078,8 @@ export default function App() {
           </div>
         </div>
 
-        <div className="max-w-7xl mx-auto mt-16 sm:mt-24 pt-6 sm:pt-8 border-t border-slate-800/50 flex flex-col sm:flex-row justify-between items-center gap-3 sm:gap-4 text-[9px] sm:text-[10px] md:text-xs font-mono text-slate-600 relative z-10 w-full text-center sm:text-left">
-          <div className="flex items-center gap-1.5 sm:gap-2"><Terminal className="w-2.5 h-2.5 sm:w-3 sm:h-3 shrink-0" /><span>END OF DOCUMENT_STREAM</span></div>
+        <div className="max-w-7xl mx-auto px-4 mt-24 pt-8 border-t border-slate-800/50 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs font-mono text-slate-600 relative z-10">
+          <div className="flex items-center gap-2"><Terminal className="w-3 h-3" /><span>END OF DOCUMENT_STREAM</span></div>
           <div>© {new Date().getFullYear()} INVADECODE_CORE. ALL RIGHTS RESERVED.</div>
         </div>
       </footer>
