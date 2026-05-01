@@ -4,7 +4,7 @@ import {
   MapPin, Clock, Layers, Send, CheckCircle, 
   ArrowRight, Activity, Cpu, Shield, Zap, GitBranch, Terminal,
   Network, MessageCircle, Factory, Scale, Check,
-  Server, Lock, Globe, Leaf, Briefcase, HeartPulse, BarChart3, LineChart
+  Server, Lock, Globe, Leaf, Briefcase, HeartPulse, BarChart3, LineChart, Target
 } from 'lucide-react';
 
 // --- Global Animation Utility ---
@@ -20,7 +20,8 @@ const Reveal = ({ children, delay = 0, className = "" }) => {
           observer.unobserve(entry.target);
         }
       },
-      { threshold: 0.1, rootMargin: '0px 0px -50px 0px' }
+      // Removed the severe negative root margin so elements reveal earlier
+      { threshold: 0.1, rootMargin: '0px 0px 0px 0px' } 
     );
     if (ref.current) observer.observe(ref.current);
     return () => observer.disconnect();
@@ -29,7 +30,8 @@ const Reveal = ({ children, delay = 0, className = "" }) => {
   return (
     <div 
       ref={ref} 
-      className={`transition-all duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] ${isVisible ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-16 scale-95'} ${className}`}
+      // Reduced the initial translateY push to prevent cards getting trapped
+      className={`transition-all duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] ${isVisible ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-8 scale-95'} ${className}`}
       style={{ transitionDelay: `${delay}ms` }}
     >
       {children}
@@ -285,7 +287,6 @@ const DynamicSimulator = ({ config, theme, id }) => {
 };
 
 // --- DATA: Massive Case Studies Configuration (18 Total) ---
-// Using extremely dense, metrics-driven technical copy to fulfill 11 sections per case study.
 const caseStudiesData = [
   // 1. PSU ERP (GovTech)
   {
@@ -757,8 +758,6 @@ const caseStudiesData = [
   }
 ];
 
-// --- Added icon specifically for defense ---
-import { Target } from 'lucide-react';
 
 // --- Showcase Gallery Hub ---
 const GalleryView = ({ studies, onSelect }) => {
@@ -770,7 +769,7 @@ const GalleryView = ({ studies, onSelect }) => {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-8 py-24 sm:py-32 relative z-10 animate-fade-in-up">
       <div className="text-center mb-16 relative">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-2xl h-64 bg-slate-200/50 blur-[100px] rounded-full pointer-events-none"></div>
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-2xl h-48 bg-slate-200/50 blur-[100px] rounded-full pointer-events-none"></div>
         <h1 className="text-5xl sm:text-7xl font-bold tracking-tighter text-slate-900 mb-6 relative z-10">
           Engineering <span className="text-transparent bg-clip-text bg-gradient-to-r from-slate-500 to-slate-900">Excellence.</span>
         </h1>
@@ -779,26 +778,30 @@ const GalleryView = ({ studies, onSelect }) => {
         </p>
       </div>
 
-      {/* Industry Filter Pills */}
-      <div className="flex flex-wrap justify-center gap-2 mb-16 relative z-10">
-        {industries.map(ind => (
-          <button
-            key={ind}
-            onClick={() => setSelectedIndustry(ind)}
-            className={`px-5 py-2 rounded-full text-xs font-bold uppercase tracking-widest transition-all duration-300 ${
-              selectedIndustry === ind 
-              ? 'bg-slate-900 text-white shadow-lg shadow-slate-900/20 scale-105' 
-              : 'bg-white text-slate-500 border border-slate-200 hover:bg-slate-50 hover:text-slate-700'
-            }`}
-          >
-            {ind}
-          </button>
-        ))}
+      {/* Filter Pills - Rewritten to completely avoid flex overflow + negative margin bugs */}
+      <div className="relative z-10 mb-10 w-full flex justify-center">
+        <div className="max-w-full overflow-x-auto no-scrollbar">
+          <div className="flex items-center gap-2 px-2 py-4 w-max mx-auto">
+            {industries.map(ind => (
+              <button
+                key={ind}
+                onClick={() => setSelectedIndustry(ind)}
+                className={`shrink-0 px-5 py-2 rounded-full text-xs font-bold uppercase tracking-widest transition-all duration-300 ${
+                  selectedIndustry === ind 
+                  ? 'bg-slate-900 text-white shadow-lg shadow-slate-900/20 scale-105' 
+                  : 'bg-white text-slate-500 border border-slate-200 hover:bg-slate-50 hover:text-slate-700'
+                }`}
+              >
+                {ind}
+              </button>
+            ))}
+          </div>
+        </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
         {filteredStudies.map((study, idx) => (
-          <Reveal key={study.id} delay={idx * 50}>
+          <Reveal key={study.id} delay={idx * 50} className="h-full">
             <button 
               onClick={() => onSelect(study.id)} 
               className="group relative w-full text-left bg-white border border-slate-200/80 rounded-[2.5rem] p-8 shadow-xl shadow-slate-200/40 hover:shadow-2xl hover:shadow-slate-300/60 transition-all duration-700 hover:-translate-y-2 overflow-hidden flex flex-col h-full"
