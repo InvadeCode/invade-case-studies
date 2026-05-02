@@ -127,7 +127,7 @@ const CaseStudyViewer = ({ study, onReturnToHub }) => {
   const theme = study.theme;
   
   return (
-    <div className="w-full px-[3%] py-12 flex flex-col lg:flex-row gap-12 lg:gap-16 relative">
+    <div className="w-full px-[3%] py-12 flex flex-col lg:flex-row gap-12 lg:gap-16 relative mx-auto max-w-[1600px]">
       {/* Sidebar Index - Glassmorphic */}
       <aside className="hidden lg:block w-[300px] shrink-0">
         <Reveal animation="fade-left" className="sticky top-32 bg-white/60 backdrop-blur-3xl border border-slate-200/80 p-8 rounded-[2.5rem] shadow-[0_20px_60px_rgb(0,0,0,0.03)] transition-all duration-500 hover:shadow-[0_20px_60px_rgb(0,0,0,0.06)] hover:-translate-y-1">
@@ -165,8 +165,8 @@ const CaseStudyViewer = ({ study, onReturnToHub }) => {
         </Reveal>
       </aside>
 
-      {/* Main Content */}
-      <main className="flex-1 max-w-4xl pb-32">
+      {/* Main Content - Expanded to fill right space */}
+      <main className="flex-1 min-w-0 pb-32 lg:pr-8">
         <Reveal animation="fade-right">
           <header className="mb-12 lg:hidden bg-white/80 backdrop-blur-2xl border border-slate-200/80 p-8 rounded-[2.5rem] shadow-[0_20px_50px_rgb(0,0,0,0.03)] relative overflow-hidden">
             <div className={`absolute top-0 right-0 w-32 h-32 bg-${theme.colorName}-500/10 rounded-full blur-[40px] pointer-events-none`}></div>
@@ -201,11 +201,11 @@ const CaseStudyViewer = ({ study, onReturnToHub }) => {
                     // SEC_{String(section.index).padStart(2, '0')}
                   </span>
                 )}
-                <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 mb-8 tracking-tight leading-tight">{section.title}</h2>
+                <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 mb-6 tracking-tight leading-tight">{section.title}</h2>
               </div>
             </Reveal>
             <Reveal delay={(idx * 30) + 100} animation="fade-up" duration={1000}>
-              <div className="text-base sm:text-lg text-slate-600 leading-relaxed sm:leading-[1.8] mb-8 font-light tracking-wide space-y-6" dangerouslySetInnerHTML={{__html: section.content}} />
+              <div className="text-sm sm:text-base text-slate-600 leading-relaxed sm:leading-[1.7] mb-8 font-normal tracking-wide space-y-5" dangerouslySetInnerHTML={{__html: section.content}} />
             </Reveal>
 
             {/* Inject Interactive Chart dynamically at optimal reading point */}
@@ -336,6 +336,8 @@ const caseStudiesData = [
     industry: 'GovTech',
     title: 'National PSU ERP Overhaul',
     subtitle: 'The Sovereign Cloud Migration.',
+    excerpt: 'Engineered a sovereign, air-gapped Enterprise OS to replace 42 fragmented Oracle/SAP instances, processing 14.2B rows daily with sub-90ms latency and saving $18.4M in licensing.',
+    techStack: ['Kubernetes', 'Apache Kafka', 'PostgreSQL', 'Rust'],
     theme: { colorName: 'amber', text: 'text-amber-500', bgSoft: 'bg-amber-500/10', borderSoft: 'border-amber-500/30', accent: 'accent-amber-500', gradientText: 'from-amber-600 to-orange-500', simBg: 'bg-[#0f0a05]', simBorder: 'border-amber-900/30', simGlow: 'bg-amber-900/20' },
     spec: { target: '2x State Energy PSUs', scale: '14,000+ Employees', metric: '100% Legacy Modules Deprecated' },
     trust: { compliance: 'FedRAMP / ISO 27001', uptime: '99.999%', dataVolume: '4.2 PB Processed' },
@@ -383,6 +385,8 @@ const caseStudiesData = [
     industry: 'AgriTech',
     title: 'Invade Agro',
     subtitle: 'Predictive Crop & Supply Chain Matrix.',
+    excerpt: 'Predictive spatial-temporal engine digesting petabytes of multi-spectral satellite imagery to automate variable-rate micro-dosing and cold-chain logistics across 12M hectares.',
+    techStack: ['Python', 'TensorFlow', 'MQTT', 'WebGL'],
     theme: { colorName: 'emerald', text: 'text-emerald-500', bgSoft: 'bg-emerald-500/10', borderSoft: 'border-emerald-500/30', accent: 'accent-emerald-500', gradientText: 'from-emerald-400 to-green-600', simBg: 'bg-[#020a06]', simBorder: 'border-emerald-900/30', simGlow: 'bg-emerald-900/20' },
     spec: { target: 'National Agri-Conglomerate', scale: '12M+ Hectares', metric: 'Yield Optimization +22%' },
     trust: { compliance: 'ISO 22000 / GAP', uptime: '99.99%', dataVolume: '8 PB Satellite Imagery' },
@@ -429,6 +433,8 @@ const caseStudiesData = [
     industry: 'Manufacturing',
     title: 'Invade Mill',
     subtitle: 'Autonomous Factory Orchestration.',
+    excerpt: 'Ultra-low-latency MES utilizing edge-compute acoustic matrices and 4K CNNs to achieve near-autonomous QA and predictive maintenance across 45 global heavy industrial facilities.',
+    techStack: ['C++', 'CUDA', 'OPC-UA', 'React'],
     theme: { colorName: 'stone', text: 'text-stone-400', bgSoft: 'bg-stone-500/10', borderSoft: 'border-stone-500/30', accent: 'accent-stone-500', gradientText: 'from-stone-400 to-yellow-600', simBg: 'bg-[#0a0a0a]', simBorder: 'border-stone-800/50', simGlow: 'bg-yellow-900/20' },
     spec: { target: 'Global Steel/Textile Mill', scale: '45 Global Facilities', metric: 'Unplanned Downtime -45%' },
     trust: { compliance: 'IEC 62443 / ISO 9001', uptime: '99.999%', dataVolume: '4M IoT Pings/Sec' },
@@ -475,6 +481,8 @@ const caseStudiesData = [
     industry: 'EdTech',
     title: 'IIT Delhi COE NZI',
     subtitle: 'Net Zero Initiative Matrix.',
+    excerpt: 'Compliance-grade environmental algorithmic modeling matrix computing absolute zero trajectories by digesting smart grid telemetry and Scope 3 supply chain vendor APIs.',
+    techStack: ['Rust', 'GraphQL', 'TimescaleDB', 'Node.js'],
     theme: { colorName: 'teal', text: 'text-teal-400', bgSoft: 'bg-teal-500/10', borderSoft: 'border-teal-500/30', accent: 'accent-teal-500', gradientText: 'from-teal-400 to-emerald-500', simBg: 'bg-[#020a0a]', simBorder: 'border-teal-900/30', simGlow: 'bg-teal-900/20' },
     spec: { target: 'Center of Excellence (COE)', scale: 'Campus Wide Grid', metric: 'Absolute Zero Trajectory' },
     trust: { compliance: 'GHG Protocol / ISO 14064', uptime: '99.99%', dataVolume: 'Smart Grid Telemetry' },
@@ -520,6 +528,8 @@ const caseStudiesData = [
     industry: 'EdTech',
     title: 'IIT Delhi CEO RA',
     subtitle: 'Resource Allocation Engine.',
+    excerpt: 'Autonomous multi-variable scheduler dynamically routing HPC bandwidth and multi-million dollar grant funding across 400+ simultaneous research projects with 99% utilization.',
+    techStack: ['Go', 'Kubernetes', 'Redis', 'Solidity'],
     theme: { colorName: 'blue', text: 'text-blue-400', bgSoft: 'bg-blue-500/10', borderSoft: 'border-blue-500/30', accent: 'accent-blue-500', gradientText: 'from-blue-400 to-indigo-500', simBg: 'bg-[#02060a]', simBorder: 'border-blue-900/30', simGlow: 'bg-blue-900/20' },
     spec: { target: 'Chief Executive Office', scale: '$500M+ Research Grants', metric: 'Capital Utilization 99%' },
     trust: { compliance: 'SOC2 / Academic ISO', uptime: '99.99%', dataVolume: 'Distributed Compute Sync' },
@@ -566,6 +576,8 @@ const caseStudiesData = [
     industry: 'Finance',
     title: 'Global FinTech Ledger',
     subtitle: 'Cross-Border Reconciliation Matrix.',
+    excerpt: 'Distributed SQL matrix executing sub-15ms real-time cross-border reconciliation, replacing legacy AS400 batch processing and unlocking $412M in daily trapped liquidity.',
+    techStack: ['CockroachDB', 'gRPC', 'Graph Neural Networks', 'Go'],
     theme: { colorName: 'indigo', text: 'text-indigo-400', bgSoft: 'bg-indigo-500/10', borderSoft: 'border-indigo-500/30', accent: 'accent-indigo-500', gradientText: 'from-indigo-400 to-blue-500', simBg: 'bg-[#050510]', simBorder: 'border-indigo-900/30', simGlow: 'bg-indigo-900/20' },
     spec: { target: 'Tier-1 Payment Gateway', scale: '140+ Countries', metric: 'Reconciliation < 12ms' },
     trust: { compliance: 'PCI-DSS Level 1', uptime: '99.9999%', dataVolume: '8.4B Tx/Day' },
@@ -610,6 +622,8 @@ const caseStudiesData = [
     industry: 'Telecom',
     title: '5G Network Auto-Scaler',
     subtitle: 'Predictive Bandwidth Allocation.',
+    excerpt: 'Deep-learning network orchestrator autonomously scaling massive MIMO antenna arrays based on predictive human density modeling, slashing telco energy OPEX by 32%.',
+    techStack: ['PyTorch', 'Kafka', 'O-RAN APIs', 'Elasticsearch'],
     theme: { colorName: 'lime', text: 'text-lime-500', bgSoft: 'bg-lime-500/10', borderSoft: 'border-lime-500/30', accent: 'accent-lime-500', gradientText: 'from-lime-400 to-green-500', simBg: 'bg-[#050a02]', simBorder: 'border-lime-900/30', simGlow: 'bg-lime-900/20' },
     spec: { target: 'Tier-1 Telco Provider', scale: '85,000+ Cell Nodes', metric: 'Energy Costs -32.4%' },
     trust: { compliance: '3GPP / SOC2 Type II', uptime: '99.999%', dataVolume: '5.2TB/Hr Handshake Logs' },
@@ -656,6 +670,8 @@ const caseStudiesData = [
     industry: 'Healthcare',
     title: 'State-Wide Dengue Predictor',
     subtitle: 'Epidemiological Decision Support System.',
+    excerpt: 'State-wide epidemiological DSS correlating 1.2B clinical records with micro-climatic APIs to forecast localized viral vector outbreaks with an 18-day predictive lead time.',
+    techStack: ['XGBoost', 'PostGIS', 'FastAPI', 'React'],
     theme: { colorName: 'rose', text: 'text-rose-500', bgSoft: 'bg-rose-500/10', borderSoft: 'border-rose-500/30', accent: 'accent-rose-500', gradientText: 'from-rose-500 to-pink-600', simBg: 'bg-[#100508]', simBorder: 'border-rose-900/30', simGlow: 'bg-rose-900/20' },
     spec: { target: 'Southern State Health Ministry', scale: '14 Districts', metric: 'Predictive Lead Time: 18 Days' },
     trust: { compliance: 'HIPAA / ISO 27799', uptime: '99.99%', dataVolume: '1.2B Clinical Rows' },
@@ -699,6 +715,8 @@ const caseStudiesData = [
     industry: 'Retail',
     title: 'Omni-Channel Retail ERP',
     subtitle: 'Algorithmic Pricing & SCM.',
+    excerpt: 'Distributed graph ledger synchronizing 18M daily POS transactions with predictive SCM routing, algorithmically liquidating dead stock via spatial dynamic pricing.',
+    techStack: ['GraphQL', 'Neo4j', 'Node.js', 'Stripe API'],
     theme: { colorName: 'fuchsia', text: 'text-fuchsia-400', bgSoft: 'bg-fuchsia-500/10', borderSoft: 'border-fuchsia-500/30', accent: 'accent-fuchsia-500', gradientText: 'from-fuchsia-400 to-purple-500', simBg: 'bg-[#100410]', simBorder: 'border-fuchsia-900/30', simGlow: 'bg-fuchsia-900/20' },
     spec: { target: 'Global Fashion Brand', scale: '4,500+ Locations', metric: 'Dead Stock -82%' },
     trust: { compliance: 'PCI-DSS / GDPR', uptime: '99.99%', dataVolume: '18M Tx/Day' },
@@ -745,6 +763,8 @@ const caseStudiesData = [
     industry: 'Defense',
     title: 'Munitions Logistics Network',
     subtitle: 'Air-Gapped SCM Matrix.',
+    excerpt: 'Military-grade, air-gapped SCM matrix algorithmically routing munitions and medical payloads across active theaters via intermittent, quantum-resistant satellite bursts.',
+    techStack: ['Rust', 'Hyperledger', 'AES-GCM-256', 'WebRTC'],
     theme: { colorName: 'emerald', text: 'text-emerald-500', bgSoft: 'bg-emerald-500/10', borderSoft: 'border-emerald-500/30', accent: 'accent-emerald-500', gradientText: 'from-emerald-400 to-green-500', simBg: 'bg-[#020a06]', simBorder: 'border-emerald-900/30', simGlow: 'bg-emerald-900/20' },
     spec: { target: 'NATO Allied Command', scale: 'Global Theater', metric: '100% Cryptographic Audit' },
     trust: { compliance: 'DoD IL6 / NIST 800-171', uptime: '99.999%', dataVolume: 'Classified' },
@@ -836,7 +856,7 @@ const GalleryView = ({ studies, onSelect }) => {
               <div className={`absolute -top-20 -right-20 w-80 h-80 bg-${study.theme.colorName}-500/10 rounded-full blur-[80px] group-hover:scale-150 group-hover:bg-${study.theme.colorName}-500/20 transition-all duration-1000`}></div>
               <div className="absolute inset-0 bg-gradient-to-br from-transparent to-slate-50/80 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
               
-              <div className="relative z-10 flex-1">
+              <div className="relative z-10 flex-1 flex flex-col">
                 <div className="flex justify-between items-start mb-8">
                    <h4 className="text-[11px] font-extrabold uppercase tracking-widest text-slate-400 bg-slate-100/50 px-3 py-1 rounded-full border border-slate-200/50">{study.industry}</h4>
                    <div className={`w-12 h-12 rounded-[1.2rem] ${study.theme.bgSoft} flex items-center justify-center border border-${study.theme.colorName}-200/50 group-hover:scale-110 group-hover:rotate-6 transition-all duration-500`}>
@@ -844,9 +864,21 @@ const GalleryView = ({ studies, onSelect }) => {
                    </div>
                 </div>
                 <h3 className="text-3xl font-extrabold text-slate-900 mb-3 group-hover:text-slate-700 transition-colors tracking-tight">{study.title}</h3>
-                <p className={`text-sm font-bold uppercase tracking-wider text-transparent bg-clip-text bg-gradient-to-r ${study.theme.gradientText} mb-10`}>{study.subtitle}</p>
+                <p className={`text-sm font-bold uppercase tracking-wider text-transparent bg-clip-text bg-gradient-to-r ${study.theme.gradientText} mb-6`}>{study.subtitle}</p>
                 
-                <div className="space-y-4 mb-12">
+                <p className="text-sm text-slate-600 font-medium line-clamp-3 mb-6 leading-relaxed flex-1">
+                  {study.excerpt}
+                </p>
+
+                <div className="flex flex-wrap gap-2 mb-8">
+                  {study.techStack.map(tech => (
+                    <span key={tech} className="px-2.5 py-1 text-[10px] font-bold font-mono uppercase bg-slate-100/80 text-slate-500 rounded-md border border-slate-200/80">
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+                
+                <div className="space-y-4 mb-8">
                   <div className="flex justify-between items-center text-[13px] font-mono border-b border-slate-100 pb-3">
                      <span className="text-slate-500 font-semibold">Scale</span>
                      <span className="text-slate-900 font-bold truncate">{study.spec.scale}</span>
@@ -955,7 +987,7 @@ export default function App() {
             
             {/* Seamless Next Case Study CTA */}
             <div className="w-full px-[3%] py-32 relative z-10 flex justify-center">
-              <Reveal animation="blur-in" duration={1200} className="w-full">
+              <Reveal animation="blur-in" duration={1200} className="w-full max-w-[1600px]">
                 <button 
                   onClick={handleNextStudy}
                   className="group relative w-full overflow-hidden rounded-[3rem] sm:rounded-[4rem] bg-white/60 backdrop-blur-2xl border border-slate-200 shadow-[0_20px_60px_rgba(0,0,0,0.05)] hover:shadow-[0_40px_100px_rgba(0,0,0,0.1)] transition-all duration-700 hover:-translate-y-2 p-10 sm:p-16 flex flex-col sm:flex-row items-center justify-between gap-10 text-left"
@@ -991,7 +1023,7 @@ export default function App() {
         <div className={`absolute top-0 left-0 w-[1000px] h-[1000px] rounded-full blur-[150px] opacity-20 pointer-events-none transition-colors duration-1000 ${activeStudy ? `bg-${activeStudy.theme.colorName}-600` : 'bg-slate-600'} -translate-x-1/2 -translate-y-1/2 animate-pulse-glow`}></div>
         <div className={`absolute bottom-0 right-0 w-[800px] h-[800px] rounded-full blur-[120px] opacity-15 pointer-events-none transition-colors duration-1000 ${activeStudy ? `bg-${activeStudy.theme.colorName}-400` : 'bg-slate-500'} translate-x-1/3 translate-y-1/3 animate-float`}></div>
 
-        <div className="w-full px-[3%] relative z-10 flex flex-col lg:flex-row gap-20 lg:gap-24 items-center">
+        <div className="w-full px-[3%] relative z-10 flex flex-col lg:flex-row gap-20 lg:gap-24 items-center max-w-[1600px] mx-auto">
           
           <div className="lg:w-1/2 text-center lg:text-left">
             <Reveal animation="fade-right" duration={1200}>
@@ -1012,7 +1044,7 @@ export default function App() {
             </Reveal>
           </div>
 
-          <div className="lg:w-1/2 w-full max-w-xl relative group">
+          <div className="lg:w-1/2 w-full max-w-xl relative group mx-auto lg:ml-auto">
             <Reveal animation="blur-in" duration={1500}>
               <div className={`absolute -inset-1 bg-gradient-to-r ${activeStudy ? activeStudy.theme.gradientText : 'from-slate-600 to-slate-400'} rounded-[3rem] blur-2xl opacity-20 group-hover:opacity-50 transition duration-1000`}></div>
               <div className="bg-slate-950/80 border border-slate-800/80 backdrop-blur-3xl rounded-[3rem] p-10 sm:p-14 relative shadow-2xl">
@@ -1076,7 +1108,7 @@ export default function App() {
           </div>
         </div>
 
-        <div className="w-full px-[3%] mt-32 pt-10 border-t border-slate-800/80 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs font-mono font-bold tracking-widest text-slate-600 relative z-10">
+        <div className="w-full px-[3%] mt-32 pt-10 border-t border-slate-800/80 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs font-mono font-bold tracking-widest text-slate-600 relative z-10 max-w-[1600px] mx-auto">
           <div className="flex items-center gap-3"><Terminal className="w-4 h-4" /><span>END OF DOCUMENT_STREAM</span></div>
           <div>© {new Date().getFullYear()} INVADECODE_CORE. ALL RIGHTS RESERVED.</div>
         </div>
